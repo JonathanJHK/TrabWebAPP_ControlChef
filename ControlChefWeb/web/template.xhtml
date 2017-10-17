@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>ControlChef</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true">
+            <h1>Sistemas para Controle de Restaurante</h1>
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    Header
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="50" closable="true" collapsible="true">
+                    Footer
+                </p:layoutUnit>
+                
+                <p:layoutUnit position="west" size="200" header="Menu" collapsible="true">
+                   <h:form>
+                       <p:panelMenu>
+                        <p:menuitem value="Home" url="index.jsf" />
+                        <p:submenu label="Gerenciar">
+                            <p:menuitem value="Funcionário" outcome="gerenciar-funcionario.jsf"/>
+                            <p:menuitem value="Cliente" outcome="gerenciar-produto.jsf" />
+                            <p:menuitem value="Produto" outcome="gerenciar-produto.jsf" />
+                            <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
+                        </p:submenu>
+                        <p:submenu label="Restaurante">
+                            <p:menuitem value="Pedidos" outcome="gerenciar-funcionario.jsf"/>
+                            <p:menuitem value="Pagamentos" outcome="gerenciar-produto.jsf" />
+                            <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
+                        </p:submenu>
+                        </p:panelMenu>
+                    </h:form>
+                    <hr/>
+        
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+                    <ui:insert></ui:insert>
+                </p:layoutUnit>
+
+            </p:layout>
+        
+          
+        
+        
+    </h:body>
+</html>
+
