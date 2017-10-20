@@ -43,6 +43,8 @@
                     <p:commandButton value="Editar" action="#{produtoBean.editar(produto)}" update="@form"></p:commandButton>
                     <p:commandButton value="Deletar" action="#{produtoBean.deletar(produto)}" update="@form"></p:commandButton>
                 </p:column>
+                <p:column headerText="Imagem" sortBy="#{produto.imagem}">
+                </p:column>
                 <p:column headerText="Nome" sortBy="#{produto.nome}">
                     <h:outputText value="#{produto.nome}"></h:outputText>
                 </p:column>
@@ -51,8 +53,6 @@
                 </p:column>
                 <p:column headerText="Preço(R$)" sortBy="#{produto.preco}">
                     <h:outputText value="#{produto.preco}"></h:outputText>
-                </p:column>
-                <p:column headerText="Imagem" sortBy="#{produto.imagem}">
                 </p:column>
                 <p:column headerText="Disponível" sortBy="#{produto.disponivel}">
                     <h:outputText value="#{produto.disponivel}">
