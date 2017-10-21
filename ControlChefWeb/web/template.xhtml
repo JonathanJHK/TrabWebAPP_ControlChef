@@ -21,16 +21,23 @@
                    <h:form>
                        <p:panelMenu>
                         <p:menuitem value="Home" url="index.jsf" />
+                        
                         <p:submenu label="Gerenciar">
                             <p:menuitem value="Funcionário" outcome="gerenciar-funcionario.jsf"/>
                             <p:menuitem value="Cliente" outcome="gerenciar-produto.jsf" />
                             <p:menuitem value="Produto" outcome="gerenciar-produto.jsf" />
-                            <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
                         </p:submenu>
+                        
                         <p:submenu label="Restaurante">
                             <p:menuitem value="Pedidos" outcome="gerenciar-pedido.jsf"/>
                             <p:menuitem value="Pagamentos" outcome="gerenciar-produto.jsf" />
-                            <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
+                        </p:submenu>
+                        
+                        <p:separator />
+                        
+                        <p:submenu label="Outros">
+                            <p:menuitem value="Ajuda" outcome="gerenciar-pedido.jsf"/>
+                            <p:menuitem value="Contatos" outcome="gerenciar-produto.jsf" />
                         </p:submenu>
                         </p:panelMenu>
                     </h:form>

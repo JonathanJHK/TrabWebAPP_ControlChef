@@ -23,11 +23,11 @@ public abstract class CrudBean<E, D extends CrudDAO> {
         try {
             getDao().salvar(entidade);
             entidade = criarNovaEntidade();
-            adicionarMensagem("Salvo com sucesso!", FacesMessage.SEVERITY_INFO);
+            adicionarMensagem("Atenção","Salvo com sucesso!");
             mudarParaBusca();
         } catch (ErroSistema ex) {
             Logger.getLogger(CrudBean.class.getName()).log(Level.SEVERE, null, ex);
-            adicionarMensagem(ex.getMessage(), FacesMessage.SEVERITY_ERROR);
+            adicionarMensagem("Atenção",ex.getMessage());
         }
     }
     public void editar(E entidade){
@@ -38,10 +38,10 @@ public abstract class CrudBean<E, D extends CrudDAO> {
         try {
             getDao().deletar(entidade);
             entidades.remove(entidade);
-            adicionarMensagem("Deletado com sucesso!", FacesMessage.SEVERITY_INFO);
+            adicionarMensagem("Atenção","Deletado com sucesso!");
         } catch (ErroSistema ex) {
             Logger.getLogger(CrudBean.class.getName()).log(Level.SEVERE, null, ex);
-            adicionarMensagem(ex.getMessage(), FacesMessage.SEVERITY_ERROR);
+            adicionarMensagem("Atenção",ex.getMessage());
         }
     }
     public void buscar(){
@@ -52,16 +52,16 @@ public abstract class CrudBean<E, D extends CrudDAO> {
         try {
             entidades = getDao().buscar();
             if(entidades == null || entidades.size() < 1){
-                adicionarMensagem("Não temos nada cadastrado!", FacesMessage.SEVERITY_WARN);
+                adicionarMensagem("Atenção","Não temos nada cadastrado!");
             }
         } catch (ErroSistema ex) {
             Logger.getLogger(CrudBean.class.getName()).log(Level.SEVERE, null, ex);
-            adicionarMensagem(ex.getMessage(), FacesMessage.SEVERITY_ERROR);
+            adicionarMensagem("Atenção",ex.getMessage());
         }
     }
     
-    public void adicionarMensagem(String mensagem, FacesMessage.Severity tipoErro){
-        FacesMessage fm = new FacesMessage(tipoErro, mensagem, null);
+    public void adicionarMensagem(String mensagem, String mensagem2){
+        FacesMessage fm = new FacesMessage(mensagem, mensagem2);
         FacesContext.getCurrentInstance().addMessage(null, fm);
     }
     

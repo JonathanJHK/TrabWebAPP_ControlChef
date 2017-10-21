@@ -11,7 +11,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
+@ManagedBean(name="FuncionarioDAO")
+@ViewScoped
 public class FuncionarioDAO implements CrudDAO<Funcionario>{
 
     @Override
