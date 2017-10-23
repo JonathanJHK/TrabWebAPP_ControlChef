@@ -9,11 +9,11 @@
     </h:head>
     <h:body>
         <p:layout fullPage="true">
-                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                <p:layoutUnit position="north" size="100" resizable="false" closable="false" collapsible="false">
                     Header
                 </p:layoutUnit>
 
-                <p:layoutUnit position="south" size="50" closable="true" collapsible="true">
+                <p:layoutUnit position="south" size="40" resizable="false" closable="false" collapsible="false">
                     Footer
                 </p:layoutUnit>
                 
@@ -23,13 +23,13 @@
                         <p:menuitem value="Home" url="index.jsf" />
                         
                         <p:submenu label="Gerenciar">
-                            <p:menuitem value="Funcionário" outcome="gerenciar-funcionario.jsf"/>
-                            <p:menuitem value="Cliente" outcome="gerenciar-produto.jsf" />
+                            <p:menuitem value="Funcionário" outcome="gerenciar-funcionario.jsf" icon="ui-icon-person"/>
+                            <p:menuitem value="Cliente" outcome="gerenciar-produto.jsf" icon="ui-icon-person" />
                             <p:menuitem value="Produto" outcome="gerenciar-produto.jsf" />
                         </p:submenu>
                         
-                        <p:submenu label="Restaurante">
-                            <p:menuitem value="Pedidos" outcome="gerenciar-pedido.jsf"/>
+                        <p:submenu label="Restaurante" >
+                            <p:menuitem value="Pedidos" outcome="gerenciar-pedido.jsf" icon="ui-icon-cart"/>
                             <p:menuitem value="Pagamentos" outcome="gerenciar-produto.jsf" />
                         </p:submenu>
                         
@@ -46,7 +46,7 @@
                 </p:layoutUnit>
 
                 <p:layoutUnit position="center">
-                    <ui:insert></ui:insert>
+                    <ui:insert name="content"/>
                 </p:layoutUnit>
 
             </p:layout>

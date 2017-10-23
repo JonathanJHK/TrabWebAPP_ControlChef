@@ -11,43 +11,42 @@ and open the template in the editor.
              template="template.xhtml"
              xmlns:p="http://primefaces.org/ui"
              xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <h:form id="form-func">
+            <p:fieldset legend="Gerenciar Funcionário">
 
-    <h:form id="form-func">
-        <p:fieldset legend="Gerenciar Funcionário">
+                <p:menubar>
+                    <p:menuitem value="Novo" outcome="novo-funcionario.jsf" icon="ui-icon-close" />
+                    <p:menuitem value="Listar" outcome="gerenciar-funcionario.jsf" icon="ui-icon-search" />
+                </p:menubar>
 
-            <p:menubar>
-                <p:menuitem value="Novo" outcome="novo-funcionario.jsf" icon="ui-icon-close"  />
-                <p:menuitem value="Listar" outcome="gerenciar-funcionario.jsf" icon="ui-icon-search" />
-            </p:menubar>
+                <p:separator/>
 
-            <p:separator/>
+                <h:panelGrid id="grid_func">
+                    <h:outputLabel for="login" value="Login:" style="font-weight:bold"/>                    
+                    <p:inputText id="login" value="#{funcionarioBean.entidade.login}" required="true" label="Login"/>
+                    <p:message for="login" />
 
-            <h:panelGrid id="grid">
-                <h:outputLabel for="login" value="Login:" style="font-weight:bold"/>                    
-                <p:inputText id="login" value="#{funcionarioBean.entidade.login}" required="true" label="Login"/>
-                <p:message for="login" />
+                    <h:outputLabel for="senha1" value="Senha: *" style="font-weight:bold"/>
+                    <p:password id="senha1" value="#{funcionarioBean.entidade.senha}" match="senha2" label="Senha" required="true" feedback="true"/>
+                    <p:message for="senha1" />
+                    <h:outputLabel for="senha2" value="Confirmação da senha: *" style="font-weight:bold"/>
+                    <p:password id="senha2" value="#{funcionarioBean.entidade.senha}" label="Confirmação da Senha" required="true" />
+                </h:panelGrid>
+                
+                <p:separator/>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton  value="Salvar" update="grid_func" icon="ui-icon-check" action="#{funcionarioBean.salvar()}" validateClient="true" />
+                        <p:commandButton  value="Resetar" update="grid_func" process="@this" >
+                            <p:resetInput target="grid_func" />
+                        </p:commandButton>
+                    </f:facet>
+                </p:toolbar>
 
-                <h:outputLabel for="senha1" value="Senha: *" style="font-weight:bold"/>
-                <p:password id="senha1" value="#{funcionarioBean.entidade.senha}" match="senha2" label="Senha" required="true" feedback="true"/>
+                <p:growl id="msg" autoUpdate="true" showDetail="true" />
+            </p:fieldset>
 
-                <h:outputLabel for="senha2" value="Confirmação da senha: *" style="font-weight:bold"/>
-                <p:password id="senha2" value="#{funcionarioBean.entidade.senha}" label="Confirmação da Senha" required="true" />
-            </h:panelGrid>
-            
-            <p:separator/>
-            <p:toolbar>
-                <f:facet name="left">
-                    <p:commandButton type="button" value="Salvar" update="grid" icon="ui-icon-check" action="#{funcionarioBean.salvar()}" validateClient="true" />
-                    <p:commandButton type="button" value="Resetar" update="grid" process="@this" >
-                        <p:resetInput target="panel" />
-                    </p:commandButton>
-                </f:facet>
-            </p:toolbar>
-            
-            <p:messages autoUpdate="true" showDetail="true"></p:messages>
-            
-        </p:fieldset>
-        
-    </h:form>
-
+        </h:form>
+    </ui:define>
 </ui:decorate>

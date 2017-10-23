@@ -4,6 +4,7 @@ import br.com.controlchefweb.entidade.Produto;
 import br.com.controlchefweb.entidade.Funcionario;
 import br.com.controlchefweb.util.FabricaConexao;
 import br.com.controlchefweb.util.exception.ErroSistema;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -16,7 +17,7 @@ import javax.faces.bean.ViewScoped;
 
 @ManagedBean(name="FuncionarioDAO")
 @ViewScoped
-public class FuncionarioDAO implements CrudDAO<Funcionario>{
+public class FuncionarioDAO implements CrudDAO<Funcionario>, Serializable{
 
     @Override
     public void salvar(Funcionario entidade) throws ErroSistema {

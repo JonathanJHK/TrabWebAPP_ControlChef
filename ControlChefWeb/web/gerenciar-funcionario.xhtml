@@ -6,58 +6,75 @@
              template="template.xhtml"
              xmlns:p="http://primefaces.org/ui"
              xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+
+        <h:form id="form">
+            <p:growl id="msgs" showDetail="true"/>
+            <p:fieldset legend="Gerenciar Funcionário">
+
+                <p:menubar>
+                    <p:menuitem value="Novo" outcome="novo-funcionario.jsf" icon="ui-icon-close" />
+                    <p:menuitem value="Listar" outcome="gerenciar-funcionario.jsf" icon="ui-icon-search" />
+                </p:menubar>
+
+                <p:separator/>
+
+                <p:dataTable id="func1" var="fun" value="#{dtEditViewF.func}" editable="true" style="margin-bottom:20px" paginator="true" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15">
+                    <f:facet name="header">
+                        Lista de Funcionários
+                    </f:facet>
+
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <p:column headerText="ID" />
+                            <p:column headerText="Login" />
+                            <p:column headerText="Senha" />
+                            <p:column colspan="2" headerText="Edição" style="width:110px" />
+                        </p:row>
+                    </p:columnGroup>
+
+                    <p:ajax event="rowEdit" listener="#{dtEditViewF.onRowEdit}" update=":form:msgs" />
+                    <p:ajax event="rowEditCancel" listener="#{dtEditViewF.onRowCancel}" update=":form:msgs" />
+
+                    <p:column sortBy="#{fun.id}">
+                        <h:outputText value="#{fun.id}"/>
+                    </p:column>
+
+                    <p:column  sortBy="#{fun.login}" filterBy="#{fun.login}">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{fun.login}" /></f:facet>
+                            <f:facet name="input"><p:inputText value="#{fun.login}" style="width:100%" label="Login"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column >
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{fun.senha}" /></f:facet>
+                            <f:facet name="input"><p:inputText value="#{fun.senha}" style="width:100%" label="Senha"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column >
+                        <p:rowEditor/>    
+                    </p:column>
+
+                    <p:column>
+                        <p:growl id="message" showDetail="true" />
+                        <p:commandButton action="#{dtEditViewF.onRowDelete(fun)}" update="form" icon="ui-icon-trash">
+                            <p:confirm header="Confirmação" message="Tem certeza que deseja remover Funcionário?" icon="ui-icon-alert" />
+                        </p:commandButton>
+
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update="form"/>
+                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog> 
+                    </p:column>
 
 
-    <h:form id="form">
-        <p:growl id="msgs" showDetail="true"/>
-        <p:fieldset legend="Gerenciar Funcionário">
-
-            <p:menubar>
-                <p:menuitem value="Novo" outcome="novo-funcionario.jsf" icon="ui-icon-close" />
-                <p:menuitem value="Listar" outcome="gerenciar-funcionario.jsf" icon="ui-icon-search" />
-            </p:menubar>
-
-            <p:separator/>
-
-            <p:dataTable id="func1" var="fun" value="#{dtEditViewF.func}" editable="true" style="margin-bottom:20px" paginator="true" rows="10">
-                <f:facet name="header">
-                    Lista de Funcionários
-                </f:facet>
-
-                <p:ajax event="rowEdit" listener="#{dtEditViewF.onRowEdit}" update=":form:msgs" />
-                <p:ajax event="rowEditCancel" listener="#{dtEditViewF.onRowCancel}" update=":form:msgs" />
-
-                <p:column headerText="Id" sortBy="#{fun.id}">
-                    <h:outputText value="#{fun.id}"/>
-                </p:column>
-
-                <p:column headerText="Login"  sortBy="#{fun.login}" filterBy="#{fun.login}">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{fun.login}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{fun.login}" style="width:100%" label="Login"/></f:facet>
-                    </p:cellEditor>
-                </p:column>
-
-                <p:column headerText="Senha">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{fun.senha}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{fun.senha}" style="width:100%" label="Senha"/></f:facet>
-                    </p:cellEditor>
-                </p:column>
-
-                <p:column style="width:32px">
-                    <p:rowEditor />
-                </p:column>
-
-                <p:column style="width:20px">
-                    <p:commandButton action="#{dtEditViewF.onRowDelete(fun)}" icon="ui-icon-trash" title="Icon Only"/>
-                </p:column>
-
-            </p:dataTable>
-
-
-        </p:fieldset>
-    </h:form>
-
+                </p:dataTable>
+            </p:fieldset>
+        </h:form>
+    </ui:define>
 </ui:decorate>
 

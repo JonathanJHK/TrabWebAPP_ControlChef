@@ -2,12 +2,13 @@ package br.com.controlchefweb.bean;
 
 import br.com.controlchefweb.dao.FuncionarioDAO;
 import br.com.controlchefweb.entidade.Funcionario;
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
-@ManagedBean
-@SessionScoped
-public class FuncionarioBean extends CrudBean<Funcionario, FuncionarioDAO>{
+@ManagedBean (name="funcionarioBean")
+@ViewScoped
+public class FuncionarioBean extends CrudBean<Funcionario, FuncionarioDAO> implements Serializable{
 
     private FuncionarioDAO usuarioDAO;
     

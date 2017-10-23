@@ -5,6 +5,7 @@ import br.com.controlchefweb.util.exception.ErroSistema;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -15,7 +16,8 @@ public abstract class CrudBean<E, D extends CrudDAO> {
     private E entidade;
     private List<E> entidades;
     
-    public void novo(){
+    @PostConstruct
+    public void CrudBean(){
         entidade =  criarNovaEntidade();
         mudarParaInseri();
     }

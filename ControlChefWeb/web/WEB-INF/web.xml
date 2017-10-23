@@ -26,4 +26,15 @@
     <welcome-file-list>
         <welcome-file>index.jsf</welcome-file>
     </welcome-file-list>
+    
+    <!-- SECURITY CONSTRAINT (BLOCK ACCESS OF CODE FROM XHTML) -->
+	<security-constraint>
+		<display-name>block-access-xhtml</display-name>
+		<web-resource-collection>
+			<web-resource-name>xhtml files</web-resource-name>
+			<url-pattern>*.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint />
+	</security-constraint>
+	
 </web-app>
