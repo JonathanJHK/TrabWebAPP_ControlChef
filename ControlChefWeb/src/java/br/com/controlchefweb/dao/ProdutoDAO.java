@@ -3,6 +3,7 @@ package br.com.controlchefweb.dao;
 import br.com.controlchefweb.entidade.Produto;
 import br.com.controlchefweb.util.FabricaConexao;
 import br.com.controlchefweb.util.exception.ErroSistema;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -15,7 +16,9 @@ import java.util.List;
  *
  * @author Danilo Souza Almeida
  */
-public class ProdutoDAO implements CrudDAO<Produto>{
+public class ProdutoDAO implements CrudDAO<Produto>, Serializable{
+    
+    private static final long serialVersionUID = 1L;
     
     @Override
     public void salvar(Produto produto) throws ErroSistema{

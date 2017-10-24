@@ -30,6 +30,8 @@ import org.primefaces.event.RowEditEvent;
 @ManagedBean(name="dtEditViewF")
 @ViewScoped
 public class EditViewF implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
      
     private List<Funcionario> func;
     

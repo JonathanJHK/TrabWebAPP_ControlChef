@@ -9,6 +9,8 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean (name="funcionarioBean")
 @ViewScoped
 public class FuncionarioBean extends CrudBean<Funcionario, FuncionarioDAO> implements Serializable{
+    
+    private static final long serialVersionUID = 1L;
 
     private FuncionarioDAO usuarioDAO;
     

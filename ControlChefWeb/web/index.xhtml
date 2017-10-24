@@ -1,13 +1,54 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
-             xmlns:h="http://xmlns.jcp.org/jsf/html"
-             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-             template="template.xhtml">
-    
-    <h1>Bem vindo ao sistema</h1>
-    <span>Sistema para controle de restaurante</span><br></br>
-    <h:link outcome="welcomePrimefaces" value="Página de boas-vindas do Primefaces" />
-    
-</ui:decorate>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="login.css" />
+        <title>Login</title>
+
+    </h:head>
+    <h:body id="tela-login">
+        <body>
+            <p:growl id="msg" autoUpdate="true" showDetail="true" />
+
+            <p:graphicImage id="login-imagem" library="image" name="/Logo/logo.png"  />
+
+
+            <div id="login-dialog">
+                <h:form id="form_autent" prependId="false">
+
+                    <p:messages closable="true" />
+
+                    <p:panel id="basic" header="Tela de Acesso" footer="Com grandes poderes vem com grandes responsabilidade">
+
+                        <h:panelGrid id="grid_auten">
+                            <p:outputLabel value="Login"/>
+                            <p:inputText size="30" id="login"  value="#{autenticadorBean.login}" required="true"/>
+
+                            <p:outputLabel value="Senha"/>
+                            <p:password size="30" id="senha" value="#{autenticadorBean.senha}" required="true"/>
+
+
+                            <h:panelGroup />
+                            <p:commandButton value="Login" action="#{autenticadorBean.autentica()}" icon="ui-icon-check" />
+                        </h:panelGrid>
+                        <p:messages autoUpdate="true" closable="true" />
+                    </p:panel>
+                </h:form>
+            </div>
+        </body>
+        <footer id="footer-login">
+            <p:separator></p:separator>
+        </footer>
+
+    </h:body>
+
+
+</html>
 

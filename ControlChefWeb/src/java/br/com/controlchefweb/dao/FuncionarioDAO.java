@@ -18,6 +18,8 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean(name="FuncionarioDAO")
 @ViewScoped
 public class FuncionarioDAO implements CrudDAO<Funcionario>, Serializable{
+    
+    private static final long serialVersionUID = 1L;
 
     @Override
     public void salvar(Funcionario entidade) throws ErroSistema {

@@ -24,7 +24,7 @@ and open the template in the editor.
 
                 <h:panelGrid id="grid_func">
                     <h:outputLabel for="login" value="Login:" style="font-weight:bold"/>                    
-                    <p:inputText id="login" value="#{funcionarioBean.entidade.login}" required="true" label="Login"/>
+                    <p:inputText id="login" value="#{funcionarioBean.entidade.login}" required="true" label="Login"><f:validateLength minimum="4" /></inputText>
                     <p:message for="login" />
 
                     <h:outputLabel for="senha1" value="Senha: *" style="font-weight:bold"/>
