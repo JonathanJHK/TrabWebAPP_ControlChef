@@ -8,23 +8,3 @@ and open the template in the editor.
     Author     : 201519060360
 */
 
-#login-dialog{
-
-    width: 400px;
-    margin: auto;
-    margin-top: 20px;
-}
-
-#login-imagem{
-    margin:0 auto;
-    display: block;
-    width: 10%;
-
-}
-
-#footer-login{
-     background-color: darkgrey;
-}
-
-
-

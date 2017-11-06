@@ -62,6 +62,7 @@ public abstract class CrudBean<E, D extends CrudDAO> {
         }
     }
     
+    
     public void adicionarMensagem(String mensagem, String mensagem2){
         FacesMessage fm = new FacesMessage(mensagem, mensagem2);
         FacesContext.getCurrentInstance().addMessage(null, fm);

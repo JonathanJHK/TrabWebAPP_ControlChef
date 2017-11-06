@@ -1,9 +1,8 @@
 package br.com.controlchefweb.entidade;
-
-import java.util.Date;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Produto {
+public class Produto implements Serializable{
     
     private Integer id;
     private String nome;
@@ -11,6 +10,7 @@ public class Produto {
     private Double preco;
     private String imagem;
     private boolean disponivel;
+    private String tipo;
 
     public String getImagem() {
         return imagem;
@@ -58,6 +58,14 @@ public class Produto {
 
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     @Override

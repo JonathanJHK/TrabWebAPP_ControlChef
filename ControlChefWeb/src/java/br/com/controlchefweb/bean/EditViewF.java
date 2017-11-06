@@ -63,7 +63,9 @@ public class EditViewF implements Serializable {
         this.funcionario = funcionario;
     }
  
-   
+   public List<String> getTipos() {
+       return funcionario.getTipos();
+   }
      
     public void onRowEdit(RowEditEvent event) throws ErroSistema {
         funcionario.salvar((Funcionario) event.getObject());
@@ -76,10 +78,11 @@ public class EditViewF implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
-     public void onRowDelete(Funcionario fun) throws ErroSistema {
+     public String onRowDelete(Funcionario fun) throws ErroSistema {
         funcionario.deletar(fun);
         FacesMessage msg = new FacesMessage("Sucessso!","Funcionário foi removido com sucesso.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
+        return "gerenciar-funcionario.jsf";
     }
      
     public void onCellEdit(CellEditEvent event) {

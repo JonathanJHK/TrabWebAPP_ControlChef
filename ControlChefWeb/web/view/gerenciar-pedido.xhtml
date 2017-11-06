@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:f="http://xmlns.jcp.org/jsf/core"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="/WEB-INF/templates/Layout.xhtml">
+    <ui:define name="content">
+        <p:commandButton icon="ui-icon ui-icon-plus" oncomplete="PF('carDialog').show()"/>
+
+        <h:form id="form">
+            <p:dialog header="Selecione os Itens" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" responsive="true">
+                <p:dataGrid var="produto" value="#{dtEditViewP.prod}" columns="3" layout="grid"
+                            rows="12" paginator="true" id="produtos" paginatorPosition="bottom"
+                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            rowsPerPageTemplate="6,12,16">
+
+                    <f:facet name="header">
+                        Cars for Sale
+                    </f:facet>
+
+                    <p:panel header="#{produto.nome}" style="text-align:center">
+                        <h:panelGrid columns="1" style="width:100%">
+
+
+                            <h:outputText value="R$ #{produto.preco}" />
+                            <h:outputLabel for="basic" value="Quantidade: " />
+                            <p:spinner id="basic" value="0" />
+
+                            <p:commandButton icon="ui-icon ui-icon-plus"  actionListener="#{pedidoBean.novoItem(produto)}">
+                                <f:setPropertyActionListener value="#{produto}" target="#{pedidoBean.itemSelecionado}" />
+                            </p:commandButton>
+                        </h:panelGrid>
+                    </p:panel>
+
+                </p:dataGrid>
+            </p:dialog>
+
+
+        </h:form>
+    </ui:define>
+</ui:decorate>
+

@@ -4,10 +4,10 @@ import br.com.controlchefweb.dao.ProdutoDAO;
 import br.com.controlchefweb.entidade.Produto;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class ProdutoBean extends CrudBean<Produto, ProdutoDAO> implements Serializable {
     
     private static final long serialVersionUID = 1L;

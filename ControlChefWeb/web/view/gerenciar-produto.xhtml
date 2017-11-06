@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:f="http://xmlns.jcp.org/jsf/core"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="/WEB-INF/templates/Layout.xhtml">
+    <ui:define name="content">
+
+        <h:form id="form">
+            <p:growl id="msgs" showDetail="true"/>
+
+            <p:fieldset legend="Gerenciar Produtos">
+
+                <p:menubar>
+                    <p:menuitem value="Novo" outcome="novo-produto.jsf" icon="ui-icon-plus" />
+                    <p:menuitem value="Listar" outcome="gerenciar-produto.jsf" icon="ui-icon-search" />
+                </p:menubar>
+
+                <p:separator/>
+
+                <p:dataTable id="produt1" value="#{dtEditViewP.prod}" var="produto" reflow="true" rowKey="#{produto}" editable="true" style="margin-bottom:20px" paginator="true" selectionMode="single" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                             rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
+
+                    <f:facet name="{Exporters}">
+                        <h:commandLink>
+                            <p:graphicImage library="resources" name="image/export/excel.png" width="24"/>
+                            <p:dataExporter type="xls" target="produt1" fileName="ControlChef-Produtos" />
+                        </h:commandLink>
+
+                        <h:commandLink>
+                            <p:graphicImage library="resources" name="image/export/pdf.png" width="24"/>
+                            <p:dataExporter type="pdf" target="produt1" fileName="ControlChef-Produtos"/>
+                        </h:commandLink>
+
+                        <h:commandLink>
+                            <p:graphicImage library="resources" name="image/export/csv.png" width="24"/>
+                            <p:dataExporter type="csv" target="produt1" fileName="ControlChef-Produtos" />
+                        </h:commandLink>
+
+                        <h:commandLink>
+                            <p:graphicImage library="resources" name="image/export/xml.png" width="24"/>
+                            <p:dataExporter type="xml" target="produt1" fileName="ControlChef-Produtos" />
+                        </h:commandLink>
+                    </f:facet>
+
+                    <f:facet name="header">
+                        Lista de Produtos
+                    </f:facet>
+
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <p:column headerText="ID" sortBy="#{produto.id}"/>
+                            <p:column headerText="Nome" sortBy="#{produto.nome}" filterBy="#{produto.nome}" />
+                            <p:column headerText="Preço Unitário" sortBy="#{produto.preco}" />
+                            <p:column headerText="Tipo" sortBy="#{produto.tipo}"/>
+                            <p:column headerText="Disponibilidade" sortBy="#{produto.disponivel}" />
+                            <p:column colspan="2" headerText="Edição" style="width:110px" />
+                        </p:row>
+                    </p:columnGroup>
+
+                    <p:ajax event="rowEdit" listener="#{dtEditViewP.onRowEdit}" update=":form:msgs" />
+                    <p:ajax event="rowEditCancel" listener="#{dtEditViewP.onRowCancel}" update=":form:msgs" />
+
+                    <p:column>
+                        <h:outputText value="#{produto.id}"/>
+                    </p:column>
+
+                    <p:column >
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{produto.nome}" /></f:facet>
+                            <f:facet name="input"><p:inputText value="#{produto.nome}" style="width:100%" label="Nome"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column >
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="R$ #{produto.preco}" /></f:facet>
+                            <f:facet name="input"><p:inputNumber id="input4" value="#{produto.preco}"  symbol="R$ "  decimalPlaces="2" style="width: 100%"/></f:facet> 
+                        </p:cellEditor>
+                    </p:column>
+
+
+                     <p:column>
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{produto.tipo}" /></f:facet>
+                            <f:facet name="input">
+                                <h:selectOneMenu value="#{produto.tipo}" style="width:100%">
+                                    <f:selectItems value="#{dtEditViewP.tipos}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />
+                                </h:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column >
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{produto.disponivel ? 'Sim' : 'Não'}" /></f:facet>
+                            <f:facet name="input"> <p:selectBooleanButton id="value2" value="#{produto.disponivel}" onLabel="Sim" offLabel="Não" style="width:90%;text-align: center" /></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column >
+                        <p:rowEditor/>    
+                    </p:column>
+
+                    <p:column>
+                        <p:growl id="mensagem" showDetail="true"/>
+                        <p:commandButton action="#{dtEditViewP.onRowDelete(produto)}" update="produt1" icon="ui-icon-trash">
+                            <p:confirm header="Confirmação" message="Tem certeza que deseja remover Produto?" icon="ui-icon-alert" />
+                        </p:commandButton>
+
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true">
+                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update="form:produt1"  />
+                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog> 
+                    </p:column>
+
+                </p:dataTable>
+
+            </p:fieldset>
+
+        </h:form>
+    </ui:define>
+</ui:decorate>
+

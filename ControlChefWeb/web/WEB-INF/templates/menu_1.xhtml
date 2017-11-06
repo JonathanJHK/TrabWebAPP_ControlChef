@@ -18,14 +18,14 @@ and open the template in the editor.
                     <p:menuitem value="Home" url="index.jsf" />
 
                     <p:submenu label="Gerenciar">
-                        <p:menuitem value="Funcionário" outcome="gerenciar-funcionario.jsf" icon="ui-icon-person"/>
+                        <p:menuitem value="Funcionário" action="gerenciar-funcionario.jsf?faces-redirect=true" icon="ui-icon-person"/>
                         <p:menuitem value="Cliente" outcome="gerenciar-produto.jsf" icon="ui-icon-person" />
                         <p:menuitem value="Produto" outcome="gerenciar-produto.jsf" />
                     </p:submenu>
 
                     <p:submenu label="Restaurante" >
                         <p:menuitem value="Pedidos" outcome="gerenciar-pedido.jsf" icon="ui-icon-cart"/>
-                        <p:menuitem value="Pagamentos" outcome="gerenciar-produto.jsf" />
+                        <p:menuitem value="Pagamentos" outcome="novo-pagamento.jsf" />
                     </p:submenu>
 
                     <p:separator />

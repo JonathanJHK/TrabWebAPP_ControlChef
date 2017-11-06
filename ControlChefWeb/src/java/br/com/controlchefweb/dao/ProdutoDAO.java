@@ -5,20 +5,38 @@ import br.com.controlchefweb.util.FabricaConexao;
 import br.com.controlchefweb.util.exception.ErroSistema;
 import java.io.Serializable;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
- * @author Danilo Souza Almeida
+ * @author VashJHK
  */
+
+@ManagedBean(name = "ProdutoDAO")
+@SessionScoped
 public class ProdutoDAO implements CrudDAO<Produto>, Serializable{
     
     private static final long serialVersionUID = 1L;
+    
+    private final static String[] tipos;
+
+    static {
+        tipos = new String[3];
+        tipos[0] = "Comida";
+        tipos[1] = "Bebida";
+        tipos[2] = "Sobremesa";
+    }
+
+    public List<String> getTipos() {
+        return Arrays.asList(tipos);
+    }
     
     @Override
     public void salvar(Produto produto) throws ErroSistema{
@@ -26,16 +44,17 @@ public class ProdutoDAO implements CrudDAO<Produto>, Serializable{
             Connection conexao = FabricaConexao.getConexao();
             PreparedStatement ps;
             if(produto.getId() == null){
-                ps = conexao.prepareStatement("INSERT INTO `carro` (`nome`,`descricao`,`preco`,`imagem`, `disponivel` ) VALUES (?,?,?,?,?)");
+                ps = conexao.prepareStatement("INSERT INTO `produto` (`nome`,`descricao`,`preco`,`imagem`, `disponivel`,`tipo` ) VALUES (?,?,?,?,?,?)");
             } else {
-                ps = conexao.prepareStatement("update carro set nome=?, descricao=?, preco=?, imagem=?, disponivel=? where id=?");
-                ps.setInt(6, produto.getId());
+                ps = conexao.prepareStatement("update produto set nome=?, descricao=?, preco=?, imagem=?, disponivel=?, tipo=? where id=?");
+                ps.setInt(7, produto.getId());
             }
             ps.setString(1, produto.getNome());
             ps.setString(2, produto.getDescricao());
             ps.setDouble(3, produto.getPreco());
             ps.setString(4, produto.getImagem());
             ps.setBoolean(5, produto.isDisponivel());
+            ps.setString(6,produto.getTipo());
             ps.execute();
             FabricaConexao.fecharConexao();
         } catch (SQLException ex) {
@@ -70,6 +89,7 @@ public class ProdutoDAO implements CrudDAO<Produto>, Serializable{
                 produto.setPreco(resultSet.getDouble("preco"));
                 produto.setImagem(resultSet.getString("imagem"));
                 produto.setDisponivel(resultSet.getBoolean("disponivel"));
+                produto.setTipo(resultSet.getString("tipo"));
                 produtos.add(produto);
             }
             FabricaConexao.fecharConexao();
@@ -79,4 +99,6 @@ public class ProdutoDAO implements CrudDAO<Produto>, Serializable{
             throw new ErroSistema("Erro ao buscar os produtos!",ex);
         }
     }
+
+
 }

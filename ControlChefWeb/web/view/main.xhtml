@@ -8,13 +8,17 @@ and open the template in the editor.
 <ui:decorate xmlns="http://www.w3.org/1999/xhtml"
              xmlns:h="http://xmlns.jcp.org/jsf/html"
              xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-             template="template.xhtml"
+             template="/WEB-INF/templates/Layout.xhtml"
              xmlns:p="http://primefaces.org/ui"
              xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:define name="content">
         <h:body>
-            <h2>Oi</h2>
+           
+            <h:panelGroup rendered="#{not empty usuarioLogado}">
+                <p> Welcome  #{usuarioLogado.nome}</p>
+            </h:panelGroup>
+            
         </h:body>
         
     </ui:define>  
-</ui:decorate>>
+</ui:decorate>

@@ -3,7 +3,7 @@
 <ui:decorate xmlns="http://www.w3.org/1999/xhtml"
              xmlns:h="http://xmlns.jcp.org/jsf/html"
              xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-             template="template.xhtml"
+             template="/WEB-INF/templates/Layout.xhtml"
              xmlns:p="http://primefaces.org/ui"
              xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:define name="content">
@@ -13,13 +13,13 @@
             <p:fieldset legend="Gerenciar Funcionário">
 
                 <p:menubar>
-                    <p:menuitem value="Novo" outcome="novo-funcionario.jsf" icon="ui-icon-close" />
+                    <p:menuitem value="Novo" outcome="novo-funcionario.jsf" icon="ui-icon-plus" />
                     <p:menuitem value="Listar" outcome="gerenciar-funcionario.jsf" icon="ui-icon-search" />
                 </p:menubar>
 
                 <p:separator/>
 
-                <p:dataTable id="func1" var="fun" value="#{dtEditViewF.func}" editable="true" style="margin-bottom:20px" paginator="true" selectionMode="single" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                <p:dataTable id="func1" var="fun" value="#{dtEditViewF.func}" reflow="true" paginatorPosition="bottom" rowKey="#{fun}" editable="true" style="margin-bottom:20px" paginator="true" selectionMode="single" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              rowsPerPageTemplate="5,10,15">
                     <f:facet name="header">
                         Lista de Funcionários
@@ -27,8 +27,10 @@
 
                     <p:columnGroup type="header">
                         <p:row>
-                            <p:column headerText="ID" />
-                            <p:column headerText="Login" />
+                            <p:column headerText="ID" sortBy="#{fun.id}"/>
+                            <p:column headerText="Nome" sortBy="#{fun.nome}" filterBy="#{fun.nome}" />
+                            <p:column headerText="Tipo" />
+                            <p:column headerText="Login" sortBy="#{fun.login}" filterBy="#{fun.login}"/>
                             <p:column headerText="Senha" />
                             <p:column colspan="2" headerText="Edição" style="width:110px" />
                         </p:row>
@@ -37,11 +39,30 @@
                     <p:ajax event="rowEdit" listener="#{dtEditViewF.onRowEdit}" update=":form:msgs" />
                     <p:ajax event="rowEditCancel" listener="#{dtEditViewF.onRowCancel}" update=":form:msgs" />
 
-                    <p:column sortBy="#{fun.id}">
+                    <p:column>
                         <h:outputText value="#{fun.id}"/>
                     </p:column>
 
-                    <p:column  sortBy="#{fun.login}" filterBy="#{fun.login}">
+                    <p:column >
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{fun.nome}" /></f:facet>
+                            <f:facet name="input"><p:inputText value="#{fun.nome}" style="width:100%" label="Senha"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column>
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{fun.tipo}" /></f:facet>
+                            <f:facet name="input">
+                                <h:selectOneMenu value="#{fun.tipo}" style="width:100%">
+                                    <f:selectItems value="#{dtEditViewF.tipos}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />
+                                </h:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    
+
+                    <p:column >
                         <p:cellEditor>
                             <f:facet name="output"><h:outputText value="#{fun.login}" /></f:facet>
                             <f:facet name="input"><p:inputText value="#{fun.login}" style="width:100%" label="Login"/></f:facet>
@@ -60,8 +81,8 @@
                     </p:column>
 
                     <p:column>
-                        <p:growl id="message" showDetail="true" />
-                        <p:commandButton action="#{dtEditViewF.onRowDelete(fun)}" update="form" icon="ui-icon-trash">
+                        <p:growl id="mensagem" showDetail="true"/>
+                        <p:commandButton action="#{dtEditViewF.onRowDelete(fun)}" update="form:func1" icon="ui-icon-trash">
                             <p:confirm header="Confirmação" message="Tem certeza que deseja remover Funcionário?" icon="ui-icon-alert" />
                         </p:commandButton>
 

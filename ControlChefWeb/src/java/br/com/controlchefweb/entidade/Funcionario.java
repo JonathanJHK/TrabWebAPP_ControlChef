@@ -1,12 +1,15 @@
 package br.com.controlchefweb.entidade;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Funcionario {
+public class Funcionario implements Serializable{
 
     private Integer id;
+    private String nome;
     private String login;
     private String senha;
+    private String tipo;
 
     public Integer getId() {
         return id;
@@ -14,6 +17,14 @@ public class Funcionario {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getLogin() {
@@ -31,6 +42,15 @@ public class Funcionario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    
 
     @Override
     public int hashCode() {
