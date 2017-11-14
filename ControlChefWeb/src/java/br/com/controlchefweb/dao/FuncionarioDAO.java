@@ -115,5 +115,29 @@ public class FuncionarioDAO implements CrudDAO<Funcionario>, Serializable {
             throw new ErroSistema("Erro ao buscar os funcionarios!", ex);
         }
     }
+    
+    public Funcionario buscarID(Integer id) throws ErroSistema {
+        try {
+            Connection conexao = FabricaConexao.getConexao();
+            PreparedStatement ps = conexao.prepareStatement("SELECT id,nome, login, senha, tipo FROM funcionario WHERE id=?");
+            ps.setInt(1, id);
+            ResultSet resultSet = ps.executeQuery();
+            Funcionario usuario = new Funcionario();
+            if (resultSet.next()) {
+                usuario.setId(resultSet.getInt("id"));
+                usuario.setNome(resultSet.getString("nome"));
+                usuario.setLogin(resultSet.getString("login"));
+                usuario.setSenha(resultSet.getString("senha"));
+                usuario.setTipo(resultSet.getString("tipo"));
+            } else {
+                return null;
+            }
+            FabricaConexao.fecharConexao();
+            return usuario;
+
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao buscar os funcionarios!", ex);
+        }
+    }
 
 }

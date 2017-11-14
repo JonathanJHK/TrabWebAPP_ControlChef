@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="/WEB-INF/templates/Layout.xhtml"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <h:form id="form-tipo">
+            <p:growl id="msgs" showDetail="true"/>
+            <p:fieldset legend="Gerenciar Produto">
+
+                <p:menubar>
+                    <p:menuitem value="Novo" outcome="novo-produto.jsf" icon="ui-icon-plus" />
+                    <p:menuitem value="Listar" outcome="gerenciar-produto.jsf" icon="ui-icon-search" />
+                    <p:menuitem value="Categoria" outcome="novo-categoria.jsf" icon="ui-icon-plus" />
+                </p:menubar>
+
+                <p:separator/>
+
+
+                    <h:panelGrid id="grid_tipo" >
+
+                         <h:outputLabel for="nome" value="Tipo de Produto:" style="font-weight:bold"/> 
+                         <p:inputText value="#{dtEditViewP.categoriap.tipo}" required="true" requiredMessage="Necessário informar o nome do Tipo!"></p:inputText>
+
+                    </h:panelGrid>
+
+                    <p:separator/>
+                    <p:toolbar>
+                        <f:facet name="left">
+                            <p:commandButton  value="Salvar" update="grid_tipo"  icon="fa fa-fw  fa-icon-plus" action="#{dtEditViewP.criarTipo()}" validateClient="true" />
+                            <p:commandButton  value="Resetar" update="grid_tipo" process="@this" icon="fa fa-fw  fa-reply-all">
+                                <p:resetInput target="grid_func" />
+                            </p:commandButton>
+                        </f:facet>
+                    </p:toolbar>
+
+                    <p:growl id="msg" autoUpdate="true" showDetail="true" />
+
+ 
+
+
+
+
+            </p:fieldset>
+
+        </h:form>
+    </ui:define>
+</ui:decorate>

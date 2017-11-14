@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:f="http://xmlns.jcp.org/jsf/core"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="/WEB-INF/templates/Layout.xhtml">
+    <ui:define name="content">
+
+        <h:form id="form">
+            <p:growl id="msgs" showDetail="true"/>
+
+            <p:fieldset legend="Gerenciar Pagamento">
+
+                <p:dataTable id="pagamento1" value="#{pedidoBean.buscarPedido()}" var="pedido" reflow="true" rowKey="#{pedido}" editable="true" style="margin-bottom:20px" paginator="true" selectionMode="single" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
+
+                    <f:facet name="header">
+                        Lista de Pagamentos
+                    </f:facet>
+
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <p:column headerText="ID" sortBy="#{pedido.id}"/>
+                            <p:column headerText="Mesa" sortBy="#{pedido.mesa}" filterBy="#{pedido.mesa}" />
+                            <p:column headerText="Cliente" sortBy="#{pedido.pagamento.cliente.nome}" filterBy="#{pedido.pagamento.cliente.nome}" />
+                            <p:column headerText="Funcionário" sortBy="#{pedido.vendedor.nome}" />
+                            
+                            <p:column headerText="Data do Pagamento" sortBy="#{pedido.pagamento.dataPagamento}" />
+                            <p:column headerText="Valor do Pagamento" sortBy="#{pedido.pagamento.valorT}" />
+                            <p:column  style="width:35px;text-align: center" />
+
+                        </p:row>
+                    </p:columnGroup>
+
+                    <p:column>
+                        <h:outputText value="#{pedido.id}"/>
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{pedido.mesa}"/>
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{pedido.pagamento.cliente.nome}"/>
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{pedido.vendedor.nome}"/>
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{pedido.pagamento.dataPagamento}"/>
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{pedido.pagamento.valorT}"><f:convertNumber pattern="R$ #0.00" /></h:outputText>
+                    </p:column>
+
+                    <p:column >
+                        <p:commandButton update=":form" oncomplete="PF('pagaDialog').show()" icon="ui-icon-search" title="View">
+                            <f:setPropertyActionListener value="#{pedido}" target="#{pedidoBean.pedidoSelecionado}" />
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+
+
+                <p:dialog header="Informação sobre Pagamento" widgetVar="pagaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:outputPanel id="carDetail" style="text-align:center;">
+
+                        <p:panelGrid columns="4" rendered="#{not empty pedidoBean.pedidoSelecionado}" id="pagamento_grid3" >
+                            <p:outputLabel value="Número do Pedido:" style="font-weight: bold;"/>
+                            <p:outputLabel value="#{pedidoBean.pedidoSelecionado.id}"/>
+
+                            <p:outputLabel value="Data do Pedido:" style="font-weight: bold;"/>
+                            <p:outputLabel value="#{pedidoBean.pedidoSelecionado.dataCriacao}"/>
+
+                            <p:outputLabel value="Número da Mesa:" style="font-weight: bold;"/>
+                            <p:outputLabel value="#{pedidoBean.pedidoSelecionado.mesa}"/>
+
+                            <p:outputLabel value="Funcionário:" style="font-weight: bold;"/>
+                            <p:outputLabel value="#{pedidoBean.pedidoSelecionado.vendedor.nome}"/>
+
+                            <p:outputLabel value="Taxa de serviço:" style="font-weight: bold;"/>
+                            <p:outputLabel value="#{pedidoBean.pedidoSelecionado.pagamento.taxa}"><f:convertNumber pattern="R$ #0.00" /></p:outputLabel>
+
+                            <p:outputLabel value="Valor de Desconto:" style="font-weight: bold;"/>
+                            <p:outputLabel  value="#{pedidoBean.pedidoSelecionado.pagamento.desconto}%"/> 
+
+                            <p:outputLabel value="Cliente:" style="font-weight: bold;" />
+                            <p:outputLabel value="#{pedidoBean.pedidoSelecionado.pagamento.cliente.nome}"/>
+
+                            <p:outputLabel value="Subtotal:" style="font-weight: bold"/>
+                            <p:outputLabel value="#{pedidoBean.pedidoSelecionado.pagamento.valorT+pedidoBean.pedidoSelecionado.pagamento.valorDesconto}" style="font-weight: bold" ><f:convertNumber pattern="R$ #0.00" /></p:outputLabel>
+
+                            <p:outputLabel rendered="true"/>
+                            <p:outputLabel rendered="true"/>
+
+                            <p:outputLabel value="Valor do Desconto:" style="font-weight: bold; font-size: 1.1em "/>
+                            <p:outputLabel value="#{pedidoBean.pedidoSelecionado.pagamento.valorDesconto}" style="font-weight: bold; font-size: 1.1em "><f:convertNumber pattern="- R$ #0.00" /></p:outputLabel>
+
+                            <p:outputLabel value="Forma de Pagamento:" style="font-weight: bold"/>
+                            <p:outputLabel value="#{pedidoBean.pedidoSelecionado.pagamento.formaPagamento}"/>
+
+                            <p:outputLabel value="Total à Pagar:" style="font-weight: bold; font-size: 1.1em "/>
+                            <p:outputLabel value="#{pedidoBean.pedidoSelecionado.pagamento.valorT}" style="font-weight: bold; font-size: 1.1em" ><f:convertNumber pattern="R$ #0.00" /></p:outputLabel>
+
+                            <p:outputLabel value="Valor do Troco:" style="font-weight: bold"/>
+                            <p:outputLabel value="#{pedidoBean.pedidoSelecionado.pagamento.troco}" style="font-weight: bold"><f:convertNumber pattern="R$ #0.00" /></p:outputLabel>
+
+                            <p:outputLabel value="Valor Pago:" style="font-weight: bold; font-size: 1.1em "/>
+                            <p:outputLabel value="#{pedidoBean.pedidoSelecionado.pagamento.valorPagamento}" style="font-weight: bold; font-size: 1.1em "><f:convertNumber pattern="R$ #0.00" /></p:outputLabel>
+
+                        </p:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+
+            </p:fieldset>
+
+        </h:form>
+    </ui:define>
+</ui:decorate>
+

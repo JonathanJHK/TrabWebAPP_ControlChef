@@ -19,6 +19,7 @@ and open the template in the editor.
                 <p:menubar>
                     <p:menuitem value="Novo" outcome="novo-produto.jsf" icon="ui-icon-plus" />
                     <p:menuitem value="Listar" outcome="gerenciar-produto.jsf" icon="ui-icon-search" />
+                    <p:menuitem value="Categoria" outcome="novo-categoria.jsf" icon="ui-icon-plus" />
                 </p:menubar>
 
                 <p:separator/>
@@ -33,9 +34,7 @@ and open the template in the editor.
                     
                     <p:outputLabel for="tipo" value="Categoria:" style="font-weight:bold" />
                     <p:selectOneMenu id="tipo" value="#{produtoBean.entidade.tipo}" required="true" >
-                        <f:selectItem itemLabel="Comida" itemValue="Comida" />
-                        <f:selectItem itemLabel="Bebida" itemValue="Bebida" />
-                        <f:selectItem itemLabel="Sobremesa" itemValue="Sobremesa" />
+                        <f:selectItems value="#{dtEditViewP.tipos}" var="tipos" itemLabel="#{tipos}" itemValue="#{tipos}" />
                     </p:selectOneMenu>
                     
 

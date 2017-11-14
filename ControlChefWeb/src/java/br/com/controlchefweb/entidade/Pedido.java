@@ -4,20 +4,21 @@
  * and open the template in the editor.
  */
 package br.com.controlchefweb.entidade;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 /**
  *
  * @author VashJHK
  */
-public class Pedido {
+public class Pedido implements Serializable {
     
     private Integer id;
-    private String vendedor;
+    private Funcionario vendedor;
     private Date dataCriacao;
     private double valorTotal;
-    private ArrayList<itemPedido> itens;
+    private List<ItemPedido> itens;
     private boolean statusPedido;
     private Integer mesa;
     private Pagamento pagamento;
@@ -30,11 +31,11 @@ public class Pedido {
         this.id = id;
     }
 
-    public String getVendedor() {
+    public Funcionario getVendedor() {
         return vendedor;
     }
 
-    public void setVendedor(String vendedor) {
+    public void setVendedor(Funcionario vendedor) {
         this.vendedor = vendedor;
     }
 
@@ -54,11 +55,11 @@ public class Pedido {
         this.valorTotal = valorTotal;
     }
 
-    public ArrayList<itemPedido> getItens() {
+    public List<ItemPedido> getItens() {
         return itens;
     }
 
-    public void setItens(ArrayList<itemPedido> itens) {
+    public void setItens(List<ItemPedido> itens) {
         this.itens = itens;
     }
 

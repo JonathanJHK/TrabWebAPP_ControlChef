@@ -24,10 +24,10 @@
     <h:body>
 
         <header class="aw-topbar">
-            <h:graphicImage library="resources" name="image/Logo/logoName.png" style="width: 180px"/>
+            <h:graphicImage library="resources" name="image/Logo/logoName.png" style="width: 180px; margin-left:15px"/>
 
             <a href="#" class="aw-toggle  js-toggle"><h:graphicImage library="resources" name="image/icon/text_justify.png" /></a>
-            <h:form style="float: right;margin-right: 30px;margin-top: 10px">
+            <h:form style="float: right;margin-right: 15px;margin-top: 10px">
                 <p:menuButton  icon="fa  fa-user">
                     <p:menuitem style="font-weight:bold" value="#{usuarioLogado.tipo}: #{usuarioLogado.nome}"/>
                     <p:separator/>
@@ -35,6 +35,7 @@
                 </p:menuButton>
             </h:form>
         </header>
+        
 
         <aside class="aw-sidebar  js-sidebar">
             <ui:include src="Menu.xhtml" />

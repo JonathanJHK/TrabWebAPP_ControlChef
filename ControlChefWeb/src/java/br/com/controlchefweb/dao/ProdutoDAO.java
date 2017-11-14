@@ -1,5 +1,6 @@
 package br.com.controlchefweb.dao;
 
+import br.com.controlchefweb.entidade.CategoriaP;
 import br.com.controlchefweb.entidade.Produto;
 import br.com.controlchefweb.util.FabricaConexao;
 import br.com.controlchefweb.util.exception.ErroSistema;
@@ -18,13 +19,12 @@ import javax.faces.bean.SessionScoped;
  *
  * @author VashJHK
  */
-
 @ManagedBean(name = "ProdutoDAO")
 @SessionScoped
-public class ProdutoDAO implements CrudDAO<Produto>, Serializable{
-    
+public class ProdutoDAO implements CrudDAO<Produto>, Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     private final static String[] tipos;
 
     static {
@@ -34,16 +34,49 @@ public class ProdutoDAO implements CrudDAO<Produto>, Serializable{
         tipos[2] = "Sobremesa";
     }
 
-    public List<String> getTipos() {
-        return Arrays.asList(tipos);
+    public List<String> getTipos() throws ErroSistema {
+        try {
+            Connection conexao = FabricaConexao.getConexao();
+            PreparedStatement ps = conexao.prepareStatement("select * from categoriap");
+            ResultSet resultSet = ps.executeQuery();
+            List<String> tipos = new ArrayList<>();
+            while (resultSet.next()) {
+                String tipo = resultSet.getString("tipo");
+                tipos.add(tipo);
+            }
+            FabricaConexao.fecharConexao();
+            return tipos;
+
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao buscar os produtos!", ex);
+        }
     }
     
+    public void criarTipo(CategoriaP categoriap) throws ErroSistema{
+         try {
+            Connection conexao = FabricaConexao.getConexao();
+            PreparedStatement ps;
+            if (categoriap.getId() == null) {
+                ps = conexao.prepareStatement("INSERT INTO `categoriap` (tipo) VALUES (?)");
+            } else {
+                ps = conexao.prepareStatement("update categoriap set tipo=? where id=?");
+                ps.setInt(2, categoriap.getId());
+            }
+            ps.setString(1, categoriap.getTipo());
+       
+            ps.execute();
+            FabricaConexao.fecharConexao();
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao tentar salvar!", ex);
+        }
+    }
+
     @Override
-    public void salvar(Produto produto) throws ErroSistema{
+    public void salvar(Produto produto) throws ErroSistema {
         try {
             Connection conexao = FabricaConexao.getConexao();
             PreparedStatement ps;
-            if(produto.getId() == null){
+            if (produto.getId() == null) {
                 ps = conexao.prepareStatement("INSERT INTO `produto` (`nome`,`descricao`,`preco`,`imagem`, `disponivel`,`tipo` ) VALUES (?,?,?,?,?,?)");
             } else {
                 ps = conexao.prepareStatement("update produto set nome=?, descricao=?, preco=?, imagem=?, disponivel=?, tipo=? where id=?");
@@ -54,34 +87,34 @@ public class ProdutoDAO implements CrudDAO<Produto>, Serializable{
             ps.setDouble(3, produto.getPreco());
             ps.setString(4, produto.getImagem());
             ps.setBoolean(5, produto.isDisponivel());
-            ps.setString(6,produto.getTipo());
+            ps.setString(6, produto.getTipo());
             ps.execute();
             FabricaConexao.fecharConexao();
         } catch (SQLException ex) {
             throw new ErroSistema("Erro ao tentar salvar!", ex);
         }
     }
-    
+
     @Override
-    public void deletar(Produto produto) throws ErroSistema{
+    public void deletar(Produto produto) throws ErroSistema {
         try {
             Connection conexao = FabricaConexao.getConexao();
-            PreparedStatement ps  = conexao.prepareStatement("delete from produto where id = ?");
+            PreparedStatement ps = conexao.prepareStatement("delete from produto where id = ?");
             ps.setInt(1, produto.getId());
             ps.execute();
         } catch (SQLException ex) {
             throw new ErroSistema("Erro ao deletar o produto!", ex);
         }
     }
-    
+
     @Override
-    public List<Produto> buscar() throws ErroSistema{
+    public List<Produto> buscar() throws ErroSistema {
         try {
             Connection conexao = FabricaConexao.getConexao();
             PreparedStatement ps = conexao.prepareStatement("select * from produto");
             ResultSet resultSet = ps.executeQuery();
             List<Produto> produtos = new ArrayList<>();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 Produto produto = new Produto();
                 produto.setId(resultSet.getInt("id"));
                 produto.setNome(resultSet.getString("nome"));
@@ -94,11 +127,59 @@ public class ProdutoDAO implements CrudDAO<Produto>, Serializable{
             }
             FabricaConexao.fecharConexao();
             return produtos;
-            
+
         } catch (SQLException ex) {
-            throw new ErroSistema("Erro ao buscar os produtos!",ex);
+            throw new ErroSistema("Erro ao buscar os produtos!", ex);
         }
     }
 
+    public Produto buscarID(Integer id) throws ErroSistema {
+        try {
+            Connection conexao = FabricaConexao.getConexao();
+            PreparedStatement ps = conexao.prepareStatement("select * from produto where id = ?");
+            ps.setInt(1, id);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                Produto produto = new Produto();
+                produto.setId(resultSet.getInt("id"));
+                produto.setNome(resultSet.getString("nome"));
+                produto.setDescricao(resultSet.getString("descricao"));
+                produto.setPreco(resultSet.getDouble("preco"));
+                produto.setImagem(resultSet.getString("imagem"));
+                produto.setDisponivel(resultSet.getBoolean("disponivel"));
+                produto.setTipo(resultSet.getString("tipo"));
+                return produto;
+            }
+
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao deletar o produto!", ex);
+        }
+        return null;
+    }
+
+    public List<Produto> buscarNome(String nome) throws ErroSistema {
+        try {
+            Connection conexao = FabricaConexao.getConexao();
+            PreparedStatement ps = conexao.prepareStatement("select * from produto where nome like '%"+nome+"%'");
+            ResultSet resultSet = ps.executeQuery();
+            List<Produto> produtos = new ArrayList<>();
+            while (resultSet.next()) {
+                Produto produto = new Produto();
+                produto.setId(resultSet.getInt("id"));
+                produto.setNome(resultSet.getString("nome"));
+                produto.setDescricao(resultSet.getString("descricao"));
+                produto.setPreco(resultSet.getDouble("preco"));
+                produto.setImagem(resultSet.getString("imagem"));
+                produto.setDisponivel(resultSet.getBoolean("disponivel"));
+                produto.setTipo(resultSet.getString("tipo"));
+                produtos.add(produto);
+            }
+            FabricaConexao.fecharConexao();
+            return produtos;
+
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao buscar o produto filtrado!", ex);
+        }
+    }
 
 }

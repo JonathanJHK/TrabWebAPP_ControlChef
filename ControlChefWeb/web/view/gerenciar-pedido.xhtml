@@ -7,38 +7,167 @@
              xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
              template="/WEB-INF/templates/Layout.xhtml">
     <ui:define name="content">
-        <p:commandButton icon="ui-icon ui-icon-plus" oncomplete="PF('carDialog').show()"/>
 
-        <h:form id="form">
-            <p:dialog header="Selecione os Itens" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" responsive="true">
-                <p:dataGrid var="produto" value="#{dtEditViewP.prod}" columns="3" layout="grid"
-                            rows="12" paginator="true" id="produtos" paginatorPosition="bottom"
-                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                            rowsPerPageTemplate="6,12,16">
+        <p:accordionPanel value="#{mesaBean.men}" var="men">
+            <p:tab title="Mesa - #{men.id}" id="mesa#{men.id}" disabled="#{men.status_mesa == false}">
 
-                    <f:facet name="header">
-                        Cars for Sale
-                    </f:facet>
+                <h:form id="form_mesa#{men.id}">
+                    <p:growl autoUpdate="true" showDetail="true"/>
 
-                    <p:panel header="#{produto.nome}" style="text-align:center">
-                        <h:panelGrid columns="1" style="width:100%">
+                    <p:commandButton action="#{pedidoBean.criarPedido(men.id)}" value="Abrir Pedido" rendered="#{pedidoBean.verifPedido(men.id) == false}" update="form_mesa"/>
+
+                    <p:fieldset legend="Gerenciar Pedidos" rendered="#{pedidoBean.verifPedido(men.id)}">
+
+                        <p:dataTable id="produt#{men.id}" value="#{pedidoBean.buscarItemPedido(men.id)}" var="pedido" reflow="true" rowKey="" paginator="true" selectionMode="single" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
+
+                            <f:facet name="header">
+                                Lista de Pedidos
+                            </f:facet>
+
+                            <p:columnGroup type="header">
+                                <p:row>
+                                    <p:column headerText="Nome" sortBy="#{pedido.produto.nome}"/>
+                                    <p:column headerText="Preço Unitário"/>
+                                    <p:column headerText="Tipo" sortBy="#{pedido.produto.tipo}"/>
+                                    <p:column headerText="Quantidade"/>
+                                    <p:column headerText="Valor Total"/>
+                                    <p:column headerText="Remoção" style="width:65px" />
+                                </p:row>
+                            </p:columnGroup>
+
+                            <p:column>
+                                <h:outputText value="#{pedido.produto.nome}"/>
+                            </p:column>
+
+                            <p:column >
+                                <h:outputText value="#{pedido.produto.preco}"><f:convertNumber  pattern="R$ #0.00" /></h:outputText>                                              
+                            </p:column>
+
+                            <p:column >
+                                <h:outputText value="#{pedido.produto.tipo}" />                                              
+                            </p:column>
+
+                            <p:column >
+                                <h:outputText value="#{pedido.quantidade}" />                                              
+                            </p:column>
+
+                            <p:column >
+                                <h:outputText  value="#{pedido.valorItem}" ><f:convertNumber pattern="R$ #0.00" /></h:outputText>                                              
+                            </p:column>
+
+                            <p:column>
+                                <p:growl autoUpdate="true" showDetail="true"/>
+                                <p:commandButton actionListener="#{pedidoBean.onRowDelete(pedido)}" update="produt" icon="ui-icon-trash" style="margin-left: 15px">
+                                    <p:confirm header="Confirmação" message="Tem certeza que deseja remover o item pedido?" icon="ui-icon-alert" />
+                                </p:commandButton>
+
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true">
+                                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update="produt"  />
+                                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                </p:confirmDialog> 
+                            </p:column>
+
+                            <!--                            <p:columnGroup type="footer">
+                                                            <p:row>
+                                                                <p:column colspan="4" style="text-align:right" footerText="Total:" />
+                                                                <p:column footerText="" />
+                                                            </p:row>
+                                                        </p:columnGroup>-->
+
+                        </p:dataTable>
+
+                        <p:separator/>
+
+                        <p:toolbar>
+                            <f:facet name="left">
+                                <p:commandButton  value="Adicionar Pedido" icon="ui-icon ui-icon-plus" oncomplete="PF('carDialog#{men.id}').show()"/>
+                            </f:facet>
+                  
+                        </p:toolbar>                       
+
+                    </p:fieldset>
+
+                    <p:dialog id="dialogo" header="Selecione os Itens" width="840"  responsive="true" position="center" widgetVar="carDialog#{men.id}" modal="true" showEffect="bounce" hideEffect="drop" resizable="false"  closable="false">
 
 
-                            <h:outputText value="R$ #{produto.preco}" />
-                            <h:outputLabel for="basic" value="Quantidade: " />
-                            <p:spinner id="basic" value="0" />
 
-                            <p:commandButton icon="ui-icon ui-icon-plus"  actionListener="#{pedidoBean.novoItem(produto)}">
-                                <f:setPropertyActionListener value="#{produto}" target="#{pedidoBean.itemSelecionado}" />
-                            </p:commandButton>
-                        </h:panelGrid>
-                    </p:panel>
+                        <p:tabView value="#{dtEditViewP.tipos}" var="prodtipos"  effect="fade"  >
+                            <p:tab title="#{prodtipos}">
 
-                </p:dataGrid>
-            </p:dialog>
+                                <p:dataGrid var="produto" value="#{dtEditViewP.listProdTipo(prodtipos)}" columns="3" layout="grid" 
+                                            rows="12" paginator="true" id="produtos" paginatorPosition="bottom" emptyMessage="produtos não encontrados"
+                                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                            rowsPerPageTemplate="6,12,16" >
 
 
-        </h:form>
+
+                                    <p:growl autoUpdate="true" showDetail="true"/>
+
+                                    <f:facet name="header">
+                                        <div>
+                                            <p:inputText id="nome" size="40" value="#{dtEditViewP.nome}" placeholder="Nome do produto" ><p:ajax process="@this" /></p:inputText>
+
+                                            <p:spacer width="10px"/>
+
+                                            <p:commandButton value="Pesquisar" action="#{dtEditViewP.pesquisar}" update="produtos"></p:commandButton>
+                                        </div>
+                                    </f:facet>
+
+                                    <p:panelGrid columns="1" style="width:100%;text-align:center" styleClass="semBorda" layout="grid">
+                                        <f:facet name="header">
+                                            #{produto.nome}
+                                        </f:facet>
+
+                                        <h:outputText value="#{produto.preco}"><f:convertNumber pattern="R$ #0.00" /></h:outputText>
+
+                                        <h:outputLabel for="basic" value="Quantidade:" />
+                                        <p:outputPanel layout="grid">
+                                            <p:spinner id="basic" value="#{pedidoBean.quant}" min="1" max="500" disabled="#{!produto.disponivel}">
+                                                <p:ajax process="@this" />
+                                            </p:spinner>
+                                        </p:outputPanel>
+
+
+                                        <p:commandButton icon="ui-icon ui-icon-plus" action="#{pedidoBean.addItemPedido(produto, men.id)}" disabled="#{!produto.disponivel}" >
+                                        </p:commandButton>
+
+                                    </p:panelGrid>
+
+
+                                </p:dataGrid>
+
+                            </p:tab>
+                        </p:tabView>
+
+                        <p:separator/>
+
+                        <p:toolbar>
+                            <f:facet name="right">
+                                <p:commandButton  value="Finalizar" icon="ui-icon ui-icon-plus" oncomplete="PF('carDialog#{men.id}').hide()" update="produt"/>
+                            </f:facet>
+                        </p:toolbar>  
+
+                    </p:dialog>
+
+
+                </h:form>
+
+
+
+
+
+
+
+
+            </p:tab>
+        </p:accordionPanel>
+
+
+
+
+
+
     </ui:define>
 </ui:decorate>
 

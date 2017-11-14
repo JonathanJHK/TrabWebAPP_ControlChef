@@ -5,16 +5,16 @@
  */
 package br.com.controlchefweb.entidade;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author VashJHK
  */
-public class itemPedido {
+public class Mesa implements Serializable {
     private Integer id;
-    private Integer quantidade;
-    private Produto produto;
+    private boolean status_mesa;
 
     public Integer getId() {
         return id;
@@ -24,26 +24,18 @@ public class itemPedido {
         this.id = id;
     }
 
-    public Integer getQuantidade() {
-        return quantidade;
+    public boolean isStatus_mesa() {
+        return status_mesa;
     }
 
-    public void setQuantidade(Integer quantidade) {
-        this.quantidade = quantidade;
-    }
-
-    public Produto getProduto() {
-        return produto;
-    }
-
-    public void setProduto(Produto produto) {
-        this.produto = produto;
+    public void setStatus_mesa(boolean status_mesa) {
+        this.status_mesa = status_mesa;
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 41 * hash + Objects.hashCode(this.id);
+        hash = 11 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -58,7 +50,7 @@ public class itemPedido {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final itemPedido other = (itemPedido) obj;
+        final Mesa other = (Mesa) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

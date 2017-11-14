@@ -16,6 +16,7 @@
                 <p:menubar>
                     <p:menuitem value="Novo" outcome="novo-produto.jsf" icon="ui-icon-plus" />
                     <p:menuitem value="Listar" outcome="gerenciar-produto.jsf" icon="ui-icon-search" />
+                    <p:menuitem value="Categoria" outcome="novo-categoria.jsf" icon="ui-icon-plus" />
                 </p:menubar>
 
                 <p:separator/>
@@ -76,7 +77,7 @@
 
                     <p:column >
                         <p:cellEditor>
-                            <f:facet name="output"><h:outputText value="R$ #{produto.preco}" /></f:facet>
+                            <f:facet name="output"><h:outputText value="#{produto.preco}"><f:convertNumber pattern="R$ #0.00" /></h:outputText></f:facet>
                             <f:facet name="input"><p:inputNumber id="input4" value="#{produto.preco}"  symbol="R$ "  decimalPlaces="2" style="width: 100%"/></f:facet> 
                         </p:cellEditor>
                     </p:column>
@@ -96,7 +97,7 @@
                     <p:column >
                         <p:cellEditor>
                             <f:facet name="output"><h:outputText value="#{produto.disponivel ? 'Sim' : 'Não'}" /></f:facet>
-                            <f:facet name="input"> <p:selectBooleanButton id="value2" value="#{produto.disponivel}" onLabel="Sim" offLabel="Não" style="width:90%;text-align: center" /></f:facet>
+                            <f:facet name="input"> <p:selectBooleanButton id="value2" value="#{produto.disponivel}" onLabel="Sim" offLabel="Não" style="width:100%;" /></f:facet>
                         </p:cellEditor>
                     </p:column>
 
