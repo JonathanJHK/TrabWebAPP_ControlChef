@@ -25,33 +25,80 @@ and open the template in the editor.
 
                 <p:separator/>
 
+                <p:panel header="Criar Categoria">
+                    <h:panelGrid id="grid_tipo" columns="2">
 
-                    <h:panelGrid id="grid_tipo" >
-
-                         <h:outputLabel for="nome" value="Tipo de Produto:" style="font-weight:bold"/> 
-                         <p:inputText value="#{dtEditViewP.categoriap.tipo}" required="true" requiredMessage="Necessário informar o nome do Tipo!"></p:inputText>
+                        <h:outputLabel for="nome" value="Nome da Categoria:" style="font-weight:bold"/> 
+                        <p:inputText id="nome" value="#{dtEditViewP.categoriap.tipo}" requiredMessage="Necessário informar o nome do Tipo!"></p:inputText>
 
                     </h:panelGrid>
-
-                    <p:separator/>
+                    <f:facet name="footer">
                     <p:toolbar>
                         <f:facet name="left">
-                            <p:commandButton  value="Salvar" update="grid_tipo"  icon="fa fa-fw  fa-icon-plus" action="#{dtEditViewP.criarTipo()}" validateClient="true" />
+                            <p:commandButton  value="Criar" update="form-tipo"  icon="fa fa-plus-square" action="#{dtEditViewP.criarTipo()}" validateClient="true" />
                             <p:commandButton  value="Resetar" update="grid_tipo" process="@this" icon="fa fa-fw  fa-reply-all">
                                 <p:resetInput target="grid_func" />
                             </p:commandButton>
                         </f:facet>
                     </p:toolbar>
+                        </f:facet>
+                </p:panel>
 
-                    <p:growl id="msg" autoUpdate="true" showDetail="true" />
+                <p:separator/>
 
- 
+                <p:dataTable id="datTipo" value="#{dtEditViewP.tipos}" var="categoria" editable="true" rowKey="#{categoria}"
+                             emptyMessage="Nenhuma categoria encontrada." rows="10" reflow="true"
+                             paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
 
+                    <f:facet name="header">
+                        Lista de Categoria dos Produtos
+                    </f:facet>
 
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <p:column headerText="ID" sortBy="#{categoria.id}"/>
+                            <p:column headerText="Nome" sortBy="#{categoria.tipo}" filterBy="#{categoria.tipo}" />
+                            <p:column colspan="2" headerText="Edição" style="width:120px" />
+                        </p:row>
+                    </p:columnGroup>
+
+                    <p:ajax event="rowEdit" listener="#{dtEditViewP.onRowEditT}" update=":form-tipo:msgs" />
+                    <p:ajax event="rowEditCancel" listener="#{dtEditViewP.onRowCancel}" update=":form-tipo:msgs" />
+
+                    <p:column >
+                        <h:outputText value="#{categoria.id}" />
+                    </p:column>
+
+                    <p:column >
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{categoria.tipo}" /></f:facet>
+                            <f:facet name="input"><p:inputText value="#{categoria.tipo}"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column >
+                        <p:rowEditor/>    
+                    </p:column>
+
+                    <p:column>
+                        <p:growl id="mensagem" showDetail="true"/>
+                        <p:commandButton action="#{dtEditViewP.onRowDeleteT(categoria)}" update=":form-tipo:datTipo" icon="ui-icon-trash">
+                            <p:confirm header="Confirmação" message="Tem certeza que deseja remover Produto?" icon="ui-icon-alert" />
+                        </p:commandButton>
+
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true">
+                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update=":form-tipo:datTipo"  />
+                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog> 
+                    </p:column>
+
+                </p:dataTable>
 
             </p:fieldset>
 
         </h:form>
+
+
     </ui:define>
 </ui:decorate>

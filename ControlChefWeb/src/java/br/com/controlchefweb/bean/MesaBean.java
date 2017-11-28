@@ -83,27 +83,27 @@ public class MesaBean implements Serializable{
         try {
             mesaDao.salvar(mesa);
             mesa = new Mesa();
-            adicionarMensagem("Atenção","Salvo com sucesso!");
+            adicionarMensagem("Sucesso!","Salvo com sucesso.",FacesMessage.SEVERITY_INFO);
         } catch (ErroSistema ex) {
             Logger.getLogger(CrudBean.class.getName()).log(Level.SEVERE, null, ex);
-            adicionarMensagem("Atenção",ex.getMessage());
+            adicionarMensagem("Atenção",ex.getMessage(),FacesMessage.SEVERITY_ERROR);
         }
     }
     
     public void onRowEdit(RowEditEvent event) throws ErroSistema {
         mesaDao.update((Mesa) event.getObject());
-        FacesMessage msg = new FacesMessage("Sucessso!","Mesa Editado com sucesso.");
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Sucessso!","Mesa Editado com sucesso.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
      
     public void onRowCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Cancelado","Edição cancelada com sucesso.");
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Cancelado","Edição cancelada com sucesso.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
      public void onRowDelete(Mesa fun) throws ErroSistema {
         mesaDao.deletar(fun);
-        FacesMessage msg = new FacesMessage("Sucessso!","Mesa foi removido com sucesso.");
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Sucessso!","Mesa foi removido com sucesso.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
@@ -116,8 +116,8 @@ public class MesaBean implements Serializable{
         this.telaBuscar=false;;
     }
     
-     public void adicionarMensagem(String mensagem, String mensagem2){
-        FacesMessage fm = new FacesMessage(mensagem, mensagem2);
+     public void adicionarMensagem(String mensagem, String mensagem2,FacesMessage.Severity tipoErro){
+        FacesMessage fm = new FacesMessage(tipoErro,mensagem, mensagem2);
         FacesContext.getCurrentInstance().addMessage(null, fm);
     }
     

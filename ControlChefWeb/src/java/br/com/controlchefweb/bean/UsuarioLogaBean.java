@@ -38,8 +38,8 @@ public class UsuarioLogaBean implements Serializable {
     @ManagedProperty("#{FuncionarioDAO}")
     private FuncionarioDAO func;
 
-    private String login;
-    private String senha;
+    public String login;
+    public String senha;
 
     public FuncionarioDAO getFunc() {
         return func;
@@ -60,8 +60,8 @@ public class UsuarioLogaBean implements Serializable {
             Funcionario user = func.buscarAunt(login, senha);
             
             if (user == null) {
-                FacesMessage msg = new FacesMessage("Login ou Senha errado, tente novamente!");
-                FacesContext.getCurrentInstance().addMessage(null, msg);
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR ,"Login ou Senha errado, tente novamente!",null);
+                FacesContext.getCurrentInstance().addMessage(null,msg);
                 FacesContext.getCurrentInstance().validationFailed();
                 return "";
             }else{

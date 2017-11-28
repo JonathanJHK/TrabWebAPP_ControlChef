@@ -59,9 +59,10 @@ public class ClienteDAO implements CrudDAO<Cliente>, Serializable {
                 cliente.setNome(resultSet.getString("nome"));
                 cliente.setDataNasc(resultSet.getDate("dataNasc"));
                 cliente.setDataCad(resultSet.getDate("dataCad"));
+                return cliente;
             }
             FabricaConexao.fecharConexao();
-            return cliente;
+            return null;
 
         } catch (SQLException ex) {
             throw new ErroSistema("Erro ao buscar o cliente pelo CPF!", ex);
@@ -73,18 +74,16 @@ public class ClienteDAO implements CrudDAO<Cliente>, Serializable {
         try {
             Connection conexao = FabricaConexao.getConexao();
             PreparedStatement ps;
+            java.sql.Date dataBanco;
             java.util.Date hoje = new java.util.Date();
             
-            if (entidade.getCpf() == null) {
-                ps = conexao.prepareStatement("INSERT INTO cliente (nome,dataNasc,dataCad,cpf) VALUES (?,?,?,?)");
-            } else {
-                ps = conexao.prepareStatement("update cliente set nome=?, dataNasc=?, dataCad=? where cpf=?");
-                
-            }
-    
+            ps = conexao.prepareStatement("INSERT INTO cliente (nome,dataNasc,dataCad,cpf) VALUES (?,?,?,?)");
+            
             ps.setString(1, entidade.getNome());
-            ps.setDate(2, (Date) entidade.getDataNasc());
-            ps.setDate(3, (Date) entidade.getDataCad());
+            dataBanco = new java.sql.Date(entidade.getDataNasc().getTime());
+            ps.setDate(2,dataBanco);
+            dataBanco = new java.sql.Date(hoje.getTime());
+            ps.setDate(3,dataBanco);
             ps.setString(4, entidade.getCpf());
             ps.execute();
             FabricaConexao.fecharConexao();
@@ -92,11 +91,39 @@ public class ClienteDAO implements CrudDAO<Cliente>, Serializable {
             throw new ErroSistema("Erro ao tentar salvar Cliente!", ex);
         }
     }
+    
+    public void update(Cliente entidade) throws ErroSistema {
+        try {
+            Connection conexao = FabricaConexao.getConexao();
+            PreparedStatement ps;
+            java.sql.Date dataBanco;
+            
+     
+            ps = conexao.prepareStatement("update cliente set nome=?, dataNasc=?, dataCad=? where cpf=?");
+      
+    
+            ps.setString(1, entidade.getNome());
+            dataBanco = new java.sql.Date(entidade.getDataNasc().getTime());
+            ps.setDate(2,dataBanco);
+            dataBanco = new java.sql.Date(entidade.getDataCad().getTime());
+            ps.setDate(3,dataBanco);
+            ps.setString(4, entidade.getCpf());
+            ps.execute();
+            FabricaConexao.fecharConexao();
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao tentar atualizar Cliente!", ex);
+        }
+    }
 
     @Override
     public void deletar(Cliente entidade) throws ErroSistema {
         try {
             Connection conexao = FabricaConexao.getConexao();
+            PreparedStatement ps0 = conexao.prepareStatement("update pagamento set id_cliente=? where id_cliente=?");
+            ps0.setString(1,null);
+            ps0.setString(2,entidade.getCpf());
+            ps0.execute();
+            
             PreparedStatement ps = conexao.prepareStatement("delete from cliente where cpf = ?");
             ps.setString(1, entidade.getCpf());
             ps.execute();
@@ -109,7 +136,7 @@ public class ClienteDAO implements CrudDAO<Cliente>, Serializable {
     public List<Cliente> buscar() throws ErroSistema {
         try {
             Connection conexao = FabricaConexao.getConexao();
-            PreparedStatement ps = conexao.prepareStatement("select * from funcionario");
+            PreparedStatement ps = conexao.prepareStatement("select * from cliente");
             ResultSet resultSet = ps.executeQuery();
             List<Cliente> usuarios = new ArrayList<>();
             while (resultSet.next()) {

@@ -13,23 +13,26 @@ public abstract class CrudBean<E, D extends CrudDAO> {
 
     private String estadoTela = "buscar";//Inserir, Editar, Buscar
     
-    private E entidade;
+    E entidade;
     private List<E> entidades;
     
     @PostConstruct
     public void CrudBean(){
         entidade =  criarNovaEntidade();
-        mudarParaInseri();
+        mudarParaBusca();
     }
+    
     public void salvar(){
         try {
-            getDao().salvar(entidade);
-            entidade = criarNovaEntidade();
-            adicionarMensagem("Atenção","Salvo com sucesso!");
-            mudarParaBusca();
+            if(verificaEntidade()){
+                 getDao().salvar(entidade);
+                 entidade = criarNovaEntidade();
+                 adicionarMensagem("Sucesso!","Salvo com sucesso!",FacesMessage.SEVERITY_INFO);
+                 mudarParaBusca();
+            }
         } catch (ErroSistema ex) {
             Logger.getLogger(CrudBean.class.getName()).log(Level.SEVERE, null, ex);
-            adicionarMensagem("Atenção",ex.getMessage());
+            adicionarMensagem("Atenção",ex.getMessage(),FacesMessage.SEVERITY_FATAL);
         }
     }
     public void editar(E entidade){
@@ -40,10 +43,10 @@ public abstract class CrudBean<E, D extends CrudDAO> {
         try {
             getDao().deletar(entidade);
             entidades.remove(entidade);
-            adicionarMensagem("Atenção","Deletado com sucesso!");
+            adicionarMensagem("Sucesso!","Deletado com sucesso!",FacesMessage.SEVERITY_INFO);
         } catch (ErroSistema ex) {
             Logger.getLogger(CrudBean.class.getName()).log(Level.SEVERE, null, ex);
-            adicionarMensagem("Atenção",ex.getMessage());
+            adicionarMensagem("Atenção",ex.getMessage(),FacesMessage.SEVERITY_FATAL);
         }
     }
     public void buscar(){
@@ -54,17 +57,17 @@ public abstract class CrudBean<E, D extends CrudDAO> {
         try {
             entidades = getDao().buscar();
             if(entidades == null || entidades.size() < 1){
-                adicionarMensagem("Atenção","Não temos nada cadastrado!");
+                adicionarMensagem("Atenção","Não temos nada cadastrado!",FacesMessage.SEVERITY_WARN);
             }
         } catch (ErroSistema ex) {
             Logger.getLogger(CrudBean.class.getName()).log(Level.SEVERE, null, ex);
-            adicionarMensagem("Atenção",ex.getMessage());
+            adicionarMensagem("Atenção",ex.getMessage(),FacesMessage.SEVERITY_FATAL);
         }
     }
     
     
-    public void adicionarMensagem(String mensagem, String mensagem2){
-        FacesMessage fm = new FacesMessage(mensagem, mensagem2);
+    public void adicionarMensagem(String mensagem, String mensagem2,FacesMessage.Severity tipoErro){
+        FacesMessage fm = new FacesMessage(tipoErro,mensagem, mensagem2);
         FacesContext.getCurrentInstance().addMessage(null, fm);
     }
     
@@ -88,6 +91,7 @@ public abstract class CrudBean<E, D extends CrudDAO> {
     //Responsvel por criar os métodos nas classes bean
     public abstract D getDao();
     public abstract E criarNovaEntidade();
+    public abstract boolean verificaEntidade();
     
     //Metodos para controle da tela
     public boolean isInseri(){

@@ -25,7 +25,7 @@
                             <p:column headerText="Número da Mesa" sortBy="#{item.produto.nome}" filterBy="#{item.produto.nome}"/>
                             <p:column headerText="Produto" sortBy="#{item.produto.nome}" filterBy="#{item.produto.nome}" />
                             <p:column headerText="Quantidade" sortBy="#{item.quantidade}" />
-                            <p:column headerText="Entregar"  />
+                            <p:column headerText="À Fazer"  />
                         
                         </p:row>
                     </p:columnGroup>
@@ -42,8 +42,8 @@
                         <h:outputText value="#{item.quantidade}"/>
                     </p:column>
                     
-                    <p:column style="width: 35px; text-align: center">
-    			<p:commandButton icon="ui-icon-check" title="Selecionar"  action="#{itemPedidoBean.itemPronto(item)}"
+                    <p:column style="text-align: center">
+    			<p:commandButton icon="ui-icon-check" value="Pronto" title="Selecionar"  action="#{itemPedidoBean.itemPronto(item)}"
     				update="pedido1" process="@this" />
                     </p:column>
                     

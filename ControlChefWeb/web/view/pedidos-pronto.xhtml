@@ -42,8 +42,8 @@
                         <h:outputText value="#{item.quantidade}"/>
                     </p:column>
                     
-                    <p:column style="width: 35px; text-align: center">
-    			<p:commandButton icon="ui-icon-check" title="Selecionar" update="form-itempedido" action="#{itemPedidoBean.itemEntregue(item)}"
+                    <p:column style="text-align: center">
+    			<p:commandButton value="Entregue" icon="ui-icon-check" title="Selecionar" update="form-itempedido" action="#{itemPedidoBean.itemEntregue(item)}"
     				process="@this" />
                     </p:column>
                     

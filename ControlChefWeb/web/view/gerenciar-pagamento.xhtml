@@ -13,7 +13,7 @@
 
             <p:fieldset legend="Gerenciar Pagamento">
 
-                <p:dataTable id="pagamento1" value="#{pedidoBean.buscarPedido()}" var="pedido" reflow="true" rowKey="#{pedido}" editable="true" style="margin-bottom:20px" paginator="true" selectionMode="single" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                <p:dataTable id="pagamento1" value="#{pedidoBean.buscarPedidoPago()}" var="pedido" reflow="true" rowKey="#{pedido}" editable="true" style="margin-bottom:20px" paginator="true" selectionMode="single" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
 
                     <f:facet name="header">
@@ -51,7 +51,7 @@
                     </p:column>
 
                     <p:column>
-                        <h:outputText value="#{pedido.pagamento.dataPagamento}"/>
+                        <h:outputText value="#{pedido.pagamento.dataPagamento}"><f:convertDateTime pattern="dd/MM/yyyy hh:mm" /></h:outputText>
                     </p:column>
 
                     <p:column>
@@ -75,7 +75,7 @@
                             <p:outputLabel value="#{pedidoBean.pedidoSelecionado.id}"/>
 
                             <p:outputLabel value="Data do Pedido:" style="font-weight: bold;"/>
-                            <p:outputLabel value="#{pedidoBean.pedidoSelecionado.dataCriacao}"/>
+                            <p:outputLabel value="#{pedidoBean.pedidoSelecionado.dataCriacao}"><f:convertDateTime pattern="dd/MM/yyyy" /></p:outputLabel>
 
                             <p:outputLabel value="Número da Mesa:" style="font-weight: bold;"/>
                             <p:outputLabel value="#{pedidoBean.pedidoSelecionado.mesa}"/>

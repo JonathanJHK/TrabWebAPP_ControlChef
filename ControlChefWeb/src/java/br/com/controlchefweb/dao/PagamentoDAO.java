@@ -8,6 +8,7 @@ package br.com.controlchefweb.dao;
 import br.com.controlchefweb.entidade.ItemPedido;
 import br.com.controlchefweb.entidade.Pagamento;
 import br.com.controlchefweb.entidade.Pedido;
+import br.com.controlchefweb.entidade.Servico;
 import br.com.controlchefweb.util.FabricaConexao;
 import br.com.controlchefweb.util.exception.ErroSistema;
 import java.io.Serializable;
@@ -17,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.sql.Timestamp;
 
 /**
  *
@@ -26,24 +28,25 @@ public class PagamentoDAO implements CrudDAO<ItemPedido>, Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    public void criar(Pedido entidade, Pagamento entidade2) throws ErroSistema{
+    public void criar(Pedido entidade) throws ErroSistema{
         try {
             Connection conexao = FabricaConexao.getConexao();
             PreparedStatement ps;
-            Date hoje = new Date();
+            Timestamp t = new Timestamp(entidade.getPagamento().getDataPagamento().getTime());
             
-            ps = conexao.prepareStatement("INSERT INTO `pagamento` (id_pedido,valor,valorDesconto,formaPagamento,troco,taxa,desconto,valorPagamento,id_cliente,dataPagamento) VALUES (?,?,?,?,?,?,?,?,?,?)");
+            ps = conexao.prepareStatement("INSERT INTO `pagamento` (id_pedido,valor,valorDesconto,formaPagamento,troco,taxa,desconto,valorPagamento,id_cliente,dataPagamento,valorTaxa) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
             
             ps.setInt(1,entidade.getId());
-            ps.setDouble(2,entidade2.getValorT());
-            ps.setDouble(3,entidade2.getValorDesconto());
-            ps.setString(4, entidade2.getFormaPagamento());
-            ps.setDouble(5, entidade2.getTroco());
-            ps.setDouble(6, entidade2.getTaxa());
-            ps.setInt(7,entidade2.getDesconto());
-            ps.setDouble(8,entidade2.getValorPagamento());
-            ps.setString(9, entidade2.getCliente().getCpf());
-            ps.setDate(10,new java.sql.Date(hoje.getTime()));
+            ps.setDouble(2,entidade.getPagamento().getValorT());
+            ps.setDouble(3,entidade.getPagamento().getValorDesconto());
+            ps.setString(4, entidade.getPagamento().getFormaPagamento());
+            ps.setDouble(5, entidade.getPagamento().getTroco());
+            ps.setDouble(6, entidade.getPagamento().getTaxa());
+            ps.setDouble(7,entidade.getPagamento().getDesconto());
+            ps.setDouble(8,entidade.getPagamento().getValorPagamento());
+            ps.setString(9, entidade.getPagamento().getCliente().getCpf());
+            ps.setTimestamp(10, t);
+            ps.setDouble(11,entidade.getPagamento().getValorTaxa());
             ps.execute();
             FabricaConexao.fecharConexao();
         } catch (SQLException ex) {
@@ -70,7 +73,7 @@ public class PagamentoDAO implements CrudDAO<ItemPedido>, Serializable {
      
     }
     
-    public Integer getarDesconto() throws ErroSistema{
+    public double getarDesconto() throws ErroSistema{
         try {
             Connection conexao = FabricaConexao.getConexao();
             PreparedStatement ps;
@@ -79,7 +82,7 @@ public class PagamentoDAO implements CrudDAO<ItemPedido>, Serializable {
             ResultSet resultSet = ps.executeQuery();
             
             if (resultSet.next()) {
-                return resultSet.getInt("descontServ");
+                return resultSet.getDouble("descontServ");
             }
             FabricaConexao.fecharConexao();
             return 0;
@@ -87,6 +90,24 @@ public class PagamentoDAO implements CrudDAO<ItemPedido>, Serializable {
             throw new ErroSistema("Erro ao setar desconto de pagamento!", ex);
         }
      
+    }
+    
+    public void updateTaxaDesconto(Servico entidade) throws ErroSistema{
+        try {
+            Connection conexao = FabricaConexao.getConexao();
+            PreparedStatement ps;
+            
+            ps = conexao.prepareStatement("update servico set descontServ=?,taxaServ=? where id=1");
+            
+            ps.setDouble(1, entidade.getDesconto());
+            ps.setDouble(2, entidade.getTaxa());
+       
+            ps.execute();
+            FabricaConexao.fecharConexao();
+            
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao atualizar desconto e taxa!", ex);
+        }
     }
     
     public Pagamento buscarID(Pedido entidade) throws ErroSistema{
@@ -106,6 +127,7 @@ public class PagamentoDAO implements CrudDAO<ItemPedido>, Serializable {
                 pagamento.setFormaPagamento(resultSet.getString("formaPagamento"));
                 pagamento.setTroco(resultSet.getDouble("troco"));
                 pagamento.setTaxa(resultSet.getDouble("taxa"));
+                pagamento.setValorTaxa(resultSet.getDouble("valorTaxa"));
                 pagamento.setDesconto(resultSet.getInt("desconto"));
                 pagamento.setValorPagamento(resultSet.getDouble("valorPagamento"));
                 pagamento.setDataPagamento(resultSet.getTimestamp("dataPagamento"));

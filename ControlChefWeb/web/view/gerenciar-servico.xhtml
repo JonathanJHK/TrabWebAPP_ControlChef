@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="/WEB-INF/templates/Layout.xhtml"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <h:form id="form-serv">
+            <p:growl id="msgs" showDetail="true"/>
+            <p:fieldset legend="Gerenciar Serviço">
+
+                <p:dataTable id="serv1" var="ser" value="#{servicoBean.serv}" reflow="true" paginatorAlwaysVisible="false" rowKey="#{ser}" editable="true" style="margin-bottom:20px" >
+
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <p:column headerText="Taxa de Serviço"/>
+                            <p:column headerText="Desconto do Cliente"/>
+                            <p:column headerText="Edição" style="width:60px" />
+                        </p:row>
+                    </p:columnGroup>
+
+                    <p:ajax event="rowEdit" listener="#{servicoBean.onRowEdit}" update=":form-serv:msgs" />
+                    <p:ajax event="rowEditCancel" listener="#{servicoBean.onRowCancel}" update=":form-serv:msgs" />
+
+                    <p:column >
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{ser.taxa}%"></h:outputText> </f:facet>
+                            <f:facet name="input"><p:inputNumber value="#{ser.taxa}"  symbol="%" symbolPosition="s" decimalPlaces="1"/>   
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column >
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{ser.desconto}%"></h:outputText> </f:facet>
+                            <f:facet name="input"><p:inputNumber value="#{ser.desconto}"  symbol="%" symbolPosition="s" decimalPlaces="1"/>   
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column >
+                        <p:rowEditor/>    
+                    </p:column>
+
+                </p:dataTable>
+
+            </p:fieldset>
+
+        </h:form>
+    </ui:define>
+</ui:decorate>

@@ -101,7 +101,7 @@ public class EditViewP implements Serializable {
         RequestContext.getCurrentInstance().closeDialog(prod);
     }
 
-    public List<String> getTipos() throws ErroSistema {
+    public List<CategoriaP> getTipos() throws ErroSistema {
         return produto.getTipos();
     }
 
@@ -138,6 +138,18 @@ public class EditViewP implements Serializable {
         FacesMessage msg = new FacesMessage("Sucessso!", "Produto foi removido com sucesso.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         return "gerenciar-produto.jsf";
+    }
+    
+    public void onRowEditT(RowEditEvent event) throws ErroSistema {
+        produto.criarTipo((CategoriaP) event.getObject());
+        FacesMessage msg = new FacesMessage("Sucessso!", "Categoria Editado com sucesso.");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    
+    public void onRowDeleteT(CategoriaP categoriap) throws ErroSistema {
+        produto.deletarTipo(categoriap);
+        FacesMessage msg = new FacesMessage("Sucessso!", "Categoria foi removido com sucesso.");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public void onCellEdit(CellEditEvent event) {

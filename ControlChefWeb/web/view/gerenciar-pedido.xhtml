@@ -83,26 +83,29 @@
                             <f:facet name="left">
                                 <p:commandButton  value="Adicionar Pedido" icon="ui-icon ui-icon-plus" oncomplete="PF('carDialog#{men.id}').show()"/>
                             </f:facet>
+                            <f:facet name="right">
+                                <p:commandButton  value="Cancelar Pedido" icon="ui-icon ui-icon-close" action="#{pedidoBean.deletarPedido(men.id)}" update="form_mesa"/>
+                            </f:facet>
                   
                         </p:toolbar>                       
 
                     </p:fieldset>
 
-                    <p:dialog id="dialogo" header="Selecione os Itens" width="840"  responsive="true" position="center" widgetVar="carDialog#{men.id}" modal="true" showEffect="bounce" hideEffect="drop" resizable="false"  closable="false">
+                    <p:dialog id="dialogo" header="Selecione os Itens" width="840" responsive="true" position="center" widgetVar="carDialog#{men.id}" showEffect="bounce" modal="true" hideEffect="drop" resizable="false"  closable="false">
 
 
 
                         <p:tabView value="#{dtEditViewP.tipos}" var="prodtipos"  effect="fade"  >
-                            <p:tab title="#{prodtipos}">
+                            <p:tab title="#{prodtipos.tipo}">
 
-                                <p:dataGrid var="produto" value="#{dtEditViewP.listProdTipo(prodtipos)}" columns="3" layout="grid" 
+                                <p:dataGrid var="produto" value="#{dtEditViewP.listProdTipo(prodtipos.tipo)}" columns="3" layout="grid" 
                                             rows="12" paginator="true" id="produtos" paginatorPosition="bottom" emptyMessage="produtos não encontrados"
                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                             rowsPerPageTemplate="6,12,16" >
 
 
 
-                                    <p:growl autoUpdate="true" showDetail="true"/>
+                                    <p:growl id="msg" autoUpdate="true" showDetail="true"/>
 
                                     <f:facet name="header">
                                         <div>
@@ -110,7 +113,7 @@
 
                                             <p:spacer width="10px"/>
 
-                                            <p:commandButton value="Pesquisar" action="#{dtEditViewP.pesquisar}" update="produtos"></p:commandButton>
+                                            <p:commandButton icon="fa fa-fw fa-search" action="#{dtEditViewP.pesquisar}" update="produtos"></p:commandButton>
                                         </div>
                                     </f:facet>
 
@@ -129,7 +132,7 @@
                                         </p:outputPanel>
 
 
-                                        <p:commandButton icon="ui-icon ui-icon-plus" action="#{pedidoBean.addItemPedido(produto, men.id)}" disabled="#{!produto.disponivel}" >
+                                        <p:commandButton icon="ui-icon ui-icon-plus" action="#{pedidoBean.addItemPedido(produto, men.id)}" disabled="#{!produto.disponivel}" update="msg" >
                                         </p:commandButton>
 
                                     </p:panelGrid>
@@ -144,7 +147,7 @@
 
                         <p:toolbar>
                             <f:facet name="right">
-                                <p:commandButton  value="Finalizar" icon="ui-icon ui-icon-plus" oncomplete="PF('carDialog#{men.id}').hide()" update="produt"/>
+                                <p:commandButton  value="Atualizar Pedido" icon="ui-icon ui-icon-plus" oncomplete="PF('carDialog#{men.id}').hide()" update="produt"/>
                             </f:facet>
                         </p:toolbar>  
 

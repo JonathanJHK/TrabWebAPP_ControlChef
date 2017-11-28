@@ -33,9 +33,10 @@ public class MesaDAO implements CrudDAO<Mesa>,Serializable{
             PreparedStatement ps;
            
             ps = conexao.prepareStatement("INSERT INTO `mesa` (`status_mesa`,`id`) VALUES (?,?)");
-           
-            ps.setInt(2,entidade.getId());
+            
             ps.setBoolean(1, entidade.isStatus_mesa());
+            ps.setInt(2,entidade.getId());
+            
     
             ps.execute();
             FabricaConexao.fecharConexao();
@@ -49,7 +50,7 @@ public class MesaDAO implements CrudDAO<Mesa>,Serializable{
             Connection conexao = FabricaConexao.getConexao();
             PreparedStatement ps;
             
-             ps = conexao.prepareStatement("update produto set status_mesa=?, where id=?");
+             ps = conexao.prepareStatement("update mesa set `status_mesa`=? where id=?");
             
             ps.setInt(2,entidade.getId());
             ps.setBoolean(1, entidade.isStatus_mesa());

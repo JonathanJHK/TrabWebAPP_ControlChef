@@ -15,12 +15,13 @@ import java.util.Objects;
  */
 public class Pagamento implements Serializable {
     private Integer id;
+    private double valorTaxa;
     private double taxa;
     private double troco;
     private double valorT;
     private Cliente cliente;
     private double valorDesconto;
-    private Integer desconto;
+    private double desconto;
     private String formaPagamento;
     private double valorPagamento;
     private Date dataPagamento;
@@ -82,14 +83,22 @@ public class Pagamento implements Serializable {
         this.valorT = valorT;
     }
 
-    public Integer getDesconto() {
+    public double getDesconto() {
         return desconto;
     }
 
-    public void setDesconto(Integer desconto) {
+    public void setDesconto(double desconto) {
         this.desconto = desconto;
     }
 
+    public double getValorTaxa() {
+        return valorTaxa;
+    }
+
+    public void setValorTaxa(double valorTaxa) {
+        this.valorTaxa = valorTaxa;
+    }
+    
     public double getValorPagamento() {
         return valorPagamento;
     }

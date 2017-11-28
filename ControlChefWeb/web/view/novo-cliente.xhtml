@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="/WEB-INF/templates/Layout.xhtml"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+
+        <h:form id="form-clienteAdd" >
+            <p:growl autoUpdate="true" showDetail="true"/>
+            <p:fieldset legend="Gerenciar Cliente">
+
+                <p:menubar>
+                    <p:menuitem value="Novo" outcome="novo-cliente.jsf" icon="ui-icon-plus" />
+                    <p:menuitem value="Listar" outcome="gerenciar-cliente.jsf" icon="ui-icon-search"  />
+                </p:menubar>
+
+                <p:separator/>
+
+                <h:panelGrid id="grid_clienteAdd">
+                    <h:outputLabel value="CPF:" />
+                    <p:inputMask  id="CPF"  size="20" mask="999.999.999-99" value="#{clienteBean.entidade.cpf}"
+                                  required="true" requiredMessage="Campo obrigatório não preenchido"
+                                  title="CPF se houver.">
+                    </p:inputMask>
+                    <p:message for="CPF" />
+
+
+                    <h:outputLabel for="nome" value="Nome:" style="font-weight:bold"/>                    
+                    <p:inputText id="nome" value="#{clienteBean.entidade.nome}" required="true" label="Nome" requiredMessage="Necessário preencher Nome!"><f:validateLength minimum="4" /></p:inputText>
+                    <p:message for="nome" />
+
+                    <h:outputLabel for="dataNsc" value="Data de Nascimento:" style="font-weight:bold"/>
+                    <p:calendar id="dataNsc" value="#{clienteBean.entidade.dataNasc}" pattern="MM/dd/yyyy" navigator="true" mask="true" effect="fold" required="true" requiredMessage="Necessário preencher Data de Nascimento!"/>
+                    <p:message for="dataNsc" />
+
+                </h:panelGrid>
+
+                <p:separator/>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton  value="Salvar" update="grid_clienteAdd" icon="fa fa-fw fa-user-plus" action="#{clienteBean.salvar()}" validateClient="true" />
+                        <p:commandButton  value="Resetar" update="grid_clienteAdd" icon="fa fa-fw fa-reply-all">
+                            <p:resetInput target="grid_clienteAdd" />
+                        </p:commandButton>
+                    </f:facet>
+                </p:toolbar>
+
+            </p:fieldset>
+
+        </h:form>
+
+    </ui:define>
+</ui:decorate>
+

@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="/WEB-INF/templates/Layout.xhtml"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+
+        <h:form id="form-cliente" >
+            <p:growl id="msgs" autoUpdate="true" showDetail="true"/>
+            <p:fieldset legend="Gerenciar Cliente">
+
+                <p:menubar>
+                    <p:menuitem value="Novo" outcome="novo-cliente.jsf" icon="ui-icon-plus" />
+                    <p:menuitem value="Listar" outcome="gerenciar-cliente.jsf" icon="ui-icon-search"  />
+                </p:menubar>
+
+
+                <p:separator/>
+
+                <p:dataTable id="cliente-tab" var="clien" value="#{clienteBean.clientes}" reflow="true" paginatorPosition="bottom" rowKey="#{clien}" editable="true" style="margin-bottom:20px" paginator="true" selectionMode="single" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15">
+                    <f:facet name="header">
+                        Lista de Clientes
+                    </f:facet>
+
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <p:column headerText="CPF" sortBy="#{clien.cpf}" filterBy="#{clien.nome}"/>
+                            <p:column headerText="Nome" sortBy="#{clien.nome}" filterBy="#{clien.nome}" />
+                            <p:column headerText="Data de Nascimento" sortBy="#{clien.dataNasc}" filterBy="#{clien.dataNasc}"/>
+                            <p:column headerText="Data de Cadastro" sortBy="#{clien.dataCad}" filterBy="#{clien.dataCad}" />
+                            <p:column colspan="2" headerText="Edição" style="width:110px" />
+                        </p:row>
+                    </p:columnGroup>
+
+                    <p:ajax event="rowEdit" listener="#{clienteBean.onRowEdit}" update=":form-cliente:msgs" process="form-cliente"/>
+                    <p:ajax event="rowEditCancel" listener="#{clienteBean.onRowCancel}" update=":form-cliente:msgs" process="form-cliente"/>
+
+                    <p:column>
+                        <h:outputText value="#{clien.cpf}"/>
+                    </p:column>
+
+                    <p:column >
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{clien.nome}" /></f:facet>
+                            <f:facet name="input"><p:inputText value="#{clien.nome}" style="width:100%" /></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column>
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{clien.dataNasc}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText></f:facet>
+                            <f:facet name="input"><p:calendar value="#{clien.dataNasc}" pattern="dd/MM/yyyy" mask="true" navigator="true" effect="fold"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+
+                    <p:column >
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{clien.dataCad}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText></f:facet>
+                            <f:facet name="input"><p:calendar value="#{clien.dataCad}" pattern="dd/MM/yyyy" navigator="true" mask="true" effect="fold"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column >
+                        <p:rowEditor/>    
+                    </p:column>
+
+                    <p:column>
+                        <p:growl id="mensagem" showDetail="true"/>
+                        <p:commandButton action="#{clienteBean.onRowDelete(clien)}" icon="ui-icon-trash">
+                            <p:confirm header="Confirmação" message="Tem certeza que deseja remover Cliente?" icon="ui-icon-alert" />
+                        </p:commandButton>
+
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true">
+                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update="form-cliente"/>
+                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog> 
+                    </p:column>
+
+
+                </p:dataTable>
+            </p:fieldset>
+        </h:form>
+
+    </ui:define>
+</ui:decorate>
+

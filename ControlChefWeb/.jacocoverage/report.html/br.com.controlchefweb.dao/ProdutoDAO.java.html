@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ProdutoDAO.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;ControlChefWeb&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">br.com.controlchefweb.dao</a> &gt; <span class="el_source">ProdutoDAO.java</span></div><h1>ProdutoDAO.java</h1><pre class="source lang-java linenums">package br.com.controlchefweb.dao;
+
+import br.com.controlchefweb.entidade.CategoriaP;
+import br.com.controlchefweb.entidade.Produto;
+import br.com.controlchefweb.util.FabricaConexao;
+import br.com.controlchefweb.util.exception.ErroSistema;
+import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
+/**
+ *
+ * @author VashJHK
+ */
+@ManagedBean(name = &quot;ProdutoDAO&quot;)
+@SessionScoped
+<span class="fc" id="L23">public class ProdutoDAO implements CrudDAO&lt;Produto&gt;, Serializable {</span>
+
+    private static final long serialVersionUID = 1L;
+
+
+    public List&lt;CategoriaP&gt; getTipos() throws ErroSistema {
+        try {
+<span class="fc" id="L30">            Connection conexao = FabricaConexao.getConexao();</span>
+<span class="fc" id="L31">            PreparedStatement ps = conexao.prepareStatement(&quot;select * from categoriap&quot;);</span>
+<span class="fc" id="L32">            ResultSet resultSet = ps.executeQuery();</span>
+<span class="fc" id="L33">            List&lt;CategoriaP&gt; tipos = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L35">                CategoriaP categoria = new CategoriaP();</span>
+<span class="fc" id="L36">                categoria.setId(resultSet.getInt(&quot;id&quot;));</span>
+<span class="fc" id="L37">                categoria.setTipo(resultSet.getString(&quot;tipo&quot;));</span>
+<span class="fc" id="L38">                tipos.add(categoria);</span>
+<span class="fc" id="L39">            }</span>
+<span class="fc" id="L40">            FabricaConexao.fecharConexao();</span>
+<span class="fc" id="L41">            return tipos;</span>
+
+<span class="nc" id="L43">        } catch (SQLException ex) {</span>
+<span class="nc" id="L44">            throw new ErroSistema(&quot;Erro ao buscar os produtos!&quot;, ex);</span>
+        }
+    }
+    
+    public void criarTipo(CategoriaP categoriap) throws ErroSistema{
+         try {
+<span class="fc" id="L50">            Connection conexao = FabricaConexao.getConexao();</span>
+            PreparedStatement ps;
+<span class="nc bnc" id="L52" title="All 2 branches missed.">            if (categoriap.getId() == null) {</span>
+<span class="nc" id="L53">                ps = conexao.prepareStatement(&quot;INSERT INTO `categoriap` (tipo) VALUES (?)&quot;);</span>
+            } else {
+<span class="nc" id="L55">                ps = conexao.prepareStatement(&quot;update categoriap set tipo=? where id=?&quot;);</span>
+<span class="nc" id="L56">                ps.setInt(2, categoriap.getId());</span>
+            }
+<span class="nc" id="L58">            ps.setString(1, categoriap.getTipo());</span>
+       
+<span class="nc" id="L60">            ps.execute();</span>
+<span class="nc" id="L61">            FabricaConexao.fecharConexao();</span>
+<span class="nc" id="L62">        } catch (SQLException ex) {</span>
+<span class="nc" id="L63">            throw new ErroSistema(&quot;Erro ao tentar salvar!&quot;, ex);</span>
+<span class="nc" id="L64">        }</span>
+<span class="nc" id="L65">    }</span>
+    
+    public void deletarTipo(CategoriaP categoriap) throws ErroSistema {
+        try {
+<span class="fc" id="L69">            Connection conexao = FabricaConexao.getConexao();</span>
+<span class="fc" id="L70">            PreparedStatement ps = conexao.prepareStatement(&quot;delete from categoriap where id = ?&quot;);</span>
+<span class="nc" id="L71">            ps.setInt(1, categoriap.getId());</span>
+<span class="nc" id="L72">            ps.execute();</span>
+<span class="nc" id="L73">        } catch (SQLException ex) {</span>
+<span class="nc" id="L74">            throw new ErroSistema(&quot;Erro ao deletar o produto!&quot;, ex);</span>
+<span class="nc" id="L75">        }</span>
+<span class="nc" id="L76">    }</span>
+
+    @Override
+    public void salvar(Produto produto) throws ErroSistema {
+        try {
+<span class="fc" id="L81">            Connection conexao = FabricaConexao.getConexao();</span>
+            PreparedStatement ps;
+<span class="nc bnc" id="L83" title="All 2 branches missed.">            if (produto.getId() == null) {</span>
+<span class="nc" id="L84">                ps = conexao.prepareStatement(&quot;INSERT INTO `produto` (`nome`,`descricao`,`preco`,`imagem`, `disponivel`,`tipo` ) VALUES (?,?,?,?,?,?)&quot;);</span>
+            } else {
+<span class="nc" id="L86">                ps = conexao.prepareStatement(&quot;update produto set nome=?, descricao=?, preco=?, imagem=?, disponivel=?, tipo=? where id=?&quot;);</span>
+<span class="nc" id="L87">                ps.setInt(7, produto.getId());</span>
+            }
+<span class="nc" id="L89">            ps.setString(1, produto.getNome());</span>
+<span class="nc" id="L90">            ps.setString(2, produto.getDescricao());</span>
+<span class="nc" id="L91">            ps.setDouble(3, produto.getPreco());</span>
+<span class="nc" id="L92">            ps.setString(4, produto.getImagem());</span>
+<span class="nc" id="L93">            ps.setBoolean(5, produto.isDisponivel());</span>
+<span class="nc" id="L94">            ps.setString(6, produto.getTipo());</span>
+<span class="nc" id="L95">            ps.execute();</span>
+<span class="nc" id="L96">            FabricaConexao.fecharConexao();</span>
+<span class="nc" id="L97">        } catch (SQLException ex) {</span>
+<span class="nc" id="L98">            throw new ErroSistema(&quot;Erro ao tentar salvar!&quot;, ex);</span>
+<span class="nc" id="L99">        }</span>
+<span class="nc" id="L100">    }</span>
+
+    @Override
+    public void deletar(Produto produto) throws ErroSistema {
+        try {
+<span class="fc" id="L105">            Connection conexao = FabricaConexao.getConexao();</span>
+            
+<span class="fc" id="L107">            PreparedStatement ps0 = conexao.prepareStatement(&quot;update itempedido set id_produto=? where id_produto=?&quot;);</span>
+<span class="fc" id="L108">            ps0.setString(1,null);</span>
+<span class="nc" id="L109">            ps0.setInt(2,produto.getId());</span>
+<span class="nc" id="L110">            ps0.execute();</span>
+            
+<span class="nc" id="L112">            PreparedStatement ps = conexao.prepareStatement(&quot;delete from produto where id = ?&quot;);</span>
+<span class="nc" id="L113">            ps.setInt(1, produto.getId());</span>
+<span class="nc" id="L114">            ps.execute();</span>
+<span class="nc" id="L115">            FabricaConexao.fecharConexao();</span>
+<span class="nc" id="L116">        } catch (SQLException ex) {</span>
+<span class="nc" id="L117">            throw new ErroSistema(&quot;Erro ao deletar o produto!&quot;, ex);</span>
+<span class="nc" id="L118">        }</span>
+<span class="nc" id="L119">    }</span>
+
+    @Override
+    public List&lt;Produto&gt; buscar() throws ErroSistema {
+        try {
+<span class="fc" id="L124">            Connection conexao = FabricaConexao.getConexao();</span>
+<span class="fc" id="L125">            PreparedStatement ps = conexao.prepareStatement(&quot;select * from produto&quot;);</span>
+<span class="fc" id="L126">            ResultSet resultSet = ps.executeQuery();</span>
+<span class="fc" id="L127">            List&lt;Produto&gt; produtos = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L129">                Produto produto = new Produto();</span>
+<span class="fc" id="L130">                produto.setId(resultSet.getInt(&quot;id&quot;));</span>
+<span class="fc" id="L131">                produto.setNome(resultSet.getString(&quot;nome&quot;));</span>
+<span class="fc" id="L132">                produto.setDescricao(resultSet.getString(&quot;descricao&quot;));</span>
+<span class="fc" id="L133">                produto.setPreco(resultSet.getDouble(&quot;preco&quot;));</span>
+<span class="fc" id="L134">                produto.setImagem(resultSet.getString(&quot;imagem&quot;));</span>
+<span class="fc" id="L135">                produto.setDisponivel(resultSet.getBoolean(&quot;disponivel&quot;));</span>
+<span class="fc" id="L136">                produto.setTipo(resultSet.getString(&quot;tipo&quot;));</span>
+<span class="fc" id="L137">                produtos.add(produto);</span>
+<span class="fc" id="L138">            }</span>
+<span class="fc" id="L139">            FabricaConexao.fecharConexao();</span>
+<span class="fc" id="L140">            return produtos;</span>
+
+<span class="nc" id="L142">        } catch (SQLException ex) {</span>
+<span class="nc" id="L143">            throw new ErroSistema(&quot;Erro ao buscar os produtos!&quot;, ex);</span>
+        }
+    }
+
+    public Produto buscarID(Integer id) throws ErroSistema {
+        try {
+<span class="fc" id="L149">            Connection conexao = FabricaConexao.getConexao();</span>
+<span class="fc" id="L150">            PreparedStatement ps = conexao.prepareStatement(&quot;select * from produto where id = ?&quot;);</span>
+<span class="nc" id="L151">            ps.setInt(1, id);</span>
+<span class="nc" id="L152">            ResultSet resultSet = ps.executeQuery();</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">            if (resultSet.next()) {</span>
+<span class="nc" id="L154">                Produto produto = new Produto();</span>
+<span class="nc" id="L155">                produto.setId(resultSet.getInt(&quot;id&quot;));</span>
+<span class="nc" id="L156">                produto.setNome(resultSet.getString(&quot;nome&quot;));</span>
+<span class="nc" id="L157">                produto.setDescricao(resultSet.getString(&quot;descricao&quot;));</span>
+<span class="nc" id="L158">                produto.setPreco(resultSet.getDouble(&quot;preco&quot;));</span>
+<span class="nc" id="L159">                produto.setImagem(resultSet.getString(&quot;imagem&quot;));</span>
+<span class="nc" id="L160">                produto.setDisponivel(resultSet.getBoolean(&quot;disponivel&quot;));</span>
+<span class="nc" id="L161">                produto.setTipo(resultSet.getString(&quot;tipo&quot;));</span>
+<span class="nc" id="L162">                return produto;</span>
+            }
+
+<span class="nc" id="L165">        } catch (SQLException ex) {</span>
+<span class="nc" id="L166">            throw new ErroSistema(&quot;Erro ao deletar o produto!&quot;, ex);</span>
+<span class="nc" id="L167">        }</span>
+<span class="nc" id="L168">        return null;</span>
+    }
+
+    public List&lt;Produto&gt; buscarNome(String nome) throws ErroSistema {
+        try {
+<span class="fc" id="L173">            Connection conexao = FabricaConexao.getConexao();</span>
+<span class="fc" id="L174">            PreparedStatement ps = conexao.prepareStatement(&quot;select * from produto where nome like '%&quot;+nome+&quot;%'&quot;);</span>
+<span class="fc" id="L175">            ResultSet resultSet = ps.executeQuery();</span>
+<span class="fc" id="L176">            List&lt;Produto&gt; produtos = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L178">                Produto produto = new Produto();</span>
+<span class="fc" id="L179">                produto.setId(resultSet.getInt(&quot;id&quot;));</span>
+<span class="fc" id="L180">                produto.setNome(resultSet.getString(&quot;nome&quot;));</span>
+<span class="fc" id="L181">                produto.setDescricao(resultSet.getString(&quot;descricao&quot;));</span>
+<span class="fc" id="L182">                produto.setPreco(resultSet.getDouble(&quot;preco&quot;));</span>
+<span class="fc" id="L183">                produto.setImagem(resultSet.getString(&quot;imagem&quot;));</span>
+<span class="fc" id="L184">                produto.setDisponivel(resultSet.getBoolean(&quot;disponivel&quot;));</span>
+<span class="fc" id="L185">                produto.setTipo(resultSet.getString(&quot;tipo&quot;));</span>
+<span class="fc" id="L186">                produtos.add(produto);</span>
+<span class="fc" id="L187">            }</span>
+<span class="fc" id="L188">            FabricaConexao.fecharConexao();</span>
+<span class="fc" id="L189">            return produtos;</span>
+
+<span class="nc" id="L191">        } catch (SQLException ex) {</span>
+<span class="nc" id="L192">            throw new ErroSistema(&quot;Erro ao buscar o produto filtrado!&quot;, ex);</span>
+        }
+    }
+    
+    public boolean verificaProd(String nome) throws ErroSistema {
+        try {
+<span class="fc" id="L198">            Connection conexao = FabricaConexao.getConexao();</span>
+<span class="fc" id="L199">            PreparedStatement ps = conexao.prepareStatement(&quot;select * from produto where nome = ? &quot;);</span>
+<span class="fc" id="L200">            ps.setString(1, nome);</span>
+<span class="fc" id="L201">            ResultSet resultSet = ps.executeQuery();</span>
+           
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">            if (!resultSet.next()) {</span>
+<span class="fc" id="L204">                return false;</span>
+            } 
+            
+<span class="nc" id="L207">            FabricaConexao.fecharConexao();</span>
+            
+<span class="nc" id="L209">            return true;</span>
+
+<span class="nc" id="L211">        } catch (SQLException ex) {</span>
+<span class="nc" id="L212">            throw new ErroSistema(&quot;Erro ao buscar os funcionarios!&quot;, ex);</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

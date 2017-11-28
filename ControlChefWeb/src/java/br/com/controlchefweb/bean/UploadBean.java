@@ -67,7 +67,7 @@ public class UploadBean implements Serializable {
                     new FacesMessage("Upload completo", "O arquivo " + arquivo.getName() + " foi salvo!"));
         } catch (IOException e) {
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro", e.getMessage()));
+                    new FacesMessage(FacesMessage.SEVERITY_FATAL, "Erro", e.getMessage()));
         }
     }
 

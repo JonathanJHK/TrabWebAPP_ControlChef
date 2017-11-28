@@ -11,16 +11,18 @@
         </p:menu>
         <p:panelMenu widgetVar="myPanelMenu">
             <p:submenu label="Gerenciar" rendered="#{usuarioLogado.tipo == 'Gerente'}">
-                <p:menuitem value="Funcionário" action="gerenciar-funcionario.jsf?faces-redirect=true" icon="fa  fa-fw fa-group" />
+                <p:menuitem value="Funcionário" outcome="gerenciar-funcionario.jsf" icon="fa  fa-fw fa-group" />
+                <p:menuitem value="Cliente" outcome="gerenciar-cliente.jsf" icon="fa  fa-fw fa-user" />
                 <p:menuitem value="Produto" outcome="gerenciar-produto.jsf" icon="fa  fa-fw fa-tags"/>
                 <p:menuitem value="Mesa" outcome="gerenciar-mesa.jsf" icon="fa  fa-fw fa-th"/>
-                <p:menuitem value="Pagamento" outcome="gerenciar-pagamento.jsf" icon="fa  fa-fw fa-archive"/>
+                <p:menuitem value="Pagamento" outcome="gerenciar-pagamento.jsf" icon="fa  fa-fw fa-inbox"/>
+                <p:menuitem value="Serviços" outcome="gerenciar-servico.jsf" icon="fa  fa-fw fa-archive"/>
             </p:submenu>
 
             <p:submenu label="Restaurante" >
                 <p:menuitem value="Pedidos" outcome="gerenciar-pedido.jsf" icon="fa  fa-fw  fa-cutlery"/>
                 <p:menuitem value="Fechar Conta" outcome="fechar-conta.jsf" icon="fa  fa-fw  fa-shopping-cart"/>
-                <p:menuitem value="Pedidos Pendente" outcome="pedidos-pendente.jsf" icon="fa  fa-fw  fa-check-square-o"/>
+                <p:menuitem value="Pedidos Pendente" outcome="pedidos-pendente.jsf" icon="fa  fa-fw  fa-square-o"/>
                 <p:menuitem value="Pedidos Pronto" outcome="pedidos-pronto.jsf" icon="fa  fa-fw  fa-check-square-o"/>
             </p:submenu>
 

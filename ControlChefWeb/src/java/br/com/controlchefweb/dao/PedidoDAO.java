@@ -68,6 +68,7 @@ public class PedidoDAO implements CrudDAO<Pedido>, Serializable {
                 pedido.setMesa(resultSet.getInt("mesa"));
                 pedido.setStatusPedido(resultSet.getBoolean("statusPedido"));
                 pedido.setDataCriacao(resultSet.getDate("dataCriacao"));
+                pedido.setItens(buscarProdutoPedido(resultSet.getInt("id")));
             } else {
                 return null;
             }
@@ -81,7 +82,7 @@ public class PedidoDAO implements CrudDAO<Pedido>, Serializable {
     public List<ItemPedido> buscarProdutoPedido(int idpedido) throws ErroSistema {
         try {
             Connection conexao = FabricaConexao.getConexao();
-            PreparedStatement ps = conexao.prepareStatement("SELECT produto.id, produto.nome,produto.preco,produto.descricao,produto.imagem,produto.disponivel,produto.tipo,itempedido.quantidade,itempedido.valor_item,itempedido.status_pedido,itempedido.id as id_pedido FROM produto,itempedido where itempedido.id_produto = produto.id and itempedido.id in (select pedido_item.id_item FROM pedido_item where pedido_item.id_pedido = ?)");
+            PreparedStatement ps = conexao.prepareStatement("SELECT produto.id, produto.nome,produto.preco,produto.descricao,produto.imagem,produto.disponivel,produto.tipo,itempedido.quantidade,itempedido.valor_item,itempedido.status_pedido,itempedido.entrega,itempedido.id as id_pedido FROM produto,itempedido where itempedido.id_produto = produto.id and itempedido.id in (select pedido_item.id_item FROM pedido_item where pedido_item.id_pedido = ?)");
             ps.setInt(1, idpedido);
             ResultSet resultSet = ps.executeQuery();
 
@@ -102,6 +103,7 @@ public class PedidoDAO implements CrudDAO<Pedido>, Serializable {
                 itempedido.setQuantidade(resultSet.getInt("quantidade"));
                 itempedido.setValorItem(resultSet.getDouble("valor_item"));
                 itempedido.setStatusItem(resultSet.getBoolean("status_pedido"));
+                itempedido.setEntrega(resultSet.getBoolean("entrega"));
                 itens.add(itempedido);
             }
 
@@ -152,7 +154,7 @@ public class PedidoDAO implements CrudDAO<Pedido>, Serializable {
     public List<Pedido> buscar() throws ErroSistema {
         try {
             Connection conexao = FabricaConexao.getConexao();
-            PreparedStatement ps = conexao.prepareStatement("select * from pedido");
+            PreparedStatement ps = conexao.prepareStatement("select * from pedido where statusPedido = false");
             ResultSet resultSet = ps.executeQuery();
             List<Pedido> pedidos = new ArrayList<>();
             while (resultSet.next()) {

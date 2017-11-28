@@ -34,14 +34,14 @@ public class PedidoBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private int quant=1;
+    private int quant = 1;
     private Pedido pedidoSelecionado;
 
     private PedidoDAO ped;
     private ItemPedidoDAO itemp;
     private FuncionarioDAO funcDao;
     private PagamentoDAO pagaDao;
-    
+
     private List<Pedido> pedidoL;
 
     @PostConstruct
@@ -113,17 +113,14 @@ public class PedidoBean implements Serializable {
     public void setPedidoSelecionado(Pedido pedidoSelecionado) {
         this.pedidoSelecionado = pedidoSelecionado;
     }
-    
-    
-    
 
     public void criarPedido(int mesa) throws ErroSistema {
         try {
             ped.criar(mesa);
-            adicionarMensagem("Sucesso", "Pedido foi aberto com sucesso!");
+            adicionarMensagem("Sucesso", "Pedido foi aberto com sucesso!",FacesMessage.SEVERITY_INFO);
         } catch (ErroSistema ex) {
             Logger.getLogger(CrudBean.class.getName()).log(Level.SEVERE, null, ex);
-            adicionarMensagem("Atenção", ex.getMessage());
+            adicionarMensagem("Atenção", ex.getMessage(),FacesMessage.SEVERITY_ERROR);
         }
     }
 
@@ -138,7 +135,7 @@ public class PedidoBean implements Serializable {
             itempedido.setQuantidade(quant);
             itempedido.setMesa(mesa);
             System.out.println(quant);
-            
+
             itemp.salvar(itempedido);
             List<ItemPedido> itens = new ArrayList<>();
             itens = itemp.buscar();
@@ -147,37 +144,51 @@ public class PedidoBean implements Serializable {
             if (verifPedido(mesa)) {
                 Integer id_ped = ped.buscarPedido(mesa).getId();
                 itemp.addPedidoItem(id_ped, itempedido.getId());
+                adicionarMensagem("Sucesso", "Item do pedido foi adicionado com sucesso!",FacesMessage.SEVERITY_INFO);
             } else {
                 throw new Exception("Erro ao relacionar pedido com o itempedido");
             }
-            this.quant=1;
-            adicionarMensagem("Sucesso", "Item do pedido foi adicionado com sucesso!");
+            this.quant = 1;
+            
         } catch (ErroSistema ex) {
             Logger.getLogger(CrudBean.class.getName()).log(Level.SEVERE, null, ex);
-            adicionarMensagem("Atenção", ex.getMessage());
+            adicionarMensagem("Atenção", ex.getMessage(),FacesMessage.SEVERITY_FATAL);
         }
     }
 
     public List<ItemPedido> buscarItemPedido(int mesa) throws ErroSistema {
         try {
-            
+
             return ped.buscarProdutoPedido(ped.buscarPedido(mesa).getId());
         } catch (ErroSistema ex) {
             Logger.getLogger(CrudBean.class.getName()).log(Level.SEVERE, null, ex);
-            adicionarMensagem("Atenção", ex.getMessage());
+            adicionarMensagem("Atenção", ex.getMessage(),FacesMessage.SEVERITY_FATAL);
         }
         return null;
     }
-    
+
     public void onRowDelete(ItemPedido item) throws ErroSistema {
         itemp.deletar(item);
-        adicionarMensagem("Sucesso","O item pedido foi removido com sucesso.");
-        
+        adicionarMensagem("Sucesso", "O item pedido foi removido com sucesso.",FacesMessage.SEVERITY_INFO);
+
     }
-                
-    public List<Pedido> buscarPedido() throws ErroSistema{
+
+    public void deletarPedido(int mesa) {
+        try {
+            
+            ped.deletar(ped.buscarPedido(mesa));
+            adicionarMensagem("Sucesso", "Pedido cancelado com sucesso.",FacesMessage.SEVERITY_INFO);
+
+        } catch (ErroSistema ex) {
+            Logger.getLogger(PedidoBean.class.getName()).log(Level.SEVERE, null, ex);
+            adicionarMensagem("Atenção", ex.getMessage(), FacesMessage.SEVERITY_FATAL);
+        }
+
+    }
+
+    public List<Pedido> buscarPedidoPago() throws ErroSistema {
         List<Pedido> pedidoLF = new ArrayList();
-        for(Pedido s: pedidoL){
+        for (Pedido s : pedidoL) {
             s.setItens(ped.buscarProdutoPedido(s.getId()));
             s.setVendedor(funcDao.buscarID(s.getVendedor().getId()));
             s.setPagamento(pagaDao.buscarID(s));
@@ -185,10 +196,9 @@ public class PedidoBean implements Serializable {
         }
         return pedidoLF;
     }
-    
 
-    public void adicionarMensagem(String mensagem, String mensagem2) {
-        FacesMessage fm = new FacesMessage(mensagem, mensagem2);
+    public void adicionarMensagem(String mensagem, String mensagem2,FacesMessage.Severity tipoErro) {
+        FacesMessage fm = new FacesMessage(tipoErro,mensagem, mensagem2);
         FacesContext.getCurrentInstance().addMessage(null, fm);
     }
 

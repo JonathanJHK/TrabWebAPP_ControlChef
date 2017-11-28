@@ -24,33 +24,36 @@ and open the template in the editor.
 
                 <p:separator/>
 
-                <p:panelGrid id="grid_prod_novo" columns="2" styleClass="ui-panelgrid-blank" columnClasses="ui-grid-col-2,ui-grid-col-14" layout="grid">
+                <p:panelGrid id="grid_prod_novo" columns="3" styleClass="ui-panelgrid-blank" columnClasses="ui-grid-col-2,ui-grid-col-14" layout="grid">
                     <h:outputLabel for="nome" value="Nome:" style="font-weight:bold"/> 
-                    <p:inputText value="#{produtoBean.entidade.nome}" required="true" requiredMessage="Necessário informar o nome do Produto!"></p:inputText>
-
+                    <p:inputText id="nome" value="#{produtoBean.entidade.nome}" required="true" requiredMessage="Necessário informar o nome do Produto!"></p:inputText>
+                    <p:message for="nome" />
+                    
                     <h:outputLabel value="Preço:" style="font-weight:bold"></h:outputLabel>
-                    <p:inputNumber id="input4" value="#{produtoBean.entidade.preco}"  symbol="R$ "  decimalPlaces="2" required="true" requiredMessage="Necessário informar o preço do Produto!">   
+                    <p:inputNumber id="preco" value="#{produtoBean.entidade.preco}"  symbol="R$ "  decimalPlaces="2" required="true" requiredMessage="Necessário informar o preço do Produto!">   
                     </p:inputNumber> 
+                    <p:message for="preco" />
                     
                     <p:outputLabel for="tipo" value="Categoria:" style="font-weight:bold" />
                     <p:selectOneMenu id="tipo" value="#{produtoBean.entidade.tipo}" required="true" >
-                        <f:selectItems value="#{dtEditViewP.tipos}" var="tipos" itemLabel="#{tipos}" itemValue="#{tipos}" />
+                        <f:selectItems value="#{dtEditViewP.tipos}" var="tipos" itemLabel="#{tipos.tipo}" itemValue="#{tipos.tipo}" />
                     </p:selectOneMenu>
-                    
+                    <p:message for="tipo"/>
 
                     <h:outputLabel value="Descrição:" style="font-weight:bold"></h:outputLabel>
-                    <p:inputTextarea value="#{produtoBean.entidade.descricao}" queryDelay="750" minQueryLength="10" required="true" requiredMessage="Necessário informar a descrição do Produto!"/>
+                    <p:inputTextarea id="descricao" value="#{produtoBean.entidade.descricao}" queryDelay="750" minQueryLength="10" required="true" requiredMessage="Necessário informar a descrição do Produto!"/>
+                    
 
 
-
-                    <p:outputLabel value="Imagem: " for="fileUpload" style="font-weight:bold"/>
-                    <p:fileUpload id="fileUpload" fileUploadListener="#{uploadBean.upload}" 
+<!--                    <p:outputLabel value="Imagem: " for="fileUpload" style="font-weight:bold"/>
+                    <p:fileUpload id="fileUpload" fileUploadListener="" 
                                   allowTypes="/(\.|\/)(gif|jpe?g|png)$/" invalidFileMessage="São permitidas somente imagens (gif, jpeg, jpg e png)" 
-                                  fileLimit="1" fileLimitMessage="Só é possível escolher 1 arquivos por vez."/>
+                                  fileLimit="1" fileLimitMessage="Só é possível escolher 1 arquivos por vez."/>-->
                     
 
                     <h:outputText value="Disponibilidade:" style="font-weight:bold" />
                     <p:selectBooleanButton id="value1" value="#{produtoBean.entidade.disponivel}" onLabel="Sim" offLabel="Não" style="width:60px" />
+                    
 
                 </p:panelGrid >
 

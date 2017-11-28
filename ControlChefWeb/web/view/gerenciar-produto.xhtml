@@ -26,7 +26,7 @@
 
                     <f:facet name="{Exporters}">
                         <h:commandLink>
-                            <p:graphicImage library="resources" name="image/export/excel.png" width="24"/>
+                            <p:graphicImage library="resources" name="image/export/excel.png" width="24" />
                             <p:dataExporter type="xls" target="produt1" fileName="ControlChef-Produtos" />
                         </h:commandLink>
 
@@ -52,30 +52,39 @@
 
                     <p:columnGroup type="header">
                         <p:row>
-                            <p:column headerText="ID" sortBy="#{produto.id}"/>
-                            <p:column headerText="Nome" sortBy="#{produto.nome}" filterBy="#{produto.nome}" />
-                            <p:column headerText="Preço Unitário" sortBy="#{produto.preco}" />
-                            <p:column headerText="Tipo" sortBy="#{produto.tipo}"/>
-                            <p:column headerText="Disponibilidade" sortBy="#{produto.disponivel}" />
-                            <p:column colspan="2" headerText="Edição" style="width:110px" />
+                            <p:column headerText="ID" />
+                            <p:column headerText="Nome" />
+                            <p:column headerText="Preço Unitário"  />
+                            <p:column headerText="Tipo" />
+                            <p:column headerText="Disponibilidade"  />
+                            <p:column colspan="2" headerText="Edição" style="width:110px" exportable="false"/>
                         </p:row>
                     </p:columnGroup>
 
                     <p:ajax event="rowEdit" listener="#{dtEditViewP.onRowEdit}" update=":form:msgs" />
                     <p:ajax event="rowEditCancel" listener="#{dtEditViewP.onRowCancel}" update=":form:msgs" />
 
-                    <p:column>
+                    <p:column sortBy="#{produto.id}" >
+                        <f:facet name="header">
+                            <h:outputText value="ID"/>
+                        </f:facet>
                         <h:outputText value="#{produto.id}"/>
                     </p:column>
 
-                    <p:column >
+                    <p:column sortBy="#{produto.nome}" filterBy="#{produto.nome}">
+                        <f:facet name="header">
+                            <h:outputText value="Nome"/>
+                        </f:facet>
                         <p:cellEditor>
                             <f:facet name="output"><h:outputText value="#{produto.nome}" /></f:facet>
                             <f:facet name="input"><p:inputText value="#{produto.nome}" style="width:100%" label="Nome"/></f:facet>
                         </p:cellEditor>
                     </p:column>
 
-                    <p:column >
+                    <p:column sortBy="#{produto.preco}">
+                        <f:facet name="header">
+                            <h:outputText value="Preço Unitário"/>
+                        </f:facet>
                         <p:cellEditor>
                             <f:facet name="output"><h:outputText value="#{produto.preco}"><f:convertNumber pattern="R$ #0.00" /></h:outputText></f:facet>
                             <f:facet name="input"><p:inputNumber id="input4" value="#{produto.preco}"  symbol="R$ "  decimalPlaces="2" style="width: 100%"/></f:facet> 
@@ -83,36 +92,42 @@
                     </p:column>
 
 
-                     <p:column>
+                     <p:column sortBy="#{produto.tipo}">
+                         <f:facet name="header">
+                            <h:outputText value="Tipo"/>
+                        </f:facet>
                         <p:cellEditor>
                             <f:facet name="output"><h:outputText value="#{produto.tipo}" /></f:facet>
                             <f:facet name="input">
                                 <h:selectOneMenu value="#{produto.tipo}" style="width:100%">
-                                    <f:selectItems value="#{dtEditViewP.tipos}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />
+                                    <f:selectItems value="#{dtEditViewP.tipos}" var="tipo" itemLabel="#{tipo.tipo}" itemValue="#{tipo.tipo}" />
                                 </h:selectOneMenu>
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
 
-                    <p:column >
+                    <p:column sortBy="#{produto.disponivel}" >
+                        <f:facet name="header">
+                            <h:outputText value="Disponibilidade"/>
+                        </f:facet>
                         <p:cellEditor>
                             <f:facet name="output"><h:outputText value="#{produto.disponivel ? 'Sim' : 'Não'}" /></f:facet>
                             <f:facet name="input"> <p:selectBooleanButton id="value2" value="#{produto.disponivel}" onLabel="Sim" offLabel="Não" style="width:100%;" /></f:facet>
                         </p:cellEditor>
                     </p:column>
 
-                    <p:column >
+                    <p:column exportable="false">
                         <p:rowEditor/>    
                     </p:column>
 
-                    <p:column>
+                    <p:column exportable="false">
                         <p:growl id="mensagem" showDetail="true"/>
-                        <p:commandButton action="#{dtEditViewP.onRowDelete(produto)}" update="produt1" icon="ui-icon-trash">
+                        <p:commandButton action="#{dtEditViewP.onRowDelete(produto)}" update="form:produt1" icon="ui-icon-trash">
                             <p:confirm header="Confirmação" message="Tem certeza que deseja remover Produto?" icon="ui-icon-alert" />
                         </p:commandButton>
 
                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true">
-                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update="form:produt1"  />
+                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"   />
                             <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                         </p:confirmDialog> 
                     </p:column>

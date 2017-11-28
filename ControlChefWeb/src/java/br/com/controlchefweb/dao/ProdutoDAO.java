@@ -10,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -25,24 +24,18 @@ public class ProdutoDAO implements CrudDAO<Produto>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final static String[] tipos;
 
-    static {
-        tipos = new String[3];
-        tipos[0] = "Comida";
-        tipos[1] = "Bebida";
-        tipos[2] = "Sobremesa";
-    }
-
-    public List<String> getTipos() throws ErroSistema {
+    public List<CategoriaP> getTipos() throws ErroSistema {
         try {
             Connection conexao = FabricaConexao.getConexao();
             PreparedStatement ps = conexao.prepareStatement("select * from categoriap");
             ResultSet resultSet = ps.executeQuery();
-            List<String> tipos = new ArrayList<>();
+            List<CategoriaP> tipos = new ArrayList<>();
             while (resultSet.next()) {
-                String tipo = resultSet.getString("tipo");
-                tipos.add(tipo);
+                CategoriaP categoria = new CategoriaP();
+                categoria.setId(resultSet.getInt("id"));
+                categoria.setTipo(resultSet.getString("tipo"));
+                tipos.add(categoria);
             }
             FabricaConexao.fecharConexao();
             return tipos;
@@ -68,6 +61,17 @@ public class ProdutoDAO implements CrudDAO<Produto>, Serializable {
             FabricaConexao.fecharConexao();
         } catch (SQLException ex) {
             throw new ErroSistema("Erro ao tentar salvar!", ex);
+        }
+    }
+    
+    public void deletarTipo(CategoriaP categoriap) throws ErroSistema {
+        try {
+            Connection conexao = FabricaConexao.getConexao();
+            PreparedStatement ps = conexao.prepareStatement("delete from categoriap where id = ?");
+            ps.setInt(1, categoriap.getId());
+            ps.execute();
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao deletar o produto!", ex);
         }
     }
 
@@ -99,9 +103,16 @@ public class ProdutoDAO implements CrudDAO<Produto>, Serializable {
     public void deletar(Produto produto) throws ErroSistema {
         try {
             Connection conexao = FabricaConexao.getConexao();
+            
+            PreparedStatement ps0 = conexao.prepareStatement("update itempedido set id_produto=? where id_produto=?");
+            ps0.setString(1,null);
+            ps0.setInt(2,produto.getId());
+            ps0.execute();
+            
             PreparedStatement ps = conexao.prepareStatement("delete from produto where id = ?");
             ps.setInt(1, produto.getId());
             ps.execute();
+            FabricaConexao.fecharConexao();
         } catch (SQLException ex) {
             throw new ErroSistema("Erro ao deletar o produto!", ex);
         }
@@ -179,6 +190,26 @@ public class ProdutoDAO implements CrudDAO<Produto>, Serializable {
 
         } catch (SQLException ex) {
             throw new ErroSistema("Erro ao buscar o produto filtrado!", ex);
+        }
+    }
+    
+    public boolean verificaProd(String nome) throws ErroSistema {
+        try {
+            Connection conexao = FabricaConexao.getConexao();
+            PreparedStatement ps = conexao.prepareStatement("select * from produto where nome = ? ");
+            ps.setString(1, nome);
+            ResultSet resultSet = ps.executeQuery();
+           
+            if (!resultSet.next()) {
+                return false;
+            } 
+            
+            FabricaConexao.fecharConexao();
+            
+            return true;
+
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao buscar os funcionarios!", ex);
         }
     }
 

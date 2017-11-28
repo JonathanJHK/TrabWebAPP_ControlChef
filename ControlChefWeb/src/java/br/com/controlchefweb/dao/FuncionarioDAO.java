@@ -59,6 +59,12 @@ public class FuncionarioDAO implements CrudDAO<Funcionario>, Serializable {
     public void deletar(Funcionario entidade) throws ErroSistema {
         try {
             Connection conexao = FabricaConexao.getConexao();
+            
+            PreparedStatement ps0 = conexao.prepareStatement("update pedido set vendendor=? where vendendor=?");
+            ps0.setString(1,null);
+            ps0.setInt(2,entidade.getId());
+            ps0.execute();
+            
             PreparedStatement ps = conexao.prepareStatement("delete from funcionario where id = ?");
             ps.setInt(1, entidade.getId());
             ps.execute();
@@ -121,6 +127,30 @@ public class FuncionarioDAO implements CrudDAO<Funcionario>, Serializable {
             Connection conexao = FabricaConexao.getConexao();
             PreparedStatement ps = conexao.prepareStatement("SELECT id,nome, login, senha, tipo FROM funcionario WHERE id=?");
             ps.setInt(1, id);
+            ResultSet resultSet = ps.executeQuery();
+            Funcionario usuario = new Funcionario();
+            if (resultSet.next()) {
+                usuario.setId(resultSet.getInt("id"));
+                usuario.setNome(resultSet.getString("nome"));
+                usuario.setLogin(resultSet.getString("login"));
+                usuario.setSenha(resultSet.getString("senha"));
+                usuario.setTipo(resultSet.getString("tipo"));
+            } else {
+                return null;
+            }
+            FabricaConexao.fecharConexao();
+            return usuario;
+
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao buscar os funcionarios!", ex);
+        }
+    }
+    
+    public Funcionario buscarLogin(String login) throws ErroSistema {
+        try {
+            Connection conexao = FabricaConexao.getConexao();
+            PreparedStatement ps = conexao.prepareStatement("SELECT id,nome, login, senha, tipo FROM funcionario WHERE login=?");
+            ps.setString(1, login);
             ResultSet resultSet = ps.executeQuery();
             Funcionario usuario = new Funcionario();
             if (resultSet.next()) {

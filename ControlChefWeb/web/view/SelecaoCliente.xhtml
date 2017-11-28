@@ -15,7 +15,7 @@
     		
     		<p:spacer width="10px"/>
     		
-                <p:commandButton value="Pesquisar" action="#{pagamentoBean.pesquisar()}" update="@form" />
+                <p:commandButton icon="fa fa-fw fa-search" action="#{pagamentoBean.pesquisar()}" update="@form" />
     	</div>
     	
             <p:dataTable value="#{pagamentoBean.clientesFiltrados}" var="cliente"

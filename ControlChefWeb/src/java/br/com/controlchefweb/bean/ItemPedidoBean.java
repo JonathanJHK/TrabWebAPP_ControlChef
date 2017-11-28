@@ -75,19 +75,19 @@ public class ItemPedidoBean implements Serializable{
     public String itemPronto(ItemPedido item) throws ErroSistema{
         item.setStatusItem(true);
         itempDao.salvar(item);
-        adicionarMensagem("Sucesso", "Item pronto para ser entregue");
+        adicionarMensagem("Sucesso", "Item pronto para ser entregue",FacesMessage.SEVERITY_INFO);
         return "pedidos-pendente.jsf";
     }
     
     public String itemEntregue(ItemPedido item) throws ErroSistema{
         item.setEntrega(true);
         itempDao.salvar(item);
-        adicionarMensagem("Sucesso", "Item entregue");
+        adicionarMensagem("Sucesso", "Item entregue",FacesMessage.SEVERITY_INFO);
         return "pedidos-pronto.jsf";
     }
     
-    public void adicionarMensagem(String mensagem, String mensagem2) {
-        FacesMessage fm = new FacesMessage(mensagem, mensagem2);
+    public void adicionarMensagem(String mensagem, String mensagem2,FacesMessage.Severity tipoErro) {
+        FacesMessage fm = new FacesMessage(tipoErro,mensagem, mensagem2);
         FacesContext.getCurrentInstance().addMessage(null, fm);
     }
     

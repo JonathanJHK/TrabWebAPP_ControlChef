@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>EditViewP.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;ControlChefWeb&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">br.com.controlchefweb.bean</a> &gt; <span class="el_source">EditViewP.java</span></div><h1>EditViewP.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.controlchefweb.bean;
+
+import br.com.controlchefweb.dao.ProdutoDAO;
+import br.com.controlchefweb.entidade.CategoriaP;
+import br.com.controlchefweb.entidade.Produto;
+import br.com.controlchefweb.util.exception.ErroSistema;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
+
+/**
+ *
+ * @author 201519060360
+ */
+@ManagedBean(name = &quot;dtEditViewP&quot;)
+@ViewScoped
+<span class="fc" id="L33">public class EditViewP implements Serializable {</span>
+
+    private List&lt;Produto&gt; prod;
+    private List&lt;Produto&gt; prodFiltrado;
+    String nome;
+    private CategoriaP categoriap;
+
+    @ManagedProperty(&quot;#{ProdutoDAO}&quot;)
+    private ProdutoDAO produto;
+
+    @PostConstruct
+    public void init() {
+        try {
+<span class="nc" id="L46">            prodFiltrado = produto.buscar();</span>
+<span class="nc" id="L47">            prod = produto.buscar();</span>
+<span class="nc" id="L48">            categoriap = new CategoriaP();</span>
+<span class="nc" id="L49">        } catch (ErroSistema ex) {</span>
+<span class="nc" id="L50">            Logger.getLogger(EditViewF.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L51">        }</span>
+<span class="nc" id="L52">    }</span>
+
+    public List&lt;Produto&gt; getProd() {
+<span class="fc" id="L55">        return prod;</span>
+    }
+
+    public void setProd(List&lt;Produto&gt; prod) {
+<span class="fc" id="L59">        this.prod = prod;</span>
+<span class="fc" id="L60">    }</span>
+
+    public List&lt;Produto&gt; getProdFiltrado() {
+<span class="fc" id="L63">        return prodFiltrado;</span>
+    }
+
+    public void setProdFiltrado(List&lt;Produto&gt; prodFiltrado) {
+<span class="fc" id="L67">        this.prodFiltrado = prodFiltrado;</span>
+<span class="fc" id="L68">    }</span>
+
+    public ProdutoDAO getProduto() {
+<span class="fc" id="L71">        return produto;</span>
+    }
+
+    public void setProduto(ProdutoDAO produto) {
+<span class="fc" id="L75">        this.produto = produto;</span>
+<span class="fc" id="L76">    }</span>
+
+    public String getNome() {
+<span class="fc" id="L79">        return nome;</span>
+    }
+
+    public void setNome(String nome) {
+<span class="fc" id="L83">        this.nome = nome;</span>
+<span class="fc" id="L84">    }</span>
+
+    public CategoriaP getCategoriap() {
+<span class="fc" id="L87">        return categoriap;</span>
+    }
+
+    public void setCategoriap(CategoriaP categoriap) {
+<span class="fc" id="L91">        this.categoriap = categoriap;</span>
+<span class="fc" id="L92">    }</span>
+    
+    public void criarTipo() throws ErroSistema{
+<span class="nc" id="L95">        produto.criarTipo(categoriap);</span>
+<span class="nc" id="L96">        FacesMessage msg = new FacesMessage(&quot;Sucessso!&quot;, &quot;Tipo de Produto criado com sucesso.&quot;);</span>
+<span class="nc" id="L97">        FacesContext.getCurrentInstance().addMessage(null, msg);</span>
+<span class="nc" id="L98">    }</span>
+
+    public void selectProdFromDialog(Produto prod) {
+<span class="nc" id="L101">        RequestContext.getCurrentInstance().closeDialog(prod);</span>
+<span class="nc" id="L102">    }</span>
+
+    public List&lt;CategoriaP&gt; getTipos() throws ErroSistema {
+<span class="nc" id="L105">        return produto.getTipos();</span>
+    }
+
+    public List&lt;Produto&gt; listProdTipo(String tipo) {
+<span class="fc" id="L109">        List&lt;Produto&gt; listprodtipo = new ArrayList();</span>
+       
+<span class="nc bnc" id="L111" title="All 2 branches missed.">            for (Produto s : prodFiltrado) {</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">                if (s.getTipo().equals(tipo)) {</span>
+<span class="nc" id="L113">                    listprodtipo.add(s);</span>
+                }
+<span class="nc" id="L115">            }</span>
+        
+
+<span class="nc" id="L118">        return listprodtipo;</span>
+    }
+
+    public void pesquisar() throws ErroSistema {
+<span class="nc" id="L122">        prodFiltrado = produto.buscarNome(nome);</span>
+<span class="nc" id="L123">    }</span>
+
+    public void onRowEdit(RowEditEvent event) throws ErroSistema {
+<span class="nc" id="L126">        produto.salvar((Produto) event.getObject());</span>
+<span class="nc" id="L127">        FacesMessage msg = new FacesMessage(&quot;Sucessso!&quot;, &quot;Produto Editado com sucesso.&quot;);</span>
+<span class="nc" id="L128">        FacesContext.getCurrentInstance().addMessage(null, msg);</span>
+<span class="nc" id="L129">    }</span>
+
+    public void onRowCancel(RowEditEvent event) {
+<span class="fc" id="L132">        FacesMessage msg = new FacesMessage(&quot;Cancelado!&quot;, &quot;Edição cancelada com sucesso.&quot;);</span>
+<span class="nc" id="L133">        FacesContext.getCurrentInstance().addMessage(null, msg);</span>
+<span class="nc" id="L134">    }</span>
+
+    public String onRowDelete(Produto pro) throws ErroSistema {
+<span class="nc" id="L137">        produto.deletar(pro);</span>
+<span class="nc" id="L138">        FacesMessage msg = new FacesMessage(&quot;Sucessso!&quot;, &quot;Produto foi removido com sucesso.&quot;);</span>
+<span class="nc" id="L139">        FacesContext.getCurrentInstance().addMessage(null, msg);</span>
+<span class="nc" id="L140">        return &quot;gerenciar-produto.jsf&quot;;</span>
+    }
+    
+    public void onRowEditT(RowEditEvent event) throws ErroSistema {
+<span class="nc" id="L144">        produto.criarTipo((CategoriaP) event.getObject());</span>
+<span class="nc" id="L145">        FacesMessage msg = new FacesMessage(&quot;Sucessso!&quot;, &quot;Categoria Editado com sucesso.&quot;);</span>
+<span class="nc" id="L146">        FacesContext.getCurrentInstance().addMessage(null, msg);</span>
+<span class="nc" id="L147">    }</span>
+    
+    public void onRowDeleteT(CategoriaP categoriap) throws ErroSistema {
+<span class="nc" id="L150">        produto.deletarTipo(categoriap);</span>
+<span class="nc" id="L151">        FacesMessage msg = new FacesMessage(&quot;Sucessso!&quot;, &quot;Categoria foi removido com sucesso.&quot;);</span>
+<span class="nc" id="L152">        FacesContext.getCurrentInstance().addMessage(null, msg);</span>
+<span class="nc" id="L153">    }</span>
+
+    public void onCellEdit(CellEditEvent event) {
+<span class="nc" id="L156">        Object oldValue = event.getOldValue();</span>
+<span class="nc" id="L157">        Object newValue = event.getNewValue();</span>
+
+<span class="nc bnc" id="L159" title="All 4 branches missed.">        if (newValue != null &amp;&amp; !newValue.equals(oldValue)) {</span>
+<span class="nc" id="L160">            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, &quot;Cell Changed&quot;, &quot;Old: &quot; + oldValue + &quot;, New:&quot; + newValue);</span>
+<span class="nc" id="L161">            FacesContext.getCurrentInstance().addMessage(null, msg);</span>
+        }
+<span class="nc" id="L163">    }</span>
+    
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
