@@ -33,35 +33,35 @@ public class ClienteBean extends CrudBean&lt;Cliente, ClienteDAO&gt; implements 
     
     
     
-<span class="fc" id="L36">    public ClienteBean(){</span>
+<span class="nc" id="L36">    public ClienteBean(){</span>
         try {
-<span class="fc" id="L38">            clientes = getDao().buscar();</span>
+<span class="nc" id="L38">            clientes = getDao().buscar();</span>
 <span class="nc" id="L39">        } catch (ErroSistema ex) {</span>
 <span class="nc" id="L40">            Logger.getLogger(ClienteBean.class.getName()).log(Level.SEVERE, null, ex);</span>
-<span class="fc" id="L41">        }</span>
-<span class="fc" id="L42">    }</span>
+<span class="nc" id="L41">        }</span>
+<span class="nc" id="L42">    }</span>
 
     public List&lt;Cliente&gt; getClientes() {
-<span class="fc" id="L45">        return clientes;</span>
+<span class="nc" id="L45">        return clientes;</span>
     }
 
     public void setClientes(List&lt;Cliente&gt; clientes) {
-<span class="fc" id="L49">        this.clientes = clientes;</span>
-<span class="fc" id="L50">    }</span>
+<span class="nc" id="L49">        this.clientes = clientes;</span>
+<span class="nc" id="L50">    }</span>
 
     
     
     @Override
     public ClienteDAO getDao() {
-<span class="fc bfc" id="L56" title="All 2 branches covered.">       if (clienteDAO == null) {</span>
-<span class="fc" id="L57">            clienteDAO = new ClienteDAO();</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">       if (clienteDAO == null) {</span>
+<span class="nc" id="L57">            clienteDAO = new ClienteDAO();</span>
         }
-<span class="fc" id="L59">        return clienteDAO;</span>
+<span class="nc" id="L59">        return clienteDAO;</span>
     }
 
     @Override
     public Cliente criarNovaEntidade() {
-<span class="fc" id="L64">       return new Cliente();</span>
+<span class="nc" id="L64">       return new Cliente();</span>
     }
 
     @Override
@@ -86,7 +86,7 @@ public class ClienteBean extends CrudBean&lt;Cliente, ClienteDAO&gt; implements 
 <span class="nc" id="L86">    }</span>
      
     public void onRowCancel(RowEditEvent event) {
-<span class="fc" id="L89">        FacesMessage msg = new FacesMessage(&quot;Cancelado&quot;,&quot;Edição cancelada com sucesso.&quot;);</span>
+<span class="nc" id="L89">        FacesMessage msg = new FacesMessage(&quot;Cancelado&quot;,&quot;Edição cancelada com sucesso.&quot;);</span>
 <span class="nc" id="L90">        FacesContext.getCurrentInstance().addMessage(null, msg);</span>
 <span class="nc" id="L91">    }</span>
     

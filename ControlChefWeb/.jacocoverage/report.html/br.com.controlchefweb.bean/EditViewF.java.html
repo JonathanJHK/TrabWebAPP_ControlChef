@@ -29,7 +29,7 @@ import org.primefaces.event.RowEditEvent;
  
 @ManagedBean(name=&quot;dtEditViewF&quot;)
 @ViewScoped
-<span class="fc" id="L32">public class EditViewF implements Serializable {</span>
+<span class="nc" id="L32">public class EditViewF implements Serializable {</span>
     
     private static final long serialVersionUID = 1L;
      
@@ -48,20 +48,20 @@ import org.primefaces.event.RowEditEvent;
 <span class="nc" id="L48">    }</span>
 
     public List&lt;Funcionario&gt; getFunc() {
-<span class="fc" id="L51">        return func;</span>
+<span class="nc" id="L51">        return func;</span>
     }
 
     public void setFunc(List&lt;Funcionario&gt; func) {
-<span class="fc" id="L55">        this.func = func;</span>
-<span class="fc" id="L56">    }</span>
+<span class="nc" id="L55">        this.func = func;</span>
+<span class="nc" id="L56">    }</span>
 
     public FuncionarioDAO getFuncionario() {
-<span class="fc" id="L59">        return funcionario;</span>
+<span class="nc" id="L59">        return funcionario;</span>
     }
 
     public void setFuncionario(FuncionarioDAO funcionario) {
-<span class="fc" id="L63">        this.funcionario = funcionario;</span>
-<span class="fc" id="L64">    }</span>
+<span class="nc" id="L63">        this.funcionario = funcionario;</span>
+<span class="nc" id="L64">    }</span>
  
    public List&lt;String&gt; getTipos() {
 <span class="nc" id="L67">       return funcionario.getTipos();</span>
@@ -74,7 +74,7 @@ import org.primefaces.event.RowEditEvent;
 <span class="nc" id="L74">    }</span>
      
     public void onRowCancel(RowEditEvent event) {
-<span class="fc" id="L77">        FacesMessage msg = new FacesMessage(&quot;Cancelado&quot;,&quot;Edição cancelada com sucesso.&quot;);</span>
+<span class="nc" id="L77">        FacesMessage msg = new FacesMessage(&quot;Cancelado&quot;,&quot;Edição cancelada com sucesso.&quot;);</span>
 <span class="nc" id="L78">        FacesContext.getCurrentInstance().addMessage(null, msg);</span>
 <span class="nc" id="L79">    }</span>
     

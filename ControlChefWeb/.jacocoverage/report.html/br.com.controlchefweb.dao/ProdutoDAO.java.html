@@ -125,17 +125,17 @@ import javax.faces.bean.SessionScoped;
 <span class="fc" id="L125">            PreparedStatement ps = conexao.prepareStatement(&quot;select * from produto&quot;);</span>
 <span class="fc" id="L126">            ResultSet resultSet = ps.executeQuery();</span>
 <span class="fc" id="L127">            List&lt;Produto&gt; produtos = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L128" title="All 2 branches covered.">            while (resultSet.next()) {</span>
-<span class="fc" id="L129">                Produto produto = new Produto();</span>
-<span class="fc" id="L130">                produto.setId(resultSet.getInt(&quot;id&quot;));</span>
-<span class="fc" id="L131">                produto.setNome(resultSet.getString(&quot;nome&quot;));</span>
-<span class="fc" id="L132">                produto.setDescricao(resultSet.getString(&quot;descricao&quot;));</span>
-<span class="fc" id="L133">                produto.setPreco(resultSet.getDouble(&quot;preco&quot;));</span>
-<span class="fc" id="L134">                produto.setImagem(resultSet.getString(&quot;imagem&quot;));</span>
-<span class="fc" id="L135">                produto.setDisponivel(resultSet.getBoolean(&quot;disponivel&quot;));</span>
-<span class="fc" id="L136">                produto.setTipo(resultSet.getString(&quot;tipo&quot;));</span>
-<span class="fc" id="L137">                produtos.add(produto);</span>
-<span class="fc" id="L138">            }</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">            while (resultSet.next()) {</span>
+<span class="nc" id="L129">                Produto produto = new Produto();</span>
+<span class="nc" id="L130">                produto.setId(resultSet.getInt(&quot;id&quot;));</span>
+<span class="nc" id="L131">                produto.setNome(resultSet.getString(&quot;nome&quot;));</span>
+<span class="nc" id="L132">                produto.setDescricao(resultSet.getString(&quot;descricao&quot;));</span>
+<span class="nc" id="L133">                produto.setPreco(resultSet.getDouble(&quot;preco&quot;));</span>
+<span class="nc" id="L134">                produto.setImagem(resultSet.getString(&quot;imagem&quot;));</span>
+<span class="nc" id="L135">                produto.setDisponivel(resultSet.getBoolean(&quot;disponivel&quot;));</span>
+<span class="nc" id="L136">                produto.setTipo(resultSet.getString(&quot;tipo&quot;));</span>
+<span class="nc" id="L137">                produtos.add(produto);</span>
+<span class="nc" id="L138">            }</span>
 <span class="fc" id="L139">            FabricaConexao.fecharConexao();</span>
 <span class="fc" id="L140">            return produtos;</span>
 
@@ -174,17 +174,17 @@ import javax.faces.bean.SessionScoped;
 <span class="fc" id="L174">            PreparedStatement ps = conexao.prepareStatement(&quot;select * from produto where nome like '%&quot;+nome+&quot;%'&quot;);</span>
 <span class="fc" id="L175">            ResultSet resultSet = ps.executeQuery();</span>
 <span class="fc" id="L176">            List&lt;Produto&gt; produtos = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L177" title="All 2 branches covered.">            while (resultSet.next()) {</span>
-<span class="fc" id="L178">                Produto produto = new Produto();</span>
-<span class="fc" id="L179">                produto.setId(resultSet.getInt(&quot;id&quot;));</span>
-<span class="fc" id="L180">                produto.setNome(resultSet.getString(&quot;nome&quot;));</span>
-<span class="fc" id="L181">                produto.setDescricao(resultSet.getString(&quot;descricao&quot;));</span>
-<span class="fc" id="L182">                produto.setPreco(resultSet.getDouble(&quot;preco&quot;));</span>
-<span class="fc" id="L183">                produto.setImagem(resultSet.getString(&quot;imagem&quot;));</span>
-<span class="fc" id="L184">                produto.setDisponivel(resultSet.getBoolean(&quot;disponivel&quot;));</span>
-<span class="fc" id="L185">                produto.setTipo(resultSet.getString(&quot;tipo&quot;));</span>
-<span class="fc" id="L186">                produtos.add(produto);</span>
-<span class="fc" id="L187">            }</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">            while (resultSet.next()) {</span>
+<span class="nc" id="L178">                Produto produto = new Produto();</span>
+<span class="nc" id="L179">                produto.setId(resultSet.getInt(&quot;id&quot;));</span>
+<span class="nc" id="L180">                produto.setNome(resultSet.getString(&quot;nome&quot;));</span>
+<span class="nc" id="L181">                produto.setDescricao(resultSet.getString(&quot;descricao&quot;));</span>
+<span class="nc" id="L182">                produto.setPreco(resultSet.getDouble(&quot;preco&quot;));</span>
+<span class="nc" id="L183">                produto.setImagem(resultSet.getString(&quot;imagem&quot;));</span>
+<span class="nc" id="L184">                produto.setDisponivel(resultSet.getBoolean(&quot;disponivel&quot;));</span>
+<span class="nc" id="L185">                produto.setTipo(resultSet.getString(&quot;tipo&quot;));</span>
+<span class="nc" id="L186">                produtos.add(produto);</span>
+<span class="nc" id="L187">            }</span>
 <span class="fc" id="L188">            FabricaConexao.fecharConexao();</span>
 <span class="fc" id="L189">            return produtos;</span>
 

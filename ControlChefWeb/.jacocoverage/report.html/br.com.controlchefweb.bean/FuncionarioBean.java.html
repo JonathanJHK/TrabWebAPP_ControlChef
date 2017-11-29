@@ -12,7 +12,7 @@ import javax.faces.bean.ViewScoped;
 
 @ManagedBean(name = &quot;funcionarioBean&quot;)
 @ViewScoped
-<span class="fc" id="L15">public class FuncionarioBean extends CrudBean&lt;Funcionario, FuncionarioDAO&gt; implements Serializable {</span>
+<span class="nc" id="L15">public class FuncionarioBean extends CrudBean&lt;Funcionario, FuncionarioDAO&gt; implements Serializable {</span>
 
     private static final long serialVersionUID = 1L;
 
@@ -20,15 +20,15 @@ import javax.faces.bean.ViewScoped;
 
     @Override
     public FuncionarioDAO getDao() {
-<span class="pc bpc" id="L23" title="1 of 2 branches missed.">        if (usuarioDAO == null) {</span>
-<span class="fc" id="L24">            usuarioDAO = new FuncionarioDAO();</span>
+<span class="nc bnc" id="L23" title="All 2 branches missed.">        if (usuarioDAO == null) {</span>
+<span class="nc" id="L24">            usuarioDAO = new FuncionarioDAO();</span>
         }
-<span class="fc" id="L26">        return usuarioDAO;</span>
+<span class="nc" id="L26">        return usuarioDAO;</span>
     }
 
     @Override
     public Funcionario criarNovaEntidade() {
-<span class="fc" id="L31">        return new Funcionario();</span>
+<span class="nc" id="L31">        return new Funcionario();</span>
     }
 
     @Override

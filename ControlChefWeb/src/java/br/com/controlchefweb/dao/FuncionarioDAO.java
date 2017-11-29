@@ -60,7 +60,7 @@ public class FuncionarioDAO implements CrudDAO<Funcionario>, Serializable {
         try {
             Connection conexao = FabricaConexao.getConexao();
             
-            PreparedStatement ps0 = conexao.prepareStatement("update pedido set vendendor=? where vendendor=?");
+            PreparedStatement ps0 = conexao.prepareStatement("update pedido set vendedor=? where vendedor=?");
             ps0.setString(1,null);
             ps0.setInt(2,entidade.getId());
             ps0.execute();
@@ -159,11 +159,10 @@ public class FuncionarioDAO implements CrudDAO<Funcionario>, Serializable {
                 usuario.setLogin(resultSet.getString("login"));
                 usuario.setSenha(resultSet.getString("senha"));
                 usuario.setTipo(resultSet.getString("tipo"));
-            } else {
-                return null;
+                return usuario;
             }
             FabricaConexao.fecharConexao();
-            return usuario;
+            return null;
 
         } catch (SQLException ex) {
             throw new ErroSistema("Erro ao buscar os funcionarios!", ex);

@@ -12,7 +12,7 @@ import javax.faces.bean.ViewScoped;
 
 @ManagedBean
 @ViewScoped
-<span class="fc" id="L15">public class ProdutoBean extends CrudBean&lt;Produto, ProdutoDAO&gt; implements Serializable {</span>
+<span class="nc" id="L15">public class ProdutoBean extends CrudBean&lt;Produto, ProdutoDAO&gt; implements Serializable {</span>
 
     private static final long serialVersionUID = 1L;
 
@@ -20,15 +20,15 @@ import javax.faces.bean.ViewScoped;
 
     @Override
     public ProdutoDAO getDao() {
-<span class="pc bpc" id="L23" title="1 of 2 branches missed.">        if (produtoDAO == null) {</span>
-<span class="fc" id="L24">            produtoDAO = new ProdutoDAO();</span>
+<span class="nc bnc" id="L23" title="All 2 branches missed.">        if (produtoDAO == null) {</span>
+<span class="nc" id="L24">            produtoDAO = new ProdutoDAO();</span>
         }
-<span class="fc" id="L26">        return produtoDAO;</span>
+<span class="nc" id="L26">        return produtoDAO;</span>
     }
 
     @Override
     public Produto criarNovaEntidade() {
-<span class="fc" id="L31">        return new Produto();</span>
+<span class="nc" id="L31">        return new Produto();</span>
     }
 
     @Override

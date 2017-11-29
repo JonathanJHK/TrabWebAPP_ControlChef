@@ -12,7 +12,7 @@ import java.util.Objects;
     private String tipo;
 
     public Integer getId() {
-<span class="nc" id="L15">        return id;</span>
+<span class="fc" id="L15">        return id;</span>
     }
 
     public void setId(Integer id) {
@@ -20,7 +20,7 @@ import java.util.Objects;
 <span class="fc" id="L20">    }</span>
 
     public String getNome() {
-<span class="nc" id="L23">        return nome;</span>
+<span class="fc" id="L23">        return nome;</span>
     }
 
     public void setNome(String nome) {
@@ -28,7 +28,7 @@ import java.util.Objects;
 <span class="fc" id="L28">    }</span>
 
     public String getLogin() {
-<span class="nc" id="L31">        return login;</span>
+<span class="fc" id="L31">        return login;</span>
     }
 
     public void setLogin(String login) {
@@ -36,7 +36,7 @@ import java.util.Objects;
 <span class="fc" id="L36">    }</span>
 
     public String getSenha() {
-<span class="nc" id="L39">        return senha;</span>
+<span class="fc" id="L39">        return senha;</span>
     }
 
     public void setSenha(String senha) {
@@ -44,7 +44,7 @@ import java.util.Objects;
 <span class="fc" id="L44">    }</span>
 
     public String getTipo() {
-<span class="nc" id="L47">        return tipo;</span>
+<span class="fc" id="L47">        return tipo;</span>
     }
 
     public void setTipo(String tipo) {
@@ -54,24 +54,24 @@ import java.util.Objects;
 
     @Override
     public int hashCode() {
-<span class="fc" id="L57">        int hash = 7;</span>
-<span class="fc" id="L58">        hash = 53 * hash + Objects.hashCode(this.id);</span>
-<span class="fc" id="L59">        return hash;</span>
+<span class="nc" id="L57">        int hash = 7;</span>
+<span class="nc" id="L58">        hash = 53 * hash + Objects.hashCode(this.id);</span>
+<span class="nc" id="L59">        return hash;</span>
     }
 
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">        if (obj == null) {</span>
 <span class="nc" id="L65">            return false;</span>
         }
-<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
 <span class="nc" id="L68">            return false;</span>
         }
-<span class="nc" id="L70">        final Funcionario other = (Funcionario) obj;</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">        if (!Objects.equals(this.id, other.id)) {</span>
+<span class="fc" id="L70">        final Funcionario other = (Funcionario) obj;</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">        if (!Objects.equals(this.id, other.id)) {</span>
 <span class="nc" id="L72">            return false;</span>
         }
-<span class="nc" id="L74">        return true;</span>
+<span class="fc" id="L74">        return true;</span>
     }
     
     

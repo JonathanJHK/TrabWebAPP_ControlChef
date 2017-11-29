@@ -6,7 +6,14 @@
 package br.com.controlchefweb.dao;
 
 import br.com.controlchefweb.entidade.Funcionario;
+import br.com.controlchefweb.util.FabricaConexao;
+import br.com.controlchefweb.util.exception.ErroSistema;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -19,38 +26,35 @@ import static org.junit.Assert.*;
  * @author VashJHK
  */
 public class FuncionarioDAOTest {
-    
+
     public FuncionarioDAOTest() {
     }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
+
+    private static Connection conexao;
+    Funcionario func;
+
     @Before
     public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
+        try {
+            conexao = FabricaConexao.getConexao();
+            func = new Funcionario();
+            func.setId(1);
+            func.setLogin("teste");
+            func.setNome("teste");
+            func.setSenha("teste");
+            func.setTipo("Teste");
+        } catch (ErroSistema ex) {
+            Logger.getLogger(ClienteDAOTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    /**
-     * Test of getTipos method, of class FuncionarioDAO.
-     */
-    @Test
-    public void testGetTipos() {
-        System.out.println("getTipos");
-        FuncionarioDAO instance = new FuncionarioDAO();
-        List<String> expResult = null;
-        List<String> result = instance.getTipos();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    @After
+    public void tearDown() {
+        try {
+            FabricaConexao.fecharConexao();
+        } catch (ErroSistema ex) {
+            Logger.getLogger(ClienteDAOTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -58,12 +62,26 @@ public class FuncionarioDAOTest {
      */
     @Test
     public void testSalvar() throws Exception {
-        System.out.println("salvar");
-        Funcionario entidade = null;
+        int aux = 0;
         FuncionarioDAO instance = new FuncionarioDAO();
-        instance.salvar(entidade);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        func.setId(null);
+        instance.salvar(func);
+        
+        Connection conexao = FabricaConexao.getConexao();
+        PreparedStatement ps = conexao.prepareStatement("select * from funcionario where login='"+func.getLogin()+"'");
+        ResultSet resultSet = ps.executeQuery();
+        Funcionario result = new Funcionario();
+        if (resultSet.next()) {
+            aux = resultSet.getInt("id");
+            result.setNome(resultSet.getString("nome"));
+            result.setLogin(resultSet.getString("login"));
+            result.setSenha(resultSet.getString("senha"));
+            result.setTipo(resultSet.getString("tipo"));
+        }
+
+        assertEquals(func.getLogin(), result.getLogin());
+        func.setId(aux);
+        instance.deletar(func);
     }
 
     /**
@@ -71,12 +89,15 @@ public class FuncionarioDAOTest {
      */
     @Test
     public void testDeletar() throws Exception {
-        System.out.println("deletar");
-        Funcionario entidade = null;
+        PreparedStatement ps = conexao.prepareStatement("INSERT INTO funcionario (id,nome,login,senha,tipo) VALUES ('"+func.getId()+"','"+func.getNome()+"','"+func.getLogin()+"','"+func.getSenha()+"','"+func.getTipo()+"')");
+        ps.execute();
+        
         FuncionarioDAO instance = new FuncionarioDAO();
-        instance.deletar(entidade);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.deletar(func);
+        
+        Funcionario result = instance.buscarLogin(func.getLogin());
+        
+        assertNull(result);
     }
 
     /**
@@ -84,13 +105,21 @@ public class FuncionarioDAOTest {
      */
     @Test
     public void testBuscar() throws Exception {
-        System.out.println("buscar");
+        boolean verifica = false;
+        
+        PreparedStatement ps = conexao.prepareStatement("INSERT INTO funcionario (id,nome,login,senha,tipo) VALUES ('"+func.getId()+"','"+func.getNome()+"','"+func.getLogin()+"','"+func.getSenha()+"','"+func.getTipo()+"')");
+        ps.execute();
+        
         FuncionarioDAO instance = new FuncionarioDAO();
-        List<Funcionario> expResult = null;
+
         List<Funcionario> result = instance.buscar();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (Funcionario s : result) {
+            if (s.getLogin().equals(func.getLogin())) {
+                verifica = true;
+            }
+        }
+        assertTrue(verifica);
+        instance.deletar(func);
     }
 
     /**
@@ -98,15 +127,16 @@ public class FuncionarioDAOTest {
      */
     @Test
     public void testBuscarAunt() throws Exception {
-        System.out.println("buscarAunt");
-        String login = "";
-        String senha = "";
+        
+        PreparedStatement ps = conexao.prepareStatement("INSERT INTO funcionario (id,nome,login,senha,tipo) VALUES ('"+func.getId()+"','"+func.getNome()+"','"+func.getLogin()+"','"+func.getSenha()+"','"+func.getTipo()+"')");
+        ps.execute();
+        
         FuncionarioDAO instance = new FuncionarioDAO();
-        Funcionario expResult = null;
-        Funcionario result = instance.buscarAunt(login, senha);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        Funcionario result = instance.buscarAunt(func.getLogin(), func.getSenha());
+        
+        assertEquals(func, result);
+        instance.deletar(func);
     }
 
     /**
@@ -114,14 +144,15 @@ public class FuncionarioDAOTest {
      */
     @Test
     public void testBuscarID() throws Exception {
-        System.out.println("buscarID");
-        Integer id = null;
+        PreparedStatement ps = conexao.prepareStatement("INSERT INTO funcionario (id,nome,login,senha,tipo) VALUES ('"+func.getId()+"','"+func.getNome()+"','"+func.getLogin()+"','"+func.getSenha()+"','"+func.getTipo()+"')");
+        ps.execute();
+        
         FuncionarioDAO instance = new FuncionarioDAO();
-        Funcionario expResult = null;
-        Funcionario result = instance.buscarID(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        Funcionario result = instance.buscarID(func.getId());
+        
+        assertEquals(func, result);
+        instance.deletar(func);
     }
 
     /**
@@ -129,14 +160,15 @@ public class FuncionarioDAOTest {
      */
     @Test
     public void testBuscarLogin() throws Exception {
-        System.out.println("buscarLogin");
-        String login = "";
+        PreparedStatement ps = conexao.prepareStatement("INSERT INTO funcionario (id,nome,login,senha,tipo) VALUES ('"+func.getId()+"','"+func.getNome()+"','"+func.getLogin()+"','"+func.getSenha()+"','"+func.getTipo()+"')");
+        ps.execute();
+        
         FuncionarioDAO instance = new FuncionarioDAO();
-        Funcionario expResult = null;
-        Funcionario result = instance.buscarLogin(login);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        Funcionario result = instance.buscarLogin(func.getLogin());
+        
+        assertEquals(func, result);
+        instance.deletar(func);
     }
-    
+
 }

@@ -21,23 +21,23 @@ import org.primefaces.model.ScheduleModel;
  
 @ManagedBean
 @ViewScoped
-<span class="fc" id="L24">public class ScheduleView implements Serializable {</span>
+<span class="nc" id="L24">public class ScheduleView implements Serializable {</span>
  
     private ScheduleModel eventModel;
      
     private ScheduleModel lazyEventModel;
  
-<span class="fc" id="L30">    private ScheduleEvent event = new DefaultScheduleEvent();</span>
+<span class="nc" id="L30">    private ScheduleEvent event = new DefaultScheduleEvent();</span>
  
     @PostConstruct
     public void init() {
-<span class="fc" id="L34">        eventModel = new DefaultScheduleModel();</span>
-<span class="fc" id="L35">        eventModel.addEvent(new DefaultScheduleEvent(&quot;Champions League Match&quot;, previousDay8Pm(), previousDay11Pm()));</span>
-<span class="fc" id="L36">        eventModel.addEvent(new DefaultScheduleEvent(&quot;Birthday Party&quot;, today1Pm(), today6Pm()));</span>
-<span class="fc" id="L37">        eventModel.addEvent(new DefaultScheduleEvent(&quot;Breakfast at Tiffanys&quot;, nextDay9Am(), nextDay11Am()));</span>
-<span class="fc" id="L38">        eventModel.addEvent(new DefaultScheduleEvent(&quot;Plant the new garden stuff&quot;, theDayAfter3Pm(), fourDaysLater3pm()));</span>
+<span class="nc" id="L34">        eventModel = new DefaultScheduleModel();</span>
+<span class="nc" id="L35">        eventModel.addEvent(new DefaultScheduleEvent(&quot;Champions League Match&quot;, previousDay8Pm(), previousDay11Pm()));</span>
+<span class="nc" id="L36">        eventModel.addEvent(new DefaultScheduleEvent(&quot;Birthday Party&quot;, today1Pm(), today6Pm()));</span>
+<span class="nc" id="L37">        eventModel.addEvent(new DefaultScheduleEvent(&quot;Breakfast at Tiffanys&quot;, nextDay9Am(), nextDay11Am()));</span>
+<span class="nc" id="L38">        eventModel.addEvent(new DefaultScheduleEvent(&quot;Plant the new garden stuff&quot;, theDayAfter3Pm(), fourDaysLater3pm()));</span>
          
-<span class="fc" id="L40">        lazyEventModel = new LazyScheduleModel() {</span>
+<span class="nc" id="L40">        lazyEventModel = new LazyScheduleModel() {</span>
              
             @Override
             public void loadEvents(Date start, Date end) {
@@ -48,10 +48,10 @@ import org.primefaces.model.ScheduleModel;
 <span class="nc" id="L48">                addEvent(new DefaultScheduleEvent(&quot;Lazy Event 2&quot;, random, random));</span>
 <span class="nc" id="L49">            }   </span>
         };
-<span class="fc" id="L51">    }</span>
+<span class="nc" id="L51">    }</span>
      
     public Date getRandomDate(Date base) {
-<span class="fc" id="L54">        Calendar date = Calendar.getInstance();</span>
+<span class="nc" id="L54">        Calendar date = Calendar.getInstance();</span>
 <span class="nc" id="L55">        date.setTime(base);</span>
 <span class="nc" id="L56">        date.add(Calendar.DATE, ((int) (Math.random()*30)) + 1);    //set random day of month</span>
          
@@ -59,107 +59,107 @@ import org.primefaces.model.ScheduleModel;
     }
      
     public Date getInitialDate() {
-<span class="fc" id="L62">        Calendar calendar = Calendar.getInstance();</span>
-<span class="fc" id="L63">        calendar.set(calendar.get(Calendar.YEAR), Calendar.FEBRUARY, calendar.get(Calendar.DATE), 0, 0, 0);</span>
+<span class="nc" id="L62">        Calendar calendar = Calendar.getInstance();</span>
+<span class="nc" id="L63">        calendar.set(calendar.get(Calendar.YEAR), Calendar.FEBRUARY, calendar.get(Calendar.DATE), 0, 0, 0);</span>
          
-<span class="fc" id="L65">        return calendar.getTime();</span>
+<span class="nc" id="L65">        return calendar.getTime();</span>
     }
      
     public ScheduleModel getEventModel() {
-<span class="fc" id="L69">        return eventModel;</span>
+<span class="nc" id="L69">        return eventModel;</span>
     }
      
     public ScheduleModel getLazyEventModel() {
-<span class="fc" id="L73">        return lazyEventModel;</span>
+<span class="nc" id="L73">        return lazyEventModel;</span>
     }
  
     private Calendar today() {
-<span class="fc" id="L77">        Calendar calendar = Calendar.getInstance();</span>
-<span class="fc" id="L78">        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), 0, 0, 0);</span>
+<span class="nc" id="L77">        Calendar calendar = Calendar.getInstance();</span>
+<span class="nc" id="L78">        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), 0, 0, 0);</span>
  
-<span class="fc" id="L80">        return calendar;</span>
+<span class="nc" id="L80">        return calendar;</span>
     }
      
     private Date previousDay8Pm() {
-<span class="fc" id="L84">        Calendar t = (Calendar) today().clone();</span>
-<span class="fc" id="L85">        t.set(Calendar.AM_PM, Calendar.PM);</span>
-<span class="fc" id="L86">        t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);</span>
-<span class="fc" id="L87">        t.set(Calendar.HOUR, 8);</span>
+<span class="nc" id="L84">        Calendar t = (Calendar) today().clone();</span>
+<span class="nc" id="L85">        t.set(Calendar.AM_PM, Calendar.PM);</span>
+<span class="nc" id="L86">        t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);</span>
+<span class="nc" id="L87">        t.set(Calendar.HOUR, 8);</span>
          
-<span class="fc" id="L89">        return t.getTime();</span>
+<span class="nc" id="L89">        return t.getTime();</span>
     }
      
     private Date previousDay11Pm() {
-<span class="fc" id="L93">        Calendar t = (Calendar) today().clone();</span>
-<span class="fc" id="L94">        t.set(Calendar.AM_PM, Calendar.PM);</span>
-<span class="fc" id="L95">        t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);</span>
-<span class="fc" id="L96">        t.set(Calendar.HOUR, 11);</span>
+<span class="nc" id="L93">        Calendar t = (Calendar) today().clone();</span>
+<span class="nc" id="L94">        t.set(Calendar.AM_PM, Calendar.PM);</span>
+<span class="nc" id="L95">        t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);</span>
+<span class="nc" id="L96">        t.set(Calendar.HOUR, 11);</span>
          
-<span class="fc" id="L98">        return t.getTime();</span>
+<span class="nc" id="L98">        return t.getTime();</span>
     }
      
     private Date today1Pm() {
-<span class="fc" id="L102">        Calendar t = (Calendar) today().clone();</span>
-<span class="fc" id="L103">        t.set(Calendar.AM_PM, Calendar.PM);</span>
-<span class="fc" id="L104">        t.set(Calendar.HOUR, 1);</span>
+<span class="nc" id="L102">        Calendar t = (Calendar) today().clone();</span>
+<span class="nc" id="L103">        t.set(Calendar.AM_PM, Calendar.PM);</span>
+<span class="nc" id="L104">        t.set(Calendar.HOUR, 1);</span>
          
-<span class="fc" id="L106">        return t.getTime();</span>
+<span class="nc" id="L106">        return t.getTime();</span>
     }
      
     private Date theDayAfter3Pm() {
-<span class="fc" id="L110">        Calendar t = (Calendar) today().clone();</span>
-<span class="fc" id="L111">        t.set(Calendar.DATE, t.get(Calendar.DATE) + 2);     </span>
-<span class="fc" id="L112">        t.set(Calendar.AM_PM, Calendar.PM);</span>
-<span class="fc" id="L113">        t.set(Calendar.HOUR, 3);</span>
+<span class="nc" id="L110">        Calendar t = (Calendar) today().clone();</span>
+<span class="nc" id="L111">        t.set(Calendar.DATE, t.get(Calendar.DATE) + 2);     </span>
+<span class="nc" id="L112">        t.set(Calendar.AM_PM, Calendar.PM);</span>
+<span class="nc" id="L113">        t.set(Calendar.HOUR, 3);</span>
          
-<span class="fc" id="L115">        return t.getTime();</span>
+<span class="nc" id="L115">        return t.getTime();</span>
     }
  
     private Date today6Pm() {
-<span class="fc" id="L119">        Calendar t = (Calendar) today().clone(); </span>
-<span class="fc" id="L120">        t.set(Calendar.AM_PM, Calendar.PM);</span>
-<span class="fc" id="L121">        t.set(Calendar.HOUR, 6);</span>
+<span class="nc" id="L119">        Calendar t = (Calendar) today().clone(); </span>
+<span class="nc" id="L120">        t.set(Calendar.AM_PM, Calendar.PM);</span>
+<span class="nc" id="L121">        t.set(Calendar.HOUR, 6);</span>
          
-<span class="fc" id="L123">        return t.getTime();</span>
+<span class="nc" id="L123">        return t.getTime();</span>
     }
      
     private Date nextDay9Am() {
-<span class="fc" id="L127">        Calendar t = (Calendar) today().clone();</span>
-<span class="fc" id="L128">        t.set(Calendar.AM_PM, Calendar.AM);</span>
-<span class="fc" id="L129">        t.set(Calendar.DATE, t.get(Calendar.DATE) + 1);</span>
-<span class="fc" id="L130">        t.set(Calendar.HOUR, 9);</span>
+<span class="nc" id="L127">        Calendar t = (Calendar) today().clone();</span>
+<span class="nc" id="L128">        t.set(Calendar.AM_PM, Calendar.AM);</span>
+<span class="nc" id="L129">        t.set(Calendar.DATE, t.get(Calendar.DATE) + 1);</span>
+<span class="nc" id="L130">        t.set(Calendar.HOUR, 9);</span>
          
-<span class="fc" id="L132">        return t.getTime();</span>
+<span class="nc" id="L132">        return t.getTime();</span>
     }
      
     private Date nextDay11Am() {
-<span class="fc" id="L136">        Calendar t = (Calendar) today().clone();</span>
-<span class="fc" id="L137">        t.set(Calendar.AM_PM, Calendar.AM);</span>
-<span class="fc" id="L138">        t.set(Calendar.DATE, t.get(Calendar.DATE) + 1);</span>
-<span class="fc" id="L139">        t.set(Calendar.HOUR, 11);</span>
+<span class="nc" id="L136">        Calendar t = (Calendar) today().clone();</span>
+<span class="nc" id="L137">        t.set(Calendar.AM_PM, Calendar.AM);</span>
+<span class="nc" id="L138">        t.set(Calendar.DATE, t.get(Calendar.DATE) + 1);</span>
+<span class="nc" id="L139">        t.set(Calendar.HOUR, 11);</span>
          
-<span class="fc" id="L141">        return t.getTime();</span>
+<span class="nc" id="L141">        return t.getTime();</span>
     }
      
     private Date fourDaysLater3pm() {
-<span class="fc" id="L145">        Calendar t = (Calendar) today().clone(); </span>
-<span class="fc" id="L146">        t.set(Calendar.AM_PM, Calendar.PM);</span>
-<span class="fc" id="L147">        t.set(Calendar.DATE, t.get(Calendar.DATE) + 4);</span>
-<span class="fc" id="L148">        t.set(Calendar.HOUR, 3);</span>
+<span class="nc" id="L145">        Calendar t = (Calendar) today().clone(); </span>
+<span class="nc" id="L146">        t.set(Calendar.AM_PM, Calendar.PM);</span>
+<span class="nc" id="L147">        t.set(Calendar.DATE, t.get(Calendar.DATE) + 4);</span>
+<span class="nc" id="L148">        t.set(Calendar.HOUR, 3);</span>
          
-<span class="fc" id="L150">        return t.getTime();</span>
+<span class="nc" id="L150">        return t.getTime();</span>
     }
      
     public ScheduleEvent getEvent() {
-<span class="fc" id="L154">        return event;</span>
+<span class="nc" id="L154">        return event;</span>
     }
  
     public void setEvent(ScheduleEvent event) {
-<span class="fc" id="L158">        this.event = event;</span>
-<span class="fc" id="L159">    }</span>
+<span class="nc" id="L158">        this.event = event;</span>
+<span class="nc" id="L159">    }</span>
      
     public void addEvent(ActionEvent actionEvent) {
-<span class="pc bpc" id="L162" title="1 of 2 branches missed.">        if(event.getId() == null)</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">        if(event.getId() == null)</span>
 <span class="nc" id="L163">            eventModel.addEvent(event);</span>
         else
 <span class="nc" id="L165">            eventModel.updateEvent(event);</span>

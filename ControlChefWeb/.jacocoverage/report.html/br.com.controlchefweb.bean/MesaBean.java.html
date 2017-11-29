@@ -26,11 +26,11 @@ import org.primefaces.event.RowEditEvent;
  */
 @ManagedBean(name=&quot;mesaBean&quot;)
 @ViewScoped
-<span class="fc" id="L29">public class MesaBean implements Serializable{</span>
+<span class="nc" id="L29">public class MesaBean implements Serializable{</span>
     
     private static final long serialVersionUID = 1L;
     private List&lt;Mesa&gt; men;
-<span class="fc" id="L33">    private boolean telaBuscar = true;</span>
+<span class="nc" id="L33">    private boolean telaBuscar = true;</span>
     private Mesa mesa;
     
     @ManagedProperty(&quot;#{MesaDAO}&quot;)
@@ -40,7 +40,7 @@ import org.primefaces.event.RowEditEvent;
     @PostConstruct
     public void init() {
         try {
-<span class="fc" id="L43">            mesa = new Mesa();</span>
+<span class="nc" id="L43">            mesa = new Mesa();</span>
 <span class="nc" id="L44">            men = mesaDao.buscar();</span>
 <span class="nc" id="L45">        } catch (ErroSistema ex) {</span>
 <span class="nc" id="L46">            Logger.getLogger(EditViewF.class.getName()).log(Level.SEVERE, null, ex);</span>
@@ -48,36 +48,36 @@ import org.primefaces.event.RowEditEvent;
 <span class="nc" id="L48">    }</span>
 
     public List&lt;Mesa&gt; getMen() {
-<span class="fc" id="L51">        return men;</span>
+<span class="nc" id="L51">        return men;</span>
     }
 
     public void setMen(List&lt;Mesa&gt; men) {
-<span class="fc" id="L55">        this.men = men;</span>
-<span class="fc" id="L56">    }</span>
+<span class="nc" id="L55">        this.men = men;</span>
+<span class="nc" id="L56">    }</span>
 
     public MesaDAO getMesaDao() {
-<span class="fc" id="L59">        return mesaDao;</span>
+<span class="nc" id="L59">        return mesaDao;</span>
     }
 
     public void setMesaDao(MesaDAO mesaDao) {
-<span class="fc" id="L63">        this.mesaDao = mesaDao;</span>
-<span class="fc" id="L64">    }</span>
+<span class="nc" id="L63">        this.mesaDao = mesaDao;</span>
+<span class="nc" id="L64">    }</span>
 
     public boolean isTelaBuscar() {
-<span class="fc" id="L67">        return telaBuscar;</span>
+<span class="nc" id="L67">        return telaBuscar;</span>
     }
 
     public void setTelaBuscar(boolean telaBuscar) {
-<span class="fc" id="L71">        this.telaBuscar = telaBuscar;</span>
-<span class="fc" id="L72">    }</span>
+<span class="nc" id="L71">        this.telaBuscar = telaBuscar;</span>
+<span class="nc" id="L72">    }</span>
 
     public Mesa getMesa() {
-<span class="fc" id="L75">        return mesa;</span>
+<span class="nc" id="L75">        return mesa;</span>
     }
 
     public void setMesa(Mesa mesa) {
-<span class="fc" id="L79">        this.mesa = mesa;</span>
-<span class="fc" id="L80">    }</span>
+<span class="nc" id="L79">        this.mesa = mesa;</span>
+<span class="nc" id="L80">    }</span>
     
     public void salvar(){
         try {
@@ -97,7 +97,7 @@ import org.primefaces.event.RowEditEvent;
 <span class="nc" id="L97">    }</span>
      
     public void onRowCancel(RowEditEvent event) {
-<span class="fc" id="L100">        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,&quot;Cancelado&quot;,&quot;Edição cancelada com sucesso.&quot;);</span>
+<span class="nc" id="L100">        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,&quot;Cancelado&quot;,&quot;Edição cancelada com sucesso.&quot;);</span>
 <span class="nc" id="L101">        FacesContext.getCurrentInstance().addMessage(null, msg);</span>
 <span class="nc" id="L102">    }</span>
     
@@ -109,12 +109,12 @@ import org.primefaces.event.RowEditEvent;
     
     
     public void telaBusca(){
-<span class="fc" id="L112">        this.telaBuscar=true;</span>
-<span class="fc" id="L113">    }</span>
+<span class="nc" id="L112">        this.telaBuscar=true;</span>
+<span class="nc" id="L113">    }</span>
     
     public void telaNovo(){
-<span class="fc" id="L116">        this.telaBuscar=false;;</span>
-<span class="fc" id="L117">    }</span>
+<span class="nc" id="L116">        this.telaBuscar=false;;</span>
+<span class="nc" id="L117">    }</span>
     
      public void adicionarMensagem(String mensagem, String mensagem2,FacesMessage.Severity tipoErro){
 <span class="nc" id="L120">        FacesMessage fm = new FacesMessage(tipoErro,mensagem, mensagem2);</span>

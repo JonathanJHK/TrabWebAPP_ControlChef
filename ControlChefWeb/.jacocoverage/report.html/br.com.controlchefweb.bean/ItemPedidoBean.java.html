@@ -25,7 +25,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean(name=&quot;itemPedidoBean&quot;)
 @ViewScoped
-<span class="fc" id="L28">public class ItemPedidoBean implements Serializable{</span>
+<span class="nc" id="L28">public class ItemPedidoBean implements Serializable{</span>
     
     private static final long serialVersionUID = 1L;
     private List&lt;ItemPedido&gt; itens;
@@ -39,37 +39,37 @@ import javax.faces.context.FacesContext;
     @PostConstruct
     public void init() {
         try {
-<span class="fc" id="L42">            itempDao = new ItemPedidoDAO();</span>
-<span class="fc" id="L43">            itens = itempDao.buscar();</span>
-<span class="fc" id="L44">            itensPronto = itempDao.buscarPronto();</span>
+<span class="nc" id="L42">            itempDao = new ItemPedidoDAO();</span>
+<span class="nc" id="L43">            itens = itempDao.buscar();</span>
+<span class="nc" id="L44">            itensPronto = itempDao.buscarPronto();</span>
 <span class="nc" id="L45">        } catch (ErroSistema ex) {</span>
 <span class="nc" id="L46">            Logger.getLogger(EditViewF.class.getName()).log(Level.SEVERE, null, ex);</span>
-<span class="fc" id="L47">        }</span>
-<span class="fc" id="L48">    }</span>
+<span class="nc" id="L47">        }</span>
+<span class="nc" id="L48">    }</span>
 
     public List&lt;ItemPedido&gt; getItens() {
-<span class="fc" id="L51">        return itens;</span>
+<span class="nc" id="L51">        return itens;</span>
     }
 
     public void setItens(List&lt;ItemPedido&gt; itens) {
-<span class="fc" id="L55">        this.itens = itens;</span>
-<span class="fc" id="L56">    }</span>
+<span class="nc" id="L55">        this.itens = itens;</span>
+<span class="nc" id="L56">    }</span>
 
     public ItemPedidoDAO getItempDao() {
-<span class="fc" id="L59">        return itempDao;</span>
+<span class="nc" id="L59">        return itempDao;</span>
     }
 
     public void setItempDao(ItemPedidoDAO itempDao) {
-<span class="fc" id="L63">        this.itempDao = itempDao;</span>
-<span class="fc" id="L64">    }</span>
+<span class="nc" id="L63">        this.itempDao = itempDao;</span>
+<span class="nc" id="L64">    }</span>
 
     public List&lt;ItemPedido&gt; getItensPronto() {
-<span class="fc" id="L67">        return itensPronto;</span>
+<span class="nc" id="L67">        return itensPronto;</span>
     }
 
     public void setItensPronto(List&lt;ItemPedido&gt; itensPronto) {
-<span class="fc" id="L71">        this.itensPronto = itensPronto;</span>
-<span class="fc" id="L72">    }</span>
+<span class="nc" id="L71">        this.itensPronto = itensPronto;</span>
+<span class="nc" id="L72">    }</span>
     
     
     public String itemPronto(ItemPedido item) throws ErroSistema{

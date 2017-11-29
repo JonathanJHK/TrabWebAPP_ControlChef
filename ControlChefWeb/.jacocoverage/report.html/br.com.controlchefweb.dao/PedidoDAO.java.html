@@ -157,21 +157,21 @@ import javax.faces.bean.SessionScoped;
 <span class="fc" id="L157">            PreparedStatement ps = conexao.prepareStatement(&quot;select * from pedido where statusPedido = false&quot;);</span>
 <span class="fc" id="L158">            ResultSet resultSet = ps.executeQuery();</span>
 <span class="fc" id="L159">            List&lt;Pedido&gt; pedidos = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L160" title="All 2 branches covered.">            while (resultSet.next()) {</span>
-<span class="fc" id="L161">                Pedido pedido = new Pedido();</span>
-<span class="fc" id="L162">                pedido.setId(resultSet.getInt(&quot;id&quot;));</span>
-<span class="fc" id="L163">                pedido.setValorTotal(resultSet.getDouble(&quot;valorTotal&quot;));</span>
-<span class="fc" id="L164">                pedido.setMesa(resultSet.getInt(&quot;mesa&quot;));</span>
-<span class="fc" id="L165">                pedido.setStatusPedido(resultSet.getBoolean(&quot;statusPedido&quot;));</span>
-<span class="fc" id="L166">                pedido.setDataCriacao(resultSet.getDate(&quot;dataCriacao&quot;));</span>
-<span class="fc" id="L167">                Funcionario funcionario = new Funcionario();</span>
-<span class="fc" id="L168">                funcionario.setId(resultSet.getInt(&quot;vendedor&quot;));</span>
-<span class="fc" id="L169">                pedido.setVendedor(funcionario);</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">            while (resultSet.next()) {</span>
+<span class="nc" id="L161">                Pedido pedido = new Pedido();</span>
+<span class="nc" id="L162">                pedido.setId(resultSet.getInt(&quot;id&quot;));</span>
+<span class="nc" id="L163">                pedido.setValorTotal(resultSet.getDouble(&quot;valorTotal&quot;));</span>
+<span class="nc" id="L164">                pedido.setMesa(resultSet.getInt(&quot;mesa&quot;));</span>
+<span class="nc" id="L165">                pedido.setStatusPedido(resultSet.getBoolean(&quot;statusPedido&quot;));</span>
+<span class="nc" id="L166">                pedido.setDataCriacao(resultSet.getDate(&quot;dataCriacao&quot;));</span>
+<span class="nc" id="L167">                Funcionario funcionario = new Funcionario();</span>
+<span class="nc" id="L168">                funcionario.setId(resultSet.getInt(&quot;vendedor&quot;));</span>
+<span class="nc" id="L169">                pedido.setVendedor(funcionario);</span>
                
                 
                 
-<span class="fc" id="L173">                pedidos.add(pedido);</span>
-<span class="fc" id="L174">            }</span>
+<span class="nc" id="L173">                pedidos.add(pedido);</span>
+<span class="nc" id="L174">            }</span>
 <span class="fc" id="L175">            FabricaConexao.fecharConexao();</span>
 <span class="fc" id="L176">            return pedidos;</span>
 

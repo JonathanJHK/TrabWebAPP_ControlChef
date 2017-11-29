@@ -20,20 +20,20 @@ public class SessionContext {
     private static SessionContext instance;
       
       public static SessionContext getInstance(){
-<span class="fc bfc" id="L23" title="All 2 branches covered.">           if (instance == null){</span>
-<span class="fc" id="L24">               instance = new SessionContext();</span>
+<span class="nc bnc" id="L23" title="All 2 branches missed.">           if (instance == null){</span>
+<span class="nc" id="L24">               instance = new SessionContext();</span>
            }
            
-<span class="fc" id="L27">           return instance;</span>
+<span class="nc" id="L27">           return instance;</span>
       }
       
-<span class="fc" id="L30">      private SessionContext(){</span>
+<span class="nc" id="L30">      private SessionContext(){</span>
            
-<span class="fc" id="L32">      }</span>
+<span class="nc" id="L32">      }</span>
       
       private ExternalContext currentExternalContext(){
-<span class="pc bpc" id="L35" title="1 of 2 branches missed.">           if (FacesContext.getCurrentInstance() == null){</span>
-<span class="fc" id="L36">               throw new RuntimeException(&quot;O FacesContext não pode ser chamado fora de uma requisição HTTP&quot;);</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">           if (FacesContext.getCurrentInstance() == null){</span>
+<span class="nc" id="L36">               throw new RuntimeException(&quot;O FacesContext não pode ser chamado fora de uma requisição HTTP&quot;);</span>
            }else{
 <span class="nc" id="L38">               return FacesContext.getCurrentInstance().getExternalContext();</span>
            }

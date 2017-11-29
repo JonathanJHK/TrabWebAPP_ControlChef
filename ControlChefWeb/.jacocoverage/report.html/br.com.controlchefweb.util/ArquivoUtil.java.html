@@ -30,32 +30,32 @@ import java.util.List;
     }
 
     public static List&lt;File&gt; listar() {
-<span class="fc" id="L33">        File dir = diretorioRaizParaArquivos();</span>
+<span class="nc" id="L33">        File dir = diretorioRaizParaArquivos();</span>
 
-<span class="fc" id="L35">        return Arrays.asList(dir.listFiles());</span>
+<span class="nc" id="L35">        return Arrays.asList(dir.listFiles());</span>
     }
 
     public static java.io.File diretorioRaizParaArquivos() {
-<span class="fc" id="L39">        File dir = new File(diretorioRaiz(), &quot;arquivos&quot;);</span>
+<span class="nc" id="L39">        File dir = new File(diretorioRaiz(), &quot;arquivos&quot;);</span>
 
-<span class="pc bpc" id="L41" title="1 of 2 branches missed.">        if (!dir.exists()) {</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        if (!dir.exists()) {</span>
 <span class="nc" id="L42">            dir.mkdirs();</span>
         }
 
-<span class="fc" id="L45">        return dir;</span>
+<span class="nc" id="L45">        return dir;</span>
     }
     
     public static File diretorioRaiz() {
       
         // File dir = new File(System.getProperty(&quot;user.home&quot;), &quot;algaworks&quot;)
         //System.out.println(System.getProperty(&quot;user.dir&quot;));
-<span class="fc" id="L52">        File dir = new File(System.getProperty(&quot;user.home&quot;), &quot;ControlChefWebUP&quot;);</span>
+<span class="nc" id="L52">        File dir = new File(System.getProperty(&quot;user.home&quot;), &quot;ControlChefWebUP&quot;);</span>
 
-<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if (!dir.exists()) {</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">        if (!dir.exists()) {</span>
 <span class="nc" id="L55">            dir.mkdirs();</span>
         }
 
-<span class="fc" id="L58">        return dir;</span>
+<span class="nc" id="L58">        return dir;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

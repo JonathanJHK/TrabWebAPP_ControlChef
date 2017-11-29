@@ -17,7 +17,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -68,7 +67,7 @@ public class ClienteDAOTest {
     public void testBuscarNome() throws Exception {
 
         boolean verifica = false;
-        List<Cliente> clientes = new ArrayList();
+     
 
         Cliente cliente = new Cliente();
         cliente.setCpf("11111");
@@ -94,8 +93,7 @@ public class ClienteDAOTest {
      */
     @Test
     public void testBuscarCPF() throws Exception {
-        boolean verifica = false;
-        List<Cliente> clientes = new ArrayList();
+      
 
         Cliente cliente = new Cliente();
         cliente.setCpf("11111");
@@ -186,9 +184,8 @@ public class ClienteDAOTest {
      */
     @Test
     public void testDeletar() throws Exception {
-         boolean verifica = false;
-  
 
+  
         Cliente cliente = new Cliente();
         cliente.setCpf("11111");
         cliente.setNome("Julia");

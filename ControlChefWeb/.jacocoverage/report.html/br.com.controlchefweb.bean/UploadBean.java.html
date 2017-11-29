@@ -28,25 +28,25 @@ import org.primefaces.model.UploadedFile;
  */
 @ManagedBean(name = &quot;uploadBean&quot;)
 @ViewScoped
-<span class="fc" id="L31">public class UploadBean implements Serializable {</span>
+<span class="nc" id="L31">public class UploadBean implements Serializable {</span>
 
     private static final long serialVersionUID = 1L;
 
-<span class="fc" id="L35">    private List&lt;File&gt; arquivos = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L35">    private List&lt;File&gt; arquivos = new ArrayList&lt;&gt;();</span>
     private String fileName;
 
     public String getFileName() {
-<span class="fc" id="L39">        return fileName;</span>
+<span class="nc" id="L39">        return fileName;</span>
     }
 
     public void setFileName(String fileName) {
-<span class="fc" id="L43">        this.fileName = fileName;</span>
-<span class="fc" id="L44">    }</span>
+<span class="nc" id="L43">        this.fileName = fileName;</span>
+<span class="nc" id="L44">    }</span>
 
     @PostConstruct
     public void postConstruct() {
-<span class="fc" id="L48">        arquivos = new ArrayList&lt;&gt;(ArquivoUtil.listar());</span>
-<span class="fc" id="L49">    }</span>
+<span class="nc" id="L48">        arquivos = new ArrayList&lt;&gt;(ArquivoUtil.listar());</span>
+<span class="nc" id="L49">    }</span>
 
     public void upload(FileUploadEvent event) {
 <span class="nc" id="L52">        UploadedFile uploadedFile = event.getFile();</span>
@@ -72,7 +72,7 @@ import org.primefaces.model.UploadedFile;
 <span class="nc" id="L72">    }</span>
 
     public List&lt;File&gt; getArquivos() {
-<span class="fc" id="L75">        return arquivos;</span>
+<span class="nc" id="L75">        return arquivos;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

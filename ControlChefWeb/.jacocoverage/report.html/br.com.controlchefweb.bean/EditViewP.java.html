@@ -30,7 +30,7 @@ import org.primefaces.event.RowEditEvent;
  */
 @ManagedBean(name = &quot;dtEditViewP&quot;)
 @ViewScoped
-<span class="fc" id="L33">public class EditViewP implements Serializable {</span>
+<span class="nc" id="L33">public class EditViewP implements Serializable {</span>
 
     private List&lt;Produto&gt; prod;
     private List&lt;Produto&gt; prodFiltrado;
@@ -52,44 +52,44 @@ import org.primefaces.event.RowEditEvent;
 <span class="nc" id="L52">    }</span>
 
     public List&lt;Produto&gt; getProd() {
-<span class="fc" id="L55">        return prod;</span>
+<span class="nc" id="L55">        return prod;</span>
     }
 
     public void setProd(List&lt;Produto&gt; prod) {
-<span class="fc" id="L59">        this.prod = prod;</span>
-<span class="fc" id="L60">    }</span>
+<span class="nc" id="L59">        this.prod = prod;</span>
+<span class="nc" id="L60">    }</span>
 
     public List&lt;Produto&gt; getProdFiltrado() {
-<span class="fc" id="L63">        return prodFiltrado;</span>
+<span class="nc" id="L63">        return prodFiltrado;</span>
     }
 
     public void setProdFiltrado(List&lt;Produto&gt; prodFiltrado) {
-<span class="fc" id="L67">        this.prodFiltrado = prodFiltrado;</span>
-<span class="fc" id="L68">    }</span>
+<span class="nc" id="L67">        this.prodFiltrado = prodFiltrado;</span>
+<span class="nc" id="L68">    }</span>
 
     public ProdutoDAO getProduto() {
-<span class="fc" id="L71">        return produto;</span>
+<span class="nc" id="L71">        return produto;</span>
     }
 
     public void setProduto(ProdutoDAO produto) {
-<span class="fc" id="L75">        this.produto = produto;</span>
-<span class="fc" id="L76">    }</span>
+<span class="nc" id="L75">        this.produto = produto;</span>
+<span class="nc" id="L76">    }</span>
 
     public String getNome() {
-<span class="fc" id="L79">        return nome;</span>
+<span class="nc" id="L79">        return nome;</span>
     }
 
     public void setNome(String nome) {
-<span class="fc" id="L83">        this.nome = nome;</span>
-<span class="fc" id="L84">    }</span>
+<span class="nc" id="L83">        this.nome = nome;</span>
+<span class="nc" id="L84">    }</span>
 
     public CategoriaP getCategoriap() {
-<span class="fc" id="L87">        return categoriap;</span>
+<span class="nc" id="L87">        return categoriap;</span>
     }
 
     public void setCategoriap(CategoriaP categoriap) {
-<span class="fc" id="L91">        this.categoriap = categoriap;</span>
-<span class="fc" id="L92">    }</span>
+<span class="nc" id="L91">        this.categoriap = categoriap;</span>
+<span class="nc" id="L92">    }</span>
     
     public void criarTipo() throws ErroSistema{
 <span class="nc" id="L95">        produto.criarTipo(categoriap);</span>
@@ -106,7 +106,7 @@ import org.primefaces.event.RowEditEvent;
     }
 
     public List&lt;Produto&gt; listProdTipo(String tipo) {
-<span class="fc" id="L109">        List&lt;Produto&gt; listprodtipo = new ArrayList();</span>
+<span class="nc" id="L109">        List&lt;Produto&gt; listprodtipo = new ArrayList();</span>
        
 <span class="nc bnc" id="L111" title="All 2 branches missed.">            for (Produto s : prodFiltrado) {</span>
 <span class="nc bnc" id="L112" title="All 2 branches missed.">                if (s.getTipo().equals(tipo)) {</span>
@@ -129,7 +129,7 @@ import org.primefaces.event.RowEditEvent;
 <span class="nc" id="L129">    }</span>
 
     public void onRowCancel(RowEditEvent event) {
-<span class="fc" id="L132">        FacesMessage msg = new FacesMessage(&quot;Cancelado!&quot;, &quot;Edição cancelada com sucesso.&quot;);</span>
+<span class="nc" id="L132">        FacesMessage msg = new FacesMessage(&quot;Cancelado!&quot;, &quot;Edição cancelada com sucesso.&quot;);</span>
 <span class="nc" id="L133">        FacesContext.getCurrentInstance().addMessage(null, msg);</span>
 <span class="nc" id="L134">    }</span>
 
